@@ -1,0 +1,166 @@
+.main-nav {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    background-color: $purple;
+    padding-left: 40px;
+    padding-right: 40px;
+    color: $white;
+    font-size: 15px;
+}
+
+.main-nav .home {
+    display: flex;
+    width: 190px;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes searchfadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.main-nav-items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.main-nav-items-left {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav-search {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    animation: 0.5s ease-out 0s 1 searchfadeIn;
+}
+
+.main-nav-search p {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.main-nav-create {
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-left: 2px solid $dark-purple;
+}
+
+.main-nav-create:hover, .main-nav-search-button:hover {
+    transition: color 0.2s ease;
+    color: $gray;
+    cursor: pointer;
+}
+
+.main-nav-create p, .main-nav-search-button p {
+    display: inline;
+    padding-left: 10px;
+}
+
+.main-nav-search-button {
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.main-nav-search-form {
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.main-nav-search div{
+    display: flex;
+    align-items: center;
+}
+
+.main-nav-search-form input[type="text"] {
+    width: 100%;
+}
+.main-nav-search-form input[type="text"]::placeholder, .main-nav-search-form input[type="text"]:-ms-input-placeholder {
+    color: $gray;
+    opacity: 1; /* Firefox */
+}
+
+
+.main-nav-search-form input[type="text"]:focus {
+    cursor: auto;
+    color: $white;
+}
+
+.main-nav-dropbtn {
+  display: flex;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.main-nav-dropbtn:hover, .main-nav-dropbtn:focus {
+  color: $gray;
+}
+
+.main-nav-dropdown {
+  position: relative;
+//   display: inline-block;
+}
+
+.main-nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: $white;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0px;
+  top: 49px;
+}
+
+.main-nav-dropdown-content a {
+  color: $dark-gray;
+  font-weight: 500;
+  height: 18px;
+  padding: 12px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.main-nav-dropdown-content a:hover {
+    background-color: $yellow
+}
+
+.fa-sort-down {
+    padding-left: 5px;
+}
+
+.show {display:block;}
+
+.main-nav-dropdown-content:before {
+    content:"";
+    position: absolute;
+    right: 0px;
+    top: -12px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 12px 12px 12px;
+    border-color: transparent transparent $white transparent;
+    z-index:2;
+}

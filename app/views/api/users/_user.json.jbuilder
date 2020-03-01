@@ -1,0 +1,1 @@
+json.extract! user, :id, :username, :email, :account_type, :status_level, :night_mode, :school_id

@@ -1,0 +1,68 @@
+.sidebar{
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    width: 270px;
+    background: $white;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    width: 100%;
+    color: $dark-gray;
+}
+
+.sidebar-link:hover {
+    background-color: $yellow;
+}
+
+.sidebar-link-text {
+    font-size: 15px;
+    margin-left: 20px;
+}
+
+.sidebar-link-text p {
+    display: inline;
+    margin-left: 12px;
+}
+
+.sidebar-selected {
+    background-color: $yellow;
+}
+
+.sidebar-home, .sidebar-sets {
+    margin-top: 20px;
+}
+
+.sidebar-home p {
+    margin-left: 10px;
+}
+
+.sidebar-help {
+    margin-bottom: 20px;
+}
+
+.sidebar-separator {
+    background-color: $lightest-gray;
+    height: 1px;
+}
+
+.sidebar-new {
+    font-size: 12px;
+    color: $teal;
+    margin-left: 49px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.sidebar-new:hover {
+    color: $yellow;
+}
+
+.sidebar-new p {
+    display: inline;
+    margin-left: 6px;
+}
