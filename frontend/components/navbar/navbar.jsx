@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import UserDropdown from './user_dropdown';
+import LoginFormContainer from '../session_form/login_form_container';
+import SignupFormContainer from '../session_form/signup_form_container';
 
 class Navbar extends React.Component {
 
@@ -35,7 +37,7 @@ class Navbar extends React.Component {
                 <div className="main-nav-search">
                     <div>
                         <i className="fas fa-search"></i>
-                        <form onSubmit={this.handleSearchSubmit.bind(this)} className='main-nav-search-form' >
+                        <form onSubmit={this.handleSearchSubmit.bind(this)} className='main-nav-search-form' spellCheck="false">
                             <input onBlur={this.closeSearchBar.bind(this)} type="text" placeholder="Search" onChange={this.handleSeachChange.bind(this)} value={this.state.searchVal} autoFocus />
                         </form>
                     </div>
@@ -56,8 +58,15 @@ class Navbar extends React.Component {
                             <p>Create</p>
                         </Link>
                     </div>
+                    {this.props.currentUser ? 
+                        <UserDropdown currentUser={this.props.currentUser} />
+                        :
+                        <div className="main-nav-session-div">
+                            <LoginFormContainer />
+                            <SignupFormContainer />
+                        </div>
+                    }
                     
-                    <UserDropdown currentUser={this.props.currentUser} />
                 </div>
             </nav>
         }

@@ -23,8 +23,7 @@ class UserDropdown extends React.Component {
         return(
             <div className="main-nav-dropdown">
                 <button onBlur={this.hideDropdown.bind(this)} onClick={this.showDropdown.bind(this)} className="main-nav-dropbtn">
-                    {/* {this.props.currentUser.username} */}
-                    <p>Steve</p>
+                    <p>{this.props.currentUser.username}</p>
                     <i className="fas fa-sort-down"></i>
                 </button>
                 <div className={this.state.cls}>

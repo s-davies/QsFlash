@@ -1,0 +1,100 @@
+.session-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.show-modal {
+    display: block;
+}
+
+.session-form-box {
+    display: flex;
+    flex-direction: column;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+//   padding: 20px;
+  height: 300px;
+  border: 1px solid #888;
+  width: 600px; /* Could be more or less, depending on screen size */
+  color: $light-gray;
+}
+
+.session-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $purple;
+    height: 80px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 26px;
+    color: $white;
+}
+
+.session-banner div {
+    // background-color: $dark-purple;
+    border: 3px solid $dark-purple;
+    padding: 8px 14px 8px 14px;
+    border-radius: 100%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.session-banner div:hover {
+    background-color: $dark-purple;
+}
+
+.session-field {
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.session-field input {
+    border-bottom: 4px solid $dark-gray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: $dark-gray;
+}
+
+.session-field label {
+    font-size: 13px;
+    padding-top: 5px;
+}
+
+.session-field input::placeholder {
+    color: $lighter-gray;
+}
+
+.session-field input:focus {
+    border-color: $yellow;
+}
+
+.session-submit {
+    // display: flex;
+    padding-left: 252px;
+    padding-right: 252px;
+    background-color: $teal;
+    margin-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: $white;
+    border-radius: 5px;
+}
+
+.session-submit:hover {
+    transition: color 0.2s ease;
+    transition: background-color 0.2s ease;
+    color: $dark-gray;
+    background-color: $yellow;
+}

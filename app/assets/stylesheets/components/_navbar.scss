@@ -65,7 +65,7 @@
     border-left: 2px solid $dark-purple;
 }
 
-.main-nav-create:hover, .main-nav-search-button:hover {
+.main-nav-create:hover, .main-nav-search-button:hover, .login-button:hover {
     transition: color 0.2s ease;
     color: $gray;
     cursor: pointer;
@@ -163,4 +163,27 @@
     border-width: 0 12px 12px 12px;
     border-color: transparent transparent $white transparent;
     z-index:2;
+}
+
+.login-button, .signup-button {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.signup-button {
+    background-color: $teal;
+    border-radius: 5px;
+}
+
+.signup-button:hover {
+    transition: color 0.2s ease;
+    transition: background-color 0.2s ease;
+    color: $dark-gray;
+    background-color: $yellow;
+}
+
+.main-nav-session-div {
+    display: flex;
 }
