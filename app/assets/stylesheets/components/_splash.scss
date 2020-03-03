@@ -1,0 +1,101 @@
+.splash {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.splash-content {
+    display: flex;
+    flex: 1 1 auto;
+    // background-color: $dark-purple;
+}
+
+.splash-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    background-color: $dark-purple;
+    color: $white;
+    
+}
+
+.splash-left-div {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.splash-left-div h1 {
+    font-size: 44px;
+    font-weight: 700;
+}
+
+.splash-title-div {
+    padding-bottom: 20px;
+    
+}
+
+.splash-signup-div {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+.splash-signup-div a {
+    color: $teal;
+    padding-left: 20px;
+}
+
+.splash-signup-div a:hover {
+    transition: color 0.2s ease;
+    color: $yellow;
+}
+
+.splash-left-div p {
+    padding-bottom: 20px;
+    font-size: 18px;
+}
+
+.splash-signup-div .signup-button {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+}
+
+.splash-left-div {
+    padding-top: 160px;
+}
+
+.splash-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    background-color: $purple;
+}
+
+.splash-right h4 {
+    padding-top: 20px;
+    color: $white;
+    font-size: 24px;
+}
+
+.splash-right p {
+    color: $white;
+    font-size: 18px;
+}
+
+// @keyframes imgfadeIn {
+//   0% {
+//     opacity: 0;
+//   }
+//   100% {
+//     opacity: 1;
+//   }
+// }
+
+// .splash-img {
+//     animation: 0.5s ease-out 0s 1 imgfadeIn;
+// }
