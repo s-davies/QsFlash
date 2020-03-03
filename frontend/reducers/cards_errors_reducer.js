@@ -1,7 +1,7 @@
 import {
     RECEIVE_CARD_ERRORS,
     RECEIVE_CARD,
-} from '../actions/deck_actions';
+} from '../actions/card_actions';
 
 const cardsErrorsReducer = (state = [], action) => {
     Object.freeze(state);

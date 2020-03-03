@@ -54,7 +54,7 @@ class Navbar extends React.Component {
                             <i className="fas fa-search"></i>
                             <p>Search</p>
                         </div>
-                        <Link to="/create-set" className="main-nav-create">
+                        <Link to="/create-deck" className="main-nav-create">
                             <i className="far fa-file"></i>
                             <p>Create</p>
                         </Link>

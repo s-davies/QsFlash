@@ -25,8 +25,8 @@ const removeCard = cardId => ({
     cardId
 });
 
-export const fetchCards = () => dispatch => (
-    CardApiUtil.fetchCards()
+export const fetchCards = (deckId) => dispatch => (
+    CardApiUtil.fetchCards(deckId)
         .then(cards => dispatch(receiveAllCards(cards)), err => (
             dispatch(receiveErrors(err.responseJSON))
         ))

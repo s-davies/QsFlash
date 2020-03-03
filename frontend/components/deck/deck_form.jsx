@@ -71,19 +71,35 @@ class DeckForm extends React.Component {
 
     insertCard(index) {
         return e => {
-            let newCardsArr = Object.assign(
+            let leftCardsArr = Object.assign(
                 [], 
-                this.state.cards.slice(0, index + 1),
-                [{title: "", description: "", order: "", deckId: ""}],
-                this.state.cards.slice(index + 1)
-                );
+                this.state.cards.slice(0, index + 1))
+            let rightCardsArr = Object.assign(
+                [],
+                this.state.cards.slice(index + 1))
+            leftCardsArr.push({ term: "", description: "", order: "", deckId: "" })
+            let newCardsArr = leftCardsArr.concat(rightCardsArr)
+            debugger
             this.setState({ cards: newCardsArr })
         };
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.deckAction(this.state.deck);
+        let that = this;
+        this.props.deckAction(this.state.deck).then(deck => {
+            for (let i = 0; i < this.state.cards.length; i++) {
+                const card = this.state.cards[i];
+                card.deck_id = deck.id
+                card.ord = i;
+                if (card.title = "") {
+                    that.props.createCard(card);
+                } else {
+                    that.props.updateCard(card);
+                }
+                
+            }
+        });
     }
 
     render() {
@@ -98,16 +114,16 @@ class DeckForm extends React.Component {
                     <input onChange={this.handleDescriptionChange.bind(this)} type="text" value={this.state.deck.description} /> 
                 </form>
                 {this.state.cards.map((card, index) => (
-                    <div key={new Date}>
+                    <div key={index}>
                         <form>
                             <h3>{index + 1}</h3>
-                            <input onChange={this.handleTermChange(index)} type="text" value={card.term} placeholder="Enter term" />
-                            <input onChange={this.handleDefinitionChange(index)} type="text" value={card.definition} placeholder="Enter definition" />
+                            <input onChange={this.handleTermChange(index).bind(this)} type="text" value={card.term} placeholder="Enter term" />
+                            <input onChange={this.handleDefinitionChange(index).bind(this)} type="text" value={card.definition} placeholder="Enter definition" />
                         </form>
                         <button onClick={this.insertCard(index)}>+</button>
                     </div>
                 ))}
-                <button onClick={this.insertCard(this.state.cards.length - 1)}>+ Add Card</button>
+                <button onClick={this.insertCard(this.state.cards.length - 1).bind(this)}>+ Add Card</button>
                 <button onClick={this.handleSubmit.bind(this)} value={this.formType === "Create Deck" ? "Create" : "Done"} />
             </div>
         )

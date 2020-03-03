@@ -1,1 +1,1 @@
-json.extract! card, :id, :term, :definition, :order
+json.extract! card, :term, :definition, :order, :deck_id

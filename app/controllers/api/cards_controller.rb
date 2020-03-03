@@ -1,12 +1,12 @@
 class Api::CardsController < ApplicationController
     def index
-        @cards = Card.all
+        @cards = Card.where(deck_id: params[:deckId])
         render :index
     end
 
     def create
         @card = Card.new(card_params)
-        @card.deck_id = current_user.decks.last.id #change this
+        # @card.deck_id = current_user.decks.last.id #change this
         if @card.save
             render :show
         else

@@ -1,7 +1,8 @@
-export const fetchCards = () => (
+export const fetchCards = (deckId) => (
     $.ajax({
         method: 'GET',
-        url: `/api/cards`
+        url: `/api/cards`,
+        data: deckId
     })
 );
 
