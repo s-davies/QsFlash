@@ -19,7 +19,6 @@ class Splash extends React.Component {
 
     componentDidMount() {
         this.interval = setInterval(() => {
-            console.log(this.state.img)
             return this.setState({img: (this.state.img % 3) + 1})
             
         }, 3000)
@@ -47,20 +46,28 @@ class Splash extends React.Component {
                         </div>
                     </div>
                     <div className="splash-right">
-                        <img className="splash-img" src={`assets/qsflash-splash${this.state.img}.png`} alt="QsFlash"/>
+                        <img key={this.state.img} className="splash-img" src={`assets/qsflash-splash${this.state.img}.png`} alt="QsFlash"/>
                         <h4>QsFlash! is for</h4>
                         {this.state.img === 1 ? 
                             <p>“Get through exams to get to vacation” students</p>
                             :
                             this.state.img === 2 ?
-                            <p>“Tonight I work, so tomorrow I can go places” students</p>
+                                <p>“Tonight I work, so tomorrow I can go places” students</p>
                             :
-                            <p>“I’ll sleep when exams are over” students</p>
+                                <p>“I’ll sleep when exams are over” students</p>
                         }
                     </div>
                 </div>
                 <footer className="splash-footer">
-
+                    <div className="splash-footer-left">
+                        <p>Created by Steven Davies</p>
+                        <a href="https://github.com/s-davies"><i class="fab fa-github-square"></i></a>
+                        <a href="https://www.linkedin.com/in/steven-davies-bb700119b/"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                    <div className="splash-footer-right">
+                        <i class="fas fa-question-circle"></i>
+                        <p>Help Center</p>
+                    </div>
                 </footer>
             </div>
         )

@@ -1,7 +1,7 @@
 .splash {
     display: flex;
     flex-flow: column;
-    height: 100%;
+    height: 88.4%;
 }
 
 .splash-content {
@@ -87,15 +87,50 @@
     font-size: 18px;
 }
 
-// @keyframes imgfadeIn {
-//   0% {
-//     opacity: 0;
-//   }
-//   100% {
-//     opacity: 1;
-//   }
-// }
+.splash-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 1 40px;
+    background-color: $red;
+}
 
-// .splash-img {
-//     animation: 0.5s ease-out 0s 1 imgfadeIn;
-// }
+.splash-footer-left, .splash-footer-right {
+    display: flex;
+    align-items: center;
+    color: $white;
+    font-size: 16px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.splash-footer-left p, .splash-footer-left a{
+    padding-right: 10px;
+}
+
+@keyframes imgfadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.splash-img {
+    animation: 1.3s ease-out 0s 1 imgfadeIn;
+}
+
+@keyframes pfadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.splash-footer-right p{
+    padding-left: 5px;
+    animation: 3s ease-out 0s 1 pfadeIn;
+}
