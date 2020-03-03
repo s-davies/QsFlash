@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import onClickOutside from 'react-onclickoutside'
 
 class UserDropdown extends React.Component {
     constructor(props) {
@@ -15,25 +16,29 @@ class UserDropdown extends React.Component {
         }
     }
 
-    hideDropdown() {
-        this.setState({ cls: "main-nav-dropdown-content" })
+    handleLogout() {
+        this.props.logout();
     }
+
+    handleClickOutside() {
+        this.setState({ cls: "main-nav-dropdown-content" })
+    }; 
 
     render() {
         return(
             <div className="main-nav-dropdown">
-                <button onBlur={this.hideDropdown.bind(this)} onClick={this.showDropdown.bind(this)} className="main-nav-dropbtn">
+                <button onClick={this.showDropdown.bind(this)} className="main-nav-dropbtn">
                     <p>{this.props.currentUser.username}</p>
                     <i className="fas fa-sort-down"></i>
                 </button>
                 <div className={this.state.cls}>
                     <Link to="/">Your Study Sets</Link>
                     <Link to="/">Settings</Link>
-                    <Link to="/">Log Out</Link>
+                    <p onClick={this.handleLogout.bind(this)}>Log Out</p>
                 </div>
             </div>
         )
     }
 }
 
-export default UserDropdown;
+export default onClickOutside(UserDropdown);

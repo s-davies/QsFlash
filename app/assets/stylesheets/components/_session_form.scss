@@ -21,7 +21,7 @@
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
 //   padding: 20px;
-  height: 300px;
+  height: 410px;
   border: 1px solid #888;
   width: 600px; /* Could be more or less, depending on screen size */
   color: $light-gray;
@@ -57,6 +57,7 @@
     flex-direction: column;
     padding-left: 30px;
     padding-right: 30px;
+    padding-top: 10px;
 }
 
 .session-field input {
@@ -82,12 +83,13 @@
 
 .session-submit {
     // display: flex;
-    padding-left: 252px;
-    padding-right: 252px;
+    padding-left: 248px;
+    padding-right: 248px;
     background-color: $teal;
     margin-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-top: 20px;
     color: $white;
     border-radius: 5px;
 }
@@ -97,4 +99,18 @@
     transition: background-color 0.2s ease;
     color: $dark-gray;
     background-color: $yellow;
+}
+
+.session-submit:disabled {
+    color: $white;
+    background-color: $gray;
+    cursor: auto;
+}
+
+.session-errors {
+    color: $red;
+    font-size: 12px;
+    // padding-top: 2px;
+    // padding-bottom: 2px;
+    height: 10px;
 }

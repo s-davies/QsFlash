@@ -7,7 +7,11 @@ class SessionForm extends React.Component {
       username: '',
       email: '',
       password: '',
-      cls: 'session-modal'
+      cls: 'session-modal',
+      usernameError: " ",
+      emailError: " ",
+      passwordError: " ",
+      submitDisabled: true
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -27,18 +31,70 @@ class SessionForm extends React.Component {
     }
   }
 
-  update(field) {
-    return e => this.setState({
-      [field]: e.currentTarget.value
-    });
+  handleUsernameChange(e) {
+    this.setState({username: e.currentTarget.value}, () => {
+      if (this.props.formType === "Sign up") {
+        if (this.props.usernames.has(this.state.username)) {
+          this.setState({ submitDisabled: true, usernameError: "Username taken" })
+        } else if (this.state.emailError === "" && this.state.passwordError === "") {
+          this.setState({ submitDisabled: false, usernameError: "" })
+        } else {
+          this.setState({ usernameError: "" })
+        }
+      } else {
+        if (!this.props.usernames.has(this.state.username)) {
+          this.setState({ submitDisabled: true, usernameError: "There is no associated user with this username" })
+        } else if (this.state.password.length === 0) {
+          this.setState({ usernameError: "" })
+        } else {
+          this.setState({ submitDisabled: false, usernameError: "" })
+        }
+      }
+      
+    })
+    
+  }
+
+  handleEmailChange(e) {
+    this.setState({ email: e.currentTarget.value }, () => {
+      if (this.props.emails.has(this.state.email)) {
+        this.setState({ submitDisabled: true, emailError: "It looks like this email address has already been registered" })
+      } else if (this.state.usernameError === "" && this.state.passwordError === "") {
+        this.setState({ submitDisabled: false, emailError: "" })
+      } else {
+        this.setState({ emailError: "" })
+      }
+    })
+  }
+
+  handlePasswordChange(e) {
+    this.setState({ password: e.currentTarget.value }, () => {
+      if (this.props.formType === "Sign up") {
+        if (this.state.password.length < 6) {
+          this.setState({ submitDisabled: true, passwordError: "Password must contain at least 6 characters" })
+        } else if (this.state.usernameError === "" && this.state.emailError === "") {
+          this.setState({ submitDisabled: false, passwordError: "" })
+        } else {
+          this.setState({ passwordError: "" })
+        }
+      } else {
+        if (this.state.password.length === 0 || this.state.usernameError.length > 1) {
+          this.setState({ submitDisabled: true })
+        } else {
+          this.setState({ submitDisabled: false })
+        }
+      }
+      
+    })
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    let user;
     if (this.props.formType === "Sign up") {
-      const user = { username: this.state.username, email: this.state.email, password: this.state.password };
+      user = { username: this.state.username, email: this.state.email, password: this.state.password };
     } else {
-      const user = {username: this.state.username, password: this.state.password}
+      user = {username: this.state.username, password: this.state.password}
     }
     this.props.processForm(user);
   }
@@ -55,7 +111,13 @@ class SessionForm extends React.Component {
     );
   }
 
+  componentDidMount() {
+    this.props.fetchUsers();
+  }
+
   render() {
+    // console.log(this.props.usernames)
+    // console.log(this.props.emails)
     return (
       <div className="session-form-container">
         <button onClick={this.showForm.bind(this)} className={this.props.formType === "Log in" ? "login-button" : "signup-button"}>{this.props.formType}</button>
@@ -65,26 +127,27 @@ class SessionForm extends React.Component {
               <h1 className="form-title">{this.props.formType}</h1>
               <div onClick={this.hideForm.bind(this)} className="close-form">X</div>
             </div>
-            {this.renderErrors()}
             <div className="session-form">
               <div className="session-field">
                 <input type="text"
                   value={this.state.username}
-                  onChange={this.update('username')}
+                  onChange={this.handleUsernameChange.bind(this)}
                   className="session-input"
                   placeholder={this.props.formType === "Log in" ? "Type your username" : "steven123"}
                 />
                 <label>USERNAME</label>
+                <div className="session-errors">{this.state.usernameError}</div>
               </div>
               {this.props.formType === "Sign up" ?
                 <div className="session-field">
                   <input type="text"
-                      value={this.state.username}
-                      onChange={this.update('email')}
+                      value={this.state.email}
+                    onChange={this.handleEmailChange.bind(this)}
                       className="session-input"
                       placeholder="user@qsflash.com"
                     />
                     <label>EMAIL</label>
+                    <div className="session-errors">{this.state.emailError}</div>
                 </div>
                 :
                 ''
@@ -92,13 +155,14 @@ class SessionForm extends React.Component {
               <div className="session-field">
                 <input type="password"
                   value={this.state.password}
-                  onChange={this.update('password')}
+                  onChange={this.handlePasswordChange.bind(this)}
                   className="session-input"
                   placeholder={this.props.formType === "Log in" ? "Type your password" : "Must be 6 or more characters"}
                 />
                 <label>PASSWORD</label>
+                <div className="session-errors">{this.props.formType === "Sign up" ? this.state.passwordError : this.renderErrors()}</div>
               </div>
-              <input className="session-submit" type="submit" value={this.props.formType} />
+              <input className="session-submit" type="submit" value={this.props.formType} disabled={this.state.submitDisabled}/>
             </div>
           </form>
         </div>

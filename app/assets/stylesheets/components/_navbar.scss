@@ -133,16 +133,17 @@
   top: 49px;
 }
 
-.main-nav-dropdown-content a {
+.main-nav-dropdown-content a,  .main-nav-dropdown-content p {
   color: $dark-gray;
   font-weight: 500;
   height: 18px;
   padding: 12px 10px;
   text-decoration: none;
   display: block;
+  cursor: pointer;
 }
 
-.main-nav-dropdown-content a:hover {
+.main-nav-dropdown-content a:hover, .main-nav-dropdown-content p:hover {
     background-color: $yellow
 }
 

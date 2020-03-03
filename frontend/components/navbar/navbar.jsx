@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import UserDropdown from './user_dropdown';
 import LoginFormContainer from '../session_form/login_form_container';
 import SignupFormContainer from '../session_form/signup_form_container';
+import {logout} from '../../actions/session_actions'
 
 class Navbar extends React.Component {
 
@@ -59,7 +60,7 @@ class Navbar extends React.Component {
                         </Link>
                     </div>
                     {this.props.currentUser ? 
-                        <UserDropdown currentUser={this.props.currentUser} />
+                        <UserDropdown currentUser={this.props.currentUser} logout={this.props.logout}/>
                         :
                         <div className="main-nav-session-div">
                             <LoginFormContainer />

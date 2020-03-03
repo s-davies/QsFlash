@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { login } from '../../actions/session_actions';
+import { login, fetchUsers } from '../../actions/session_actions';
 import SessionForm from './session_form';
 
-const mapStateToProps = ({ errors }) => {
+const mapStateToProps = (state) => {
   return {
-    errors: errors.session,
+    errors: state.errors.session,
+    usernames: new Set(Object.keys(state.entities.users).map(key => state.entities.users[key].username)),
+    emails: new Set(Object.keys(state.entities.users).map(key => state.entities.users[key].email)),
     formType: 'Log in'
   };
 };
@@ -14,6 +16,7 @@ const mapStateToProps = ({ errors }) => {
 const mapDispatchToProps = dispatch => {
   return {
     processForm: (user) => dispatch(login(user)),
+    fetchUsers: () => dispatch(fetchUsers())
   };
 };
 
