@@ -6,12 +6,15 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import NavbarContainer from './navbar/navbar_container'
 import UserContent from './user_content/user_content'
 import Splash from './splash/splash'
+import EditDeckCardFormWrapper from './deck/edit_deck_card_form_wrapper'
+import CreateDeckCardFormWrapper from './deck/create_deck_card_form_wrapper'
 
 const App = () => (
   <div className="app group">
     <NavbarContainer />
     <AuthRoute exact path="/" component={Splash} />
     <ProtectedRoute exact path="/latest" component={UserContent} />
+    <ProtectedRoute exact path="/create-deck" component={CreateDeckCardFormWrapper} />
   </div>
 );
 
