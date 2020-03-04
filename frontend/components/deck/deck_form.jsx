@@ -12,7 +12,10 @@ class DeckForm extends React.Component {
         super(props);
         this.state = {
             deck: this.props.deck,
-            cards: this.props.cards
+            cards: this.props.cards,
+            cls: "accessibility-modal",
+            tempVis: this.props.deck.visibility,
+            tempEdit: this.props.deck.editability,
         }
     }
 
@@ -26,6 +29,25 @@ class DeckForm extends React.Component {
         }
     }
 
+    showForm() {
+        if (this.state.cls === "accessibility-modal") {
+            this.setState({ cls: "accessibility-modal show-modal" })
+        } else {
+            this.setState({ cls: "accessibility-modal" })
+        }
+    }
+
+    hideForm(e) {
+        if (e.target.className === "accessibility-modal show-modal" ||
+            e.target.className === "close-form") {
+            this.setState({ tempVis: this.state.deck.visibility, tempEdit: this.state.deck.editability, cls: "accessibility-modal" })
+        }
+    }
+
+    hideFormOnSave() {
+        this.setState({ tempVis: this.state.deck.visibility, tempEdit: this.state.deck.editability, cls: "accessibility-modal" })
+    }
+
     handleTitleChange(e) {
         let newDeck = Object.assign({}, this.state.deck);
         newDeck.title = e.currentTarget.value;
@@ -36,6 +58,36 @@ class DeckForm extends React.Component {
         let newDeck = Object.assign({}, this.state.deck);
         newDeck.description = e.currentTarget.value;
         this.setState({ deck: newDeck });
+    }
+
+    handleVisibilityChange(e) {
+        if (e.target.value === "Just me") {
+            this.setState({ tempVis: e.target.value, tempEdit: e.target.value });
+        } else {
+            this.setState({ tempVis: e.target.value});
+        }
+    }
+
+    handleEditabilityChange(e) {
+        this.setState({ tempEdit: e.target.value });
+    }
+
+    handleAccessibilityChange() {
+        let newDeck = Object.assign({}, this.state.deck);
+        newDeck.visibility = this.state.tempVis;
+        newDeck.editability = this.state.tempEdit;
+        this.setState({deck: newDeck}, this.hideFormOnSave.bind(this));
+    }
+
+    flipTermsAndDefs() {
+        let newCards = [];
+        for (let i = 0; i < this.state.cards.length; i++) {
+            const card = this.state.cards[i];
+            let dupCard = Object.assign({}, card);
+            [dupCard.term, dupCard.definition] = [dupCard.definition, dupCard.term];
+            newCards.push(dupCard);
+        }
+        this.setState({cards: newCards});
     }
 
     handleTermChange(index) {
@@ -89,9 +141,42 @@ class DeckForm extends React.Component {
     }
 
     render() {
+
         return (
             <div className="create-forms">
                 <div className="deck-form">
+                    <div onClick={this.hideForm.bind(this)} className={this.state.cls}>
+                        <form onSubmit={this.handleAccessibilityChange.bind(this)} className='accessibility-form-box'>
+                            <div className="accessibility-banner">
+                                <h1 className="form-title">Options</h1>
+                                <div onClick={this.hideForm.bind(this)} className="close-form">X</div>
+                            </div>
+                            <div className="accessibility-form">
+                                <div className="accessibility-fields">
+                                    <div className="accessibility-field">
+                                        <label>VISIBLE TO</label>
+                                        <select value={this.state.tempVis} onChange={this.handleVisibilityChange.bind(this)}>
+                                            <option value="Everyone">
+                                                Everyone
+                                            </option>
+                                            <option value="Certain classes">Certain classes</option>
+                                            <option value="Just me">Just me</option>
+                                        </select>
+                                        <span>{this.state.tempVis === "Everyone" ? "All QsFlash! users can see this deck" : this.state.tempVis === "Certain classes" ? "Only members of these classes can use this deck" : "Only you can view this deck"}</span>
+                                    </div>
+                                    <div className="accessibility-field">
+                                        <label>EDITABLE BY</label>
+                                        <select value={this.state.tempEdit} onChange={this.handleEditabilityChange.bind(this)}>
+                                            <option value="Certain classes">Certain classes</option>
+                                            <option value="Just me">Just me</option>
+                                        </select>
+                                        <span>{this.state.tempEdit === "Certain classes" ? "Only members of these classes can edit this deck" : "Only you can edit this deck"}</span>
+                                    </div>
+                                </div>
+                                <input className="accessibility-submit" type="submit" value="Save" />
+                            </div>
+                        </form>
+                    </div>
                     <header>
                         <h1>{this.props.formType === "Create Deck" ? "Create a new study deck" : "Edit study deck"}</h1>
                         <button className="teal" onClick={this.handleSubmit.bind(this)}>{this.props.formType === "Create Deck" ? "Create" : "Done"}</button>
@@ -104,19 +189,19 @@ class DeckForm extends React.Component {
                     </form>
                     <div className="deck-form-options">
                         <div>
-                            <label>{this.state.deck.visibility === "Everyone" ? "Visibile to everyone" : "Visible only to me"}</label>
-                            <button className="deck-accessibility-button">Change</button>
+                            <label>{this.state.deck.visibility === "Everyone" ? "Visibile to everyone" : this.state.deck.visibility === "Certain classes" ? "Visible to certain classes": "Visible only to me"}</label>
+                            <button onClick={this.showForm.bind(this)} className="deck-accessibility-button">Change</button>
                         </div>
                         {this.state.deck.visibility === "Everyone" || this.state.deck.visibility === "Certain classes" ?
                             <div>
                                 <label>{this.state.deck.editability === "Certain classes" ? "Editable by certain classes" : "Only editable by me"}</label>
-                                <button className="deck-accessibility-button">Change</button>
+                                <button onClick={this.showForm.bind(this)} className="deck-accessibility-button">Change</button>
                             </div>
                             :
                             ""
                         }
                         <div className="tooltip">
-                            <button className="deck-switch-button" ><i className="fas fa-sync-alt"></i></button>
+                            <button onClick={this.flipTermsAndDefs.bind(this)} className="deck-switch-button" ><i className="fas fa-sync-alt"></i></button>
                             <span className="tooltiptext">Flip terms and definitions</span>
                         </div>
                     </div>

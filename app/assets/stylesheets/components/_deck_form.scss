@@ -311,4 +311,134 @@
     font-size: 18px;
     align-self: flex-end;
     margin-bottom: 20px;
+    text-align: center;
+}
+
+
+.accessibility-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.show-modal {
+    display: block;
+}
+
+.accessibility-form-box {
+    display: flex;
+    flex-direction: column;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+//   padding: 20px;
+  height: 360px;
+  border: 1px solid #888;
+  width: 600px; /* Could be more or less, depending on screen size */
+  color: $light-gray;
+}
+
+.accessibility-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $purple;
+    height: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 32px;
+    color: $white;
+    font-weight: 700;
+}
+
+.accessibility-fields {
+    display: flex;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    justify-content: space-between;
+}
+
+.accessibility-field {
+    display: flex;
+    flex-direction: column;
+    color: $dark-gray;
+    font-size: 13px;
+}
+
+.accessibility-field label{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.accessibility-field span{
+    padding-top: 15px;
+    padding-bottom: 5px;
+    color: $gray;
+    font-size: 14px;
+    width: 240px;
+}
+
+.accessibility-field select{
+    height: 40px;
+    width: 240px;
+    background-color: $white;
+    font-family: $cabin;
+    font-size: 15px;
+    color: $teal;
+    border: 2px solid $lighter-gray;
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // text-indent: 1px;
+    // text-overflow: '';
+    // padding-left: 15px;
+    // font-family: 'FontAwesome', $cabin
+    // background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right;
+    // background-position-x: 216px;
+}
+
+.accessibility-field select:hover{
+    transition: color 0.2s ease;
+    color: $yellow;
+    cursor: pointer;
+}
+
+.accessibility-submit {
+    // display: flex;
+    padding-left: 252px;
+    padding-right: 252px;
+    background-color: $teal;
+    margin-left: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    color: $white;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.accessibility-submit:hover {
+    transition: color 0.2s ease;
+    transition: background-color 0.2s ease;
+    color: $dark-gray;
+    background-color: $yellow;
+}
+
+.accessibility-banner div {
+    // background-color: $dark-purple;
+    border: 3px solid $dark-purple;
+    padding: 8px 14px 8px 14px;
+    border-radius: 100%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.accessibility-banner div:hover {
+    background-color: $dark-purple;
 }
