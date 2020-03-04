@@ -1,6 +1,6 @@
 class Api::CardsController < ApplicationController
     def index
-        @cards = Card.where(deck_id: params[:deckId])
+        @cards = Card.where(deck_id: params[:deck_id])
         render :index
     end
 
@@ -20,6 +20,7 @@ class Api::CardsController < ApplicationController
     end
 
     def update
+        debugger
         @card = Card.find_by(id: params[:id])
         if @card && @card.update(card_params)
             render :show
@@ -37,6 +38,6 @@ class Api::CardsController < ApplicationController
     private
 
     def card_params
-        params.require(:card).permit(:term, :definition, :order)
+        params.require(:card).permit(:term, :definition, :order, :deck_id)
     end
 end

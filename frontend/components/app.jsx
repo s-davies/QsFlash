@@ -15,6 +15,7 @@ const App = () => (
     <AuthRoute exact path="/" component={Splash} />
     <ProtectedRoute exact path="/latest" component={UserContent} />
     <ProtectedRoute exact path="/create-deck" component={CreateDeckFormContainer} />
+    <ProtectedRoute exact path="/:deckId/edit" component={EditDeckFormContainer} />
   </div>
 );
 

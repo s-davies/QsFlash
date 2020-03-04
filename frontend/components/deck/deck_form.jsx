@@ -1,39 +1,3 @@
-// import React from 'react';
-
-// class DeckForm extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = this.props.deck
-//     }
-
-//     handleTitleChange(e) {
-//         this.setState({ title: e.currentTarget.value })
-//     }
-
-//     handleDescriptionChange(e) {
-//         this.setState({ body: e.currentTarget.value })
-//     }
-
-//     handleSubmit(e) {
-//         e.preventDefault();
-//         this.props.action(this.state);
-//     }
-
-//     render() {
-//         return (
-//             <form onSubmit={this.handleSubmit.bind(this)}>
-//                 <h1>{this.props.formType}</h1>
-//                 <input type="submit" value="Create" className="deck-form-submit-small"/>
-//                 <input onChange={this.handleTitleChange.bind(this)} type="text" value={this.state.title} />
-//                 <input onChange={this.handleDescriptionChange.bind(this)} type="text" value={this.state.description} />
-//                 <input type="submit" value="Create" />
-//             </form>
-//         )
-//     }
-// }
-
-// export default DeckForm;
-
 import React from 'react';
 
 class DeckForm extends React.Component {
@@ -45,12 +9,24 @@ class DeckForm extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (this.props.deckId) {
+            this.props.fetchCards(this.props.deckId).then(cards => {
+                this.setState({ cards: Object.values(cards.cards) })
+            })
+        }
+    }
+
     handleTitleChange(e) {
-        this.setState({ title: e.currentTarget.value })
+        let newDeck = Object.assign({}, this.state.deck);
+        newDeck.title = e.currentTarget.value;
+        this.setState({ deck: newDeck });
     }
 
     handleDescriptionChange(e) {
-        this.setState({ body: e.currentTarget.value })
+        let newDeck = Object.assign({}, this.state.deck);
+        newDeck.description = e.currentTarget.value;
+        this.setState({ deck: newDeck });
     }
 
     handleTermChange(index) {
@@ -79,7 +55,6 @@ class DeckForm extends React.Component {
                 this.state.cards.slice(index + 1))
             leftCardsArr.push({ term: "", description: "", order: "", deckId: "" })
             let newCardsArr = leftCardsArr.concat(rightCardsArr)
-            debugger
             this.setState({ cards: newCardsArr })
         };
     }
@@ -90,9 +65,10 @@ class DeckForm extends React.Component {
         this.props.deckAction(this.state.deck).then(deck => {
             for (let i = 0; i < this.state.cards.length; i++) {
                 const card = this.state.cards[i];
-                card.deck_id = deck.id
-                card.ord = i;
-                if (card.title = "") {
+                let isOldCard = !!card.deckId
+                card.deckId = deck.deck.id
+                card.order = i + 1;
+                if (!isOldCard) {
                     that.props.createCard(card);
                 } else {
                     that.props.updateCard(card);
@@ -107,24 +83,24 @@ class DeckForm extends React.Component {
             <div>
                 <header>
                     <h1>{this.props.formType}</h1>
-                    <button value={this.formType === "Create Deck" ? "Create" : "Done"} />
+                    <button onClick={this.handleSubmit.bind(this)}>{this.props.formType === "Create Deck" ? "Create" : "Done"}</button>
                 </header>
                 <form>
-                    <input onChange={this.handleTitleChange.bind(this)} type="text" value={this.state.deck.title} />
-                    <input onChange={this.handleDescriptionChange.bind(this)} type="text" value={this.state.deck.description} /> 
+                    <input onChange={this.handleTitleChange.bind(this)} type="text" value={this.state.deck.title} placeholder="Enter a title, like “Ruby on Rails”"/>
+                    <input onChange={this.handleDescriptionChange.bind(this)} type="text" value={this.state.deck.description} placeholder="Add a description..."/> 
                 </form>
                 {this.state.cards.map((card, index) => (
                     <div key={index}>
                         <form>
                             <h3>{index + 1}</h3>
-                            <input onChange={this.handleTermChange(index).bind(this)} type="text" value={card.term} placeholder="Enter term" />
-                            <input onChange={this.handleDefinitionChange(index).bind(this)} type="text" value={card.definition} placeholder="Enter definition" />
+                            <input onChange={this.handleTermChange(index).bind(this)} type="text" value={this.state.cards[index].term || ""} placeholder="Enter term" />
+                            <input onChange={this.handleDefinitionChange(index).bind(this)} type="text" value={this.state.cards[index].definition || ""} placeholder="Enter definition" />
                         </form>
                         <button onClick={this.insertCard(index)}>+</button>
                     </div>
                 ))}
                 <button onClick={this.insertCard(this.state.cards.length - 1).bind(this)}>+ Add Card</button>
-                <button onClick={this.handleSubmit.bind(this)} value={this.formType === "Create Deck" ? "Create" : "Done"} />
+                <button onClick={this.handleSubmit.bind(this)}>{this.props.formType === "Create Deck" ? "Create" : "Done"}</button>
             </div>
         )
     }

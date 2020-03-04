@@ -7,5 +7,6 @@ class Deck < ApplicationRecord
 
     has_many :cards,
         foreign_key: :deck_id,
-        class_name: :Card
+        class_name: :Card,
+        dependent: :destroy
 end

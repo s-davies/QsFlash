@@ -2,18 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DeckForm from './deck_form';
 import { fetchDeck, updateDeck } from '../../actions/deck_actions';
-import { updateCard, createCard } from '../../actions/card_actions';
+import { updateCard, createCard, fetchCards} from '../../actions/card_actions';
 
 class EditDeckForm extends React.Component {
     componentDidMount() {
-        this.props.fetchDeck(this.props.match.params.deckId).then(deck =>
-            this.props.fetchCards(deck.id)
-        );
-        
+        this.props.fetchDeck(this.props.match.params.deckId);
     }
 
     render() {
-        const { deckAction, formType, deck, createCard, updateCard } = this.props;
+        const { deckAction, formType, deck, createCard, updateCard, cards, fetchCards, deckId } = this.props;
 
         if (!deck) return null;
         return (
@@ -21,23 +18,29 @@ class EditDeckForm extends React.Component {
                 deckAction={deckAction}
                 createCard={createCard}
                 updateCard={updateCard}
+                fetchCards={fetchCards}
+                cards={cards}
                 formType={formType}
-                deck={deck} />
+                deck={deck}
+                deckId={deckId} />
         );
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    deck: state.decks[ownProps.match.params.deckId],
-    cards: state.cards,
+const mapStateToProps = (state, ownProps) => {
+    return {
+    deck: state.entities.decks[ownProps.match.params.deckId],
+    deckId: ownProps.match.params.deckId,
+    cards: Object.keys(state.entities.cards).map(key => state.entities.cards[key]),
     formType: 'Update Deck'
-});
+}};
 
 const mapDispatchToProps = dispatch => ({
     fetchDeck: deckId => dispatch(fetchDeck(deckId)),
     deckAction: deck => dispatch(updateDeck(deck)),
     createCard: (card) => dispatch(createCard(card)),
-    updateCard: (card) => dispatch(updateCard(card))
+    updateCard: (card) => dispatch(updateCard(card)),
+    fetchCards: (deckId) => dispatch(fetchCards(deckId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditDeckForm);
