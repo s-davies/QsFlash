@@ -20,7 +20,6 @@ class Api::CardsController < ApplicationController
     end
 
     def update
-        debugger
         @card = Card.find_by(id: params[:id])
         if @card && @card.update(card_params)
             render :show
