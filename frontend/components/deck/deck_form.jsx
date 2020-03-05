@@ -4,6 +4,35 @@ import {
 } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import uuid from 'react-uuid'
+const { createRef, useState, useEffect } = React
+
+
+function Header({ children, sticky = false, className, ...rest }) {
+    const [isSticky, setIsSticky] = useState(false)
+    const ref = React.createRef()
+
+    // mount 
+    useEffect(() => {
+        const cachedRef = ref.current,
+            observer = new IntersectionObserver(
+                ([e]) => setIsSticky(e.intersectionRatio < 1),
+                { threshold: [1] }
+            )
+
+        observer.observe(cachedRef)
+
+        // unmount
+        return function () {
+            observer.unobserve(cachedRef)
+        }
+    }, [])
+
+    return (
+        <header className={className + (isSticky ? " isSticky" : "")} ref={ref} {...rest}>
+            {children}
+        </header>
+    )
+}
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -221,6 +250,10 @@ class DeckForm extends React.Component {
         
         return (
             <div className="create-forms">
+                <Header className="deck-form-header">
+                    <h1>{this.props.formType === "Create Deck" ? "Create a new study deck" : "Edit study deck"}</h1>
+                    <button className="teal" onClick={this.handleSubmit.bind(this)}>{this.props.formType === "Create Deck" ? "Create" : "Done"}</button>
+                </Header>
             <div className="deck-form">
                 <div onClick={this.hideForm.bind(this)} className={this.state.cls}>
                     <form onSubmit={this.handleAccessibilityChange.bind(this)} className='accessibility-form-box'>
@@ -254,10 +287,7 @@ class DeckForm extends React.Component {
                         </div>
                     </form>
                 </div>
-                <header>
-                    <h1>{this.props.formType === "Create Deck" ? "Create a new study deck" : "Edit study deck"}</h1>
-                    <button className="teal" onClick={this.handleSubmit.bind(this)}>{this.props.formType === "Create Deck" ? "Create" : "Done"}</button>
-                </header>
+                
                 <form className="deck-form-deck">
                     <input className="create-form-input" onChange={this.handleTitleChange.bind(this)} type="text" value={this.state.deck.title} placeholder="Enter a title, like “Ruby on Rails”" />
                     {this.state.errors.includes("A TITLE") ?
