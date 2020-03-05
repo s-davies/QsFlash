@@ -46,7 +46,7 @@ class Splash extends React.Component {
                         </div>
                     </div>
                     <div className="splash-right">
-                        <img key={this.state.img} className="splash-img" src={`assets/qsflash-splash${this.state.img}.png`} alt="QsFlash"/>
+                        <img key={this.state.img} className="splash-img" src={this.state.img === 1 ? window.qsflashSplash1 : this.state.img === 2 ? window.qsflashSplash2 : window.qsflashSplash3} alt="QsFlash"/>
                         <h4>QsFlash! is for</h4>
                         {this.state.img === 1 ? 
                             <p>“Get through exams to get to vacation” students</p>
