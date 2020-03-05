@@ -1,108 +1,9 @@
 import React from 'react';
 import {
-    Route,
     Redirect,
-    Switch,
-    Link,
-    HashRouter
 } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import styled from 'styled-components';
-
-// const Container = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     background-color: $lightest-gray;
-//     padding-left: 40px;
-//     padding-right: 40px;
-// `;
-
-// const CardForms = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     background-color: $lightest-gray;
-//     padding-left: 40px;
-//     padding-right: 40px;
-// `;
-
-// const CardsWrapper = styled.div`
-//     display: flex;
-//     flex-direction: column;
-// `;
-
-// const CardForm = styled.div`
-//     background-color: $white;
-//     display: flex;
-//     flex-direction: column;
-// `;
-
-// const CardForm = styled.div`
-//     background-color: $white;
-//     display: flex;
-//     flex-direction: column;
-// `;
-
-// class DeckForm extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             // deck: this.props.deck,
-//             cards: this.props.cards,
-//             // cls: "accessibility-modal",
-//             // tempVis: this.props.deck.visibility,
-//             // tempEdit: this.props.deck.editability,
-//         }
-//     }
-
-//     componentDidMount() {
-//         if (this.props.formType === "Update Deck") {
-//             this.props.fetchCards(this.props.deck.id).then(cards => {
-//                 let newCards = Object.values(cards.cards);
-//                 let sortedCards = newCards.sort((a, b) => (a.order > b.order) ? 1 : -1)
-//                 this.setState({ cards: sortedCards })
-//             })
-//         }
-//     }
-
-//     onDragEnd(result) {
-
-//     }
-
-//     render() {
-//         return(
-//             <DragDropContext onDragEnd={this.onDragEnd}>
-//                 <Droppable droppableId={this.props.deck.id.toString()}>
-//                     {(provided) => (
-//                         <CardForms
-//                             innerRef={provided.innerRef}
-//                             {...provided.droppableProps}
-//                         >
-//                             {this.state.cards.map((card, index) => (
-//                                 <CardsWrapper key={index}>
-//                                     <Draggable draggableId={index.toString()} index={index}>
-//                                         {(provided) => (
-//                                             <CardForm key={index}
-//                                                 {...provided.draggableProps}
-//                                                 {...provided.dragHandleProps}
-//                                                 innerRef={provided.innerRef}
-//                                             >
-//                                                 {card.term}
-//                                             </CardForm>
-//                                         )}
-//                                     </Draggable>
-//                                 </CardsWrapper>
-//                             ))}
-//                             {provided.placeholder}
-//                         </CardForms>
-//                     )}
-//                 </Droppable>
-//             </DragDropContext>
-//         )
-//     }
-// }
-
-// export default DeckForm;
-
+import uuid from 'react-uuid'
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -113,45 +14,6 @@ const reorder = (list, startIndex, endIndex) => {
     return result;
 };
 
-// const grid = 8;
-
-// const getItemStyle = (isDragging, draggableStyle) => ({
-//     // some basic styles to make the items look a bit nicer
-//     userSelect: "none",
-//     padding: grid * 2,
-//     margin: `0 0 ${grid}px 0`,
-
-//     // change background colour if dragging
-//     background: isDragging ? "lightgreen" : "grey",
-
-//     // styles we need to apply on draggables
-//     ...draggableStyle
-// });
-
-// const getListStyle = isDraggingOver => ({
-//     background: isDraggingOver ? "lightblue" : "lightgrey",
-//     padding: grid,
-//     width: 500
-// });
-
-const CardForms = styled.div`
-  display: flex;
-    flex-direction: column;
-    background-color: #F0F0F0;
-    padding-left: 40px;
-    padding-right: 40px;
-`;
-const CardsWrapper = styled.div`
-   display: flex;
-    flex-direction: column; 
-`;
-
-const CardForm = styled.div`
-   background-color: $white;
-    display: flex;
-    flex-direction: column; 
-`;
-
 class DeckForm extends React.Component {
     constructor(props) {
         super(props);
@@ -161,6 +23,9 @@ class DeckForm extends React.Component {
             cls: "accessibility-modal",
             tempVis: this.props.deck.visibility,
             tempEdit: this.props.deck.editability,
+            redirect: null,
+            errors: [],
+            removedCards: []
         }
     }
 
@@ -171,7 +36,7 @@ class DeckForm extends React.Component {
                 let sortedCards = newCards.sort((a, b) => (a.order > b.order) ? 1 : -1)
                 for (let i = 0; i < sortedCards.length; i++) {
                     const card = sortedCards[i];
-                    card.id = card.id.toString();
+                    card.uId = card.uId || uuid();
                 }
                 this.setState({ cards: sortedCards })
             })
@@ -283,35 +148,77 @@ class DeckForm extends React.Component {
             let rightCardsArr = Object.assign(
                 [],
                 this.state.cards.slice(index + 1))
-            leftCardsArr.push({ term: "", description: "", order: "", deckId: "" })
+            leftCardsArr.push({ term: "", definition: "", order: "", deckId: "" })
             let newCardsArr = leftCardsArr.concat(rightCardsArr)
             this.setState({ cards: newCardsArr })
         };
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        let that = this;
-        this.props.deckAction(this.state.deck).then(deck => {
-            for (let i = 0; i < this.state.cards.length; i++) {
-                const card = this.state.cards[i];
-                let isOldCard = !!card.deckId
-                card.deckId = deck.deck.id
-                card.order = i + 1;
-                if (!isOldCard) {
-                    that.props.createCard(card);
-                } else {
-                    that.props.updateCard(card);
-                }
-
+    removeCard(index) {
+        return e => {
+            let leftCardsArr = Object.assign(
+                [],
+                this.state.cards.slice(0, index))
+            let rightCardsArr = Object.assign(
+                [],
+                this.state.cards.slice(index + 1))
+            let newCardsArr = leftCardsArr.concat(rightCardsArr)
+            let remCards = Object.assign([], this.state.removedCards);
+            if (this.state.cards[index].id) {
+                remCards.push(this.state.cards[index]);
             }
-        });
-        <Redirect to="/latest" />
+            this.setState({ cards: newCardsArr, removedCards: remCards })
+        };
     }
 
-    // Normally you would want to split things out into separate components.
-    // But in this example everything is just done in one place for simplicity
+    handleSubmit(e) {
+        e.preventDefault();
+        let allErrors = [];
+        if (this.state.deck.title === "") {
+            allErrors.push("A TITLE")
+        }
+        let filledInCards = [];
+        for (let i = 0; i < this.state.cards.length; i++) {
+            const card = this.state.cards[i];
+            if (card.term.length > 0 || card.definition.length > 0) {
+                filledInCards.push(card)
+            }
+        }
+        if (filledInCards.length < 2) {
+            allErrors.push("AT LEAST TWO CARDS")
+        }
+        if (allErrors.length === 0) {
+            let that = this;
+            this.props.deckAction(this.state.deck).then(deck => {
+                for (let i = 0; i < filledInCards.length; i++) {
+                    const card = filledInCards[i];
+                    let isOldCard = !!card.deckId
+                    card.deckId = deck.deck.id
+                    card.order = i + 1;
+                    if (!isOldCard) {
+                        that.props.createCard(card).then(card => this.setState({ redirect: "/latest" }));
+                    } else {
+                        that.props.updateCard(card).then(card => this.setState({ redirect: "/latest" }));;
+                    }
+
+                }
+            })
+            for (let i = 0; i < this.state.removedCards.length; i++) {
+                const card = this.state.removedCards[i];
+                this.props.deleteCard(card.id);
+            }
+        } else {
+            this.setState({errors: allErrors});
+        }
+    }
+
+    
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        }
+        
+        
         return (
             <div className="create-forms">
             <div className="deck-form">
@@ -353,7 +260,9 @@ class DeckForm extends React.Component {
                 </header>
                 <form className="deck-form-deck">
                     <input className="create-form-input" onChange={this.handleTitleChange.bind(this)} type="text" value={this.state.deck.title} placeholder="Enter a title, like “Ruby on Rails”" />
-                    <label className="create-form-label" >TITLE</label>
+                    {this.state.errors.includes("A TITLE") ?
+                    <label className="create-form-label errors" >PLEASE ENTER A TITLE TO SUBMIT YOUR DECK</label>
+                    : <label className="create-form-label" >TITLE</label>}
                     <input className="create-form-input" onChange={this.handleDescriptionChange.bind(this)} type="text" value={this.state.deck.description} placeholder="Add a description..." />
                     <label className="create-form-label">DESCRIPTION</label>
                 </form>
@@ -375,33 +284,36 @@ class DeckForm extends React.Component {
                         <span className="tooltiptext">Flip terms and definitions</span>
                     </div>
                 </div>
+                {this.state.errors.length > 0 ? 
+                <div className="deck-form-errors">
+                    {`YOU NEED THE FOLLOWING TO SUBMIT A DECK: ${this.state.errors.join(", ")}`}
+                </div>
+                :
+                ""
+                }
             </div>
 
             <DragDropContext onDragEnd={this.onDragEnd.bind(this)}>
-                    <Droppable droppableId={this.props.deck.id.toString()}>
+                    <Droppable droppableId="droppable">
                     {(provided, snapshot) => (
                         <div className="card-forms"
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
                             {this.state.cards.map((card, index) => (
-                                <Draggable key={card.id} draggableId={index.toString()} index={index}>
+                                <Draggable key={card.uid} draggableId={index.toString()} index={index}>
                                     {(provided, snapshot) => (
                                         <div key={index} className="cards-wrapper"
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
-                                            // style={getItemStyle(
-                                            //     snapshot.isDragging,
-                                            //     provided.draggableProps.style
-                                            // )}
                                         >
                                             <div className="card-form" key={index}>
                                                 <form>
                                                     <div className="card-header">
                                                         <h3>{index + 1}</h3>
                                                         <div className="tooltip-trash">
-                                                            <button className="delete-card-button"><i className="fas fa-trash-alt"></i></button>
+                                                            <button onClick={this.removeCard(index).bind(this)} className="delete-card-button"><i className="fas fa-trash-alt"></i></button>
                                                             <span className="tooltiptext-trash">Delete this card</span>
                                                         </div>
 
@@ -409,11 +321,15 @@ class DeckForm extends React.Component {
                                                     <div className="card-form-fields">
                                                         <div className="card-form-field">
                                                             <input className="create-form-input" onChange={this.handleTermChange(index).bind(this)} type="text" value={this.state.cards[index].term || ""} placeholder="Enter term" />
-                                                            <label className="create-form-label" >TERM</label>
+                                                            {this.state.errors.includes("AT LEAST TWO CARDS") && index <= 1 ?
+                                                            <label className="create-form-label errors" >YOU NEED TWO CARDS TO SUBMIT A DECK</label>
+                                                            : <label className="create-form-label" >TERM</label>}
                                                         </div>
                                                         <div className="card-form-field">
                                                             <input className="create-form-input" onChange={this.handleDefinitionChange(index).bind(this)} type="text" value={this.state.cards[index].definition || ""} placeholder="Enter definition" />
-                                                            <label className="create-form-label" >DEFINITION</label>
+                                                            {this.state.errors.includes("AT LEAST TWO CARDS") && index <= 1 ?
+                                                            <label className="create-form-label errors" >YOU NEED TWO CARDS TO SUBMIT A DECK</label>
+                                                            : <label className="create-form-label" >DEFINITION</label>}
                                                         </div>
                                                     </div>
                                                 </form>

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DeckForm from './deck_form';
 import { fetchDeck, updateDeck } from '../../actions/deck_actions';
-import { updateCard, createCard, fetchCards} from '../../actions/card_actions';
+import { updateCard, createCard, deleteCard, fetchCards} from '../../actions/card_actions';
 
 class EditDeckForm extends React.Component {
     componentDidMount() {
@@ -10,7 +10,7 @@ class EditDeckForm extends React.Component {
     }
 
     render() {
-        const { deckAction, formType, deck, createCard, updateCard, cards, fetchCards} = this.props;
+        const { deckAction, formType, deck, createCard, updateCard, deleteCard, cards, fetchCards} = this.props;
 
         if (!deck) return null;
         return (
@@ -18,6 +18,7 @@ class EditDeckForm extends React.Component {
                 deckAction={deckAction}
                 createCard={createCard}
                 updateCard={updateCard}
+                deleteCard={deleteCard}
                 fetchCards={fetchCards}
                 cards={cards}
                 formType={formType}
@@ -38,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
     deckAction: deck => dispatch(updateDeck(deck)),
     createCard: (card) => dispatch(createCard(card)),
     updateCard: (card) => dispatch(updateCard(card)),
+    deleteCard: (cardId) => dispatch(deleteCard(cardId)),
     fetchCards: (deckId) => dispatch(fetchCards(deckId))
 });
 
