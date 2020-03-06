@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { Textfit } from 'react-textfit';
 
 class DeckPage extends React.Component {
 
@@ -9,18 +10,20 @@ class DeckPage extends React.Component {
             flipped: false,
             progress: null,
             deckStudy: null,
-            setProgress: false
-        }
+            setProgress: false,
+            curTar: null
+        };
         this.componentCleanup = this.componentCleanup.bind(this);
     }
 
     componentDidMount() {
-        this.props.fetchDeck(this.props.match.params.deckId)
-        this.props.fetchCards(this.props.match.params.deckId)
+        const dId = this.props.match.params.deckId;
+        this.props.fetchDeck(dId)
+        this.props.fetchCards(dId)
         if (this.state.setProgress === false) {
-            this.props.fetchDeckStudy(this.props.match.params.deckId).then(() => this.setState({ progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }))
+            this.props.fetchDeckStudy(dId).then(() => this.setState({ progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }))
         } else {
-            this.props.fetchDeckStudies(this.props.match.params.deckId)
+            this.props.fetchDeckStudies(dId)
         }
         window.addEventListener('beforeunload', this.componentCleanup);
         
@@ -44,13 +47,18 @@ class DeckPage extends React.Component {
 
     handleProgress(num) {
         return e => {
-            let prg = this.state.progress + num
+            let prg = this.state.progress + num;
             if (prg === 0) {
                 prg = this.props.cards.length;
             } else if (prg === this.props.cards.length + 1) {
                 prg = 1;
             }
-            this.setState({ progress: prg, flipped: false })
+            if (this.state.curTar.style.transform === "rotateX(180deg)") {
+                this.state.curTar.style.transition = "transform 0s";
+                this.state.curTar.style.transform = "rotateX(0deg)"
+            }
+            this.setState({ progress: prg, flipped: false });
+            
         }
         
     }
@@ -58,14 +66,24 @@ class DeckPage extends React.Component {
     handleFlip(e) {
         // debugger
         if (e.currentTarget.style.transform === "rotateX(180deg)") {
+            e.currentTarget.style.transition = "transform 0.6s"
             e.currentTarget.style.transform = "rotateX(0deg)"
         } else {
+            e.currentTarget.style.transition = "transform 0.6s"
             e.currentTarget.style.transform = "rotateX(180deg)";
+            if (this.state.curTar === null) {
+                this.setState({curTar: e.currentTarget})
+            }
         }
     }
 
     render() {
         if (this.props.cards.length === 0 || !this.props.deck || this.state.setProgress === false) return null;
+        let cardStyles = {
+            height: '250px',
+            width: '410px',
+        };
+        // debugger
         return (
             <div className="deck-page">
                 <h1>{this.props.deck.title}</h1>
@@ -108,15 +126,20 @@ class DeckPage extends React.Component {
                         <div className="flip-card">
                             <div onClick={this.handleFlip.bind(this)} className="flip-card-inner">
                                 <div className="flip-card-front">
+                                    <Textfit mode="multi" style={cardStyles}>
                                     <p>{this.props.cards[this.state.progress - 1].term}</p>
+                                    </Textfit>
                                 </div>
-                                <div className="flip-card-back">
+                                <div className="flip-card-back" >
+                                    <Textfit mode="multi" style={cardStyles}>
                                     <p>{this.props.cards[this.state.progress - 1].definition}</p>
+                                    </Textfit>
                                 </div>
                             </div>
                         </div>
                             
                         <div className="deck-page-card-next">
+                            <div className="deck-page-card-empty"></div>
                             <div className="deck-page-card-switch">
                                 <button onClick={this.handleProgress(-1).bind(this)} ><i className="fas fa-arrow-left"></i></button>
                                 <label>{this.state.progress}/{this.props.cards.length}</label>
@@ -129,7 +152,14 @@ class DeckPage extends React.Component {
                     </div>
                 </div>
                 <div className="deck-page-deck-options">
-                    
+                    <div className="deck-options-left">
+                        <h4>Created by</h4>
+                        <h3>{this.props.user.username}</h3>
+                        <p>{this.props.deck.description}</p>
+                    </div>
+                    <div className="deck-options-right">
+
+                    </div>
                 </div>
                 <div className="deck-page-bottom">
 

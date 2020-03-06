@@ -8,7 +8,7 @@ export const fetchDeckStudies = (deckId) => (
 export const fetchDeckStudy = (deckId) => (
     $.ajax({
         method: 'GET',
-        url: `/api/decks/${deckId}/deck_studies/1` //dummy number at end to send to show action
+        url: `/api/decks/${deckId}/deck_studies/1000` //dummy number at end to send to show action
     })
 );
 

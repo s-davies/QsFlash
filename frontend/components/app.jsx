@@ -14,10 +14,12 @@ const App = () => (
   <div className="app group">
     <NavbarContainer />
     <AuthRoute exact path="/" component={Splash} />
-    <ProtectedRoute exact path="/latest" component={UserContent} />
-    <ProtectedRoute exact path="/create-deck" component={CreateDeckFormContainer} />
-    <ProtectedRoute exact path="/:deckId/edit" component={EditDeckFormContainer} />
-    <ProtectedRoute exact path="/:deckId/flash-cards" component={DeckPageContainer} />
+    <div className="app-div">
+      <ProtectedRoute exact path="/create-deck" component={CreateDeckFormContainer} />
+      <ProtectedRoute exact path="/:deckId/edit" component={EditDeckFormContainer} />
+      <ProtectedRoute exact path="/latest" component={UserContent} />
+      <ProtectedRoute exact path="/:deckId/flash-cards" component={DeckPageContainer} />
+    </div>
   </div>
 );
 

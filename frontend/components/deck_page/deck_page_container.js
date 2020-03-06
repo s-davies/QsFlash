@@ -8,7 +8,9 @@ const mapStateToProps = (state, ownProps) => {
     return {
         deck: state.entities.decks[ownProps.match.params.deckId],
         cards: Object.keys(state.entities.cards).map(key => state.entities.cards[key]).sort((a, b) => (a.order > b.order) ? 1 : -1),
-        deckStudies: Object.values(state.entities.deckStudies)
+        deckStudies: Object.values(state.entities.deckStudies),
+        creator: state.entities.users[state.entities.decks[ownProps.match.params.deckId].ownerId],
+        currentUser: state.entities.users[state.session.id]
         // deckStudies: Object.values(state.entities.deckStudies)
     }
 };
@@ -19,7 +21,8 @@ const mapDispatchToProps = dispatch => ({
     fetchCards: (deckId) => dispatch(fetchCards(deckId)),
     fetchDeckStudy: (deckId) => dispatch(fetchDeckStudy(deckId)),
     fetchDeckStudies: (deckId) => dispatch(fetchDeckStudies(deckId)),
-    updateDeckStudy: (deckStudy) => dispatch(updateDeckStudy(deckStudy))
+    updateDeckStudy: (deckStudy) => dispatch(updateDeckStudy(deckStudy)),
+    // fetchUsers: ()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckPage);

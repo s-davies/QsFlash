@@ -225,9 +225,9 @@ class DeckForm extends React.Component {
                     card.deckId = deck.deck.id
                     card.order = i + 1;
                     if (!isOldCard) {
-                        that.props.createCard(card).then(card => this.setState({ redirect: "/latest" }));
+                        that.props.createCard(card).then(card => this.setState({ redirect: `${this.props.deck.id}/flash-cards` }));
                     } else {
-                        that.props.updateCard(card).then(card => this.setState({ redirect: "/latest" }));;
+                        that.props.updateCard(card).then(card => this.setState({ redirect: `${this.props.deck.id}/flash-cards` }));;
                     }
 
                 }

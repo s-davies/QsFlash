@@ -4,19 +4,19 @@
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 40px;
+    padding-top: 30px;
+    background-color: $white;
 }
 
 .deck-form-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 30px;
+    padding-top: 60px;
     padding-bottom: 30px;
     background-color: $white;
     padding-left: 40px;
     padding-right: 40px;
-    margin-top: 30px;
-    margin-bottom: 30px;
     z-index: 3;
   position: sticky;
   top: -1px;

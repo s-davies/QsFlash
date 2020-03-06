@@ -1,5 +1,6 @@
-.main-nav {
-    display: flex;
+.main-div {
+  display: flex;
+  justify-content: center;
     align-items: center;
     height: 80px;
     background-color: $purple;
@@ -7,6 +8,19 @@
     padding-right: 40px;
     color: $white;
     font-size: 15px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 1314px;
+    // height: 80px;
+    // background-color: $purple;
+    // padding-left: 40px;
+    // padding-right: 40px;
+    // color: $white;
+    // font-size: 15px;
 }
 
 .main-nav .home {

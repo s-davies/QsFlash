@@ -3,3 +3,15 @@
 //    width: 100px;
     flex: 1;
 }
+
+.app {
+    background-color: $lightest-gray;
+    height: auto;
+}
+
+.app-div {
+    // display: flex;
+    // justify-content: center;
+    margin: auto;
+    max-width: 1314px;
+}

@@ -33,7 +33,8 @@ class Navbar extends React.Component {
     render() {
         let display;
         if (this.state.searchOpen) {
-            display = <nav className="main-nav">
+            
+            display = <div className="main-div"><nav className="main-nav">
                 <Link to="/" className="home">QsFlash!</Link>
                 <div className="main-nav-search">
                     <div>
@@ -45,8 +46,9 @@ class Navbar extends React.Component {
                     <p>X</p>
                 </div>
             </nav>
+            </div>
         } else {
-            display = <nav className="main-nav">
+            display = <div className="main-div"><nav className="main-nav">
                 <Link to="/" className="home">QsFlash!</Link>
                 <div className="main-nav-items">
                     <div className="main-nav-items-left">
@@ -70,7 +72,7 @@ class Navbar extends React.Component {
                     
                 </div>
             </nav>
-        }
+            </div>}
         return (
             display
         )

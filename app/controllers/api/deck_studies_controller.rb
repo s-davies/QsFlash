@@ -5,7 +5,9 @@ class Api::DeckStudiesController < ApplicationController
     end
 
     def show
-        @deck_study = DeckStudy.find_by(studier_id: current_user.id)
+
+        @deck_study = DeckStudy.find_by(studier_id: current_user.id, deck_id: params[:deck_id])
+
         #create a new deck study if none exists
         if !@deck_study
             @deck_study = DeckStudy.create(progress: 1, deck_id: params[:deck_id], studier_id: current_user.id)
