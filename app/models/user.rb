@@ -13,6 +13,13 @@ class User < ApplicationRecord
         class_name: :Deck,
         dependent: :destroy
 
+    has_many :deck_studies,
+        foreign_key: :deck_id,
+        class_name: :DeckStudy,
+        dependent: :destroy
+
+    has_many :decks_studied, through: :deck_studies, source: :deck
+
     def self.find_by_credentials(username, password)
         @user = User.find_by(username: username)
         @user && @user.is_password?(password) ? @user : nil

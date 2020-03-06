@@ -8,6 +8,12 @@ class Api::DecksController < ApplicationController
         @deck = Deck.new(deck_params)
         @deck.owner_id = current_user.id
         if @deck.save
+            # @deck_study = DeckStudy.new(progress: 1, deck_id: @deck.id, studier_id: @deck.owner_id)
+            # if @deck_study.save
+            #     render :show
+            # else
+            #     render json: @deck_study.errors.full_messages, statu: 422
+            # end
             render :show
         else
             render json: @deck.errors.full_messages, status: 422

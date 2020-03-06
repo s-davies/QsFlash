@@ -1,0 +1,1 @@
+json.extract! deck_study, :id, :progress, :deck_id, :studier_id

@@ -1,0 +1,172 @@
+.deck-page {
+    padding-left: 60px;
+    padding-right: 60px;
+    display: flex;
+    flex-direction: column;
+    color: $dark-gray;
+}
+
+.deck-page h1 {
+    font-size: 32px;
+    font-weight: 700;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.deck-page-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.deck-page-learn {
+    display: flex;
+    flex-direction: column;
+    margin-left: 60px;
+}
+
+.deck-page-learn a {
+    font-size: 15px;
+    display: block;
+}
+
+.deck-page-learn label {
+    cursor: pointer;
+}
+
+.deck-page-learn label:hover {
+    transition: color 0.15s ease;
+    color: $yellow;
+}
+
+.deck-page-learn i {
+    // margin-right: 10px;
+    color: $purple;
+    font-size: 18px;
+}
+
+.deck-page-learn a:first-of-type label {
+    // margin-right: 10px;
+    border-bottom: 4px solid $yellow;
+}
+
+.fa-buffer {
+    padding-left: 2px;
+    padding-right: 10px;
+}
+
+.fa-brain {
+    padding-right: 8px;
+}
+
+.fa-pencil-alt {
+    padding-left: 1px;
+    padding-right: 9px;
+}
+
+.fa-volume-up {
+    padding-right: 8px;
+}
+
+.fa-file-alt {
+    padding-left: 1px;
+    padding-right: 13px;
+}
+
+.fa-clone {
+    padding-right: 10px;
+}
+
+.fa-meteor {
+    padding-right: 10px;
+}
+
+.deck-page-learn h3 {
+    font-size: 12px;
+    color: $light-gray;
+    margin: 0;
+}
+
+.deck-page-learn a, h3 {
+    padding-bottom: 15px;
+}
+
+.deck-page-flip {
+    margin-right: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+// .flip-card {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 450px;
+//     height: 290px;
+//     box-shadow: 0px 5px 15px $gray;
+//     font-size: 32px;
+//     background-color: green;
+    
+//     perspective: 1000px;
+// }
+
+// .transform {
+//   -webkit-transition: all 2s ease;  
+//   -moz-transition: all 2s ease;  
+//   -o-transition: all 2s ease;  
+//   -ms-transition: all 2s ease;  
+//   transition: all 2s ease;
+// }
+
+// .flipped {
+//     background-color: red;
+//     transform: rotateX(180deg);
+//     transform-style: preserve-3d;
+// }
+
+.flip-card {
+  background-color: transparent;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+  width: 450px;
+  height: 290px;
+  font-size: 32px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0px 0px 10px $gray;
+}
+
+// .flip-card:hover .flip-card-inner {
+//   transform: rotateX(180deg);
+// }
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: $white;
+//   color: $dark-gray;
+}
+
+.flip-card-back {
+  background-color: $white;
+//   color: $dark-gray;
+  transform: rotateX(180deg);
+}
+

@@ -4,8 +4,10 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :index]
     resources :decks, only: [:create, :destroy, :update, :show, :index] do
       resources :cards, only: [:index]
+      resources :deck_studies, only: [:index, :show]
     end
     resources :cards, only: [:create, :destroy, :update, :show]
+    resources :deck_studies, only: [:create, :update]
     resource :session, only: [:create, :destroy]
   end
 

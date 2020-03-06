@@ -1,0 +1,1 @@
+json.partial! 'api/deck_studies/deck_study', deck_study: @deck_study
