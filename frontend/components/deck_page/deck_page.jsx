@@ -18,8 +18,8 @@ class DeckPage extends React.Component {
 
     componentDidMount() {
         const dId = this.props.match.params.deckId;
-        this.props.fetchDeck(dId)
-        this.props.fetchCards(dId)
+        this.props.fetchDeck(dId).then(() => this.props.fetchUsers());
+        this.props.fetchCards(dId);
         if (this.state.setProgress === false) {
             this.props.fetchDeckStudy(dId).then(() => this.setState({ progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }))
         } else {
@@ -78,12 +78,11 @@ class DeckPage extends React.Component {
     }
 
     render() {
-        if (this.props.cards.length === 0 || !this.props.deck || this.state.setProgress === false) return null;
+        if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false) return null;
         let cardStyles = {
             height: '250px',
             width: '410px',
         };
-        // debugger
         return (
             <div className="deck-page">
                 <h1>{this.props.deck.title}</h1>
@@ -153,12 +152,27 @@ class DeckPage extends React.Component {
                 </div>
                 <div className="deck-page-deck-options">
                     <div className="deck-options-left">
-                        <h4>Created by</h4>
-                        <h3>{this.props.user.username}</h3>
+                        <div className="created-by">
+                            <h4>Created by</h4>
+                            <h3>{this.props.creator.username}</h3>
+                        </div>
                         <p>{this.props.deck.description}</p>
                     </div>
                     <div className="deck-options-right">
-
+                        <div className="tooltip-options">
+                            <i className="fas fa-plus"></i>
+                            <span className="tooltiptext-plus">Add set to class or folder</span>
+                        </div>
+                        <div className="tooltip-options">
+                            <i className="fas fa-pen"></i>
+                            <span className="tooltiptext-pen">Edit</span>
+                        </div>
+                        <div className="tooltip-options">
+                            <i className="fas fa-info"></i>
+                            <span className="tooltiptext-info">Info</span>
+                        </div>
+                       
+                        <i className="fas fa-ellipsis-h"></i>
                     </div>
                 </div>
                 <div className="deck-page-bottom">

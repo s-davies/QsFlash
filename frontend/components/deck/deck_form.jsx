@@ -225,17 +225,19 @@ class DeckForm extends React.Component {
                     card.deckId = deck.deck.id
                     card.order = i + 1;
                     if (!isOldCard) {
-                        that.props.createCard(card).then(card => this.setState({ redirect: `${this.props.deck.id}/flash-cards` }));
+                        that.props.createCard(card);
                     } else {
-                        that.props.updateCard(card).then(card => this.setState({ redirect: `${this.props.deck.id}/flash-cards` }));;
+                        that.props.updateCard(card);
                     }
 
                 }
+                this.setState({ redirect: this.props.formType === "Create Deck" ? `${deck.deck.id}/flash-cards` : `${deck.deck.id}/flash-cards` })
             })
             for (let i = 0; i < this.state.removedCards.length; i++) {
                 const card = this.state.removedCards[i];
                 this.props.deleteCard(card.id);
             }
+            
         } else {
             this.setState({errors: allErrors});
         }

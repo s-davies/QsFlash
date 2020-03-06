@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     color: $dark-gray;
-    max-width: 1000px;
+    max-width: 940px;
     margin: auto;
 }
 
@@ -14,7 +14,7 @@
     padding-top: 40px;
     padding-bottom: 40px;
     background-color: $white;
-    padding-left: 60px;
+    // padding-left: 60px;
 }
 
 .deck-page-top {
@@ -173,4 +173,145 @@
     justify-content: space-between;
     width: 150px;
     font-size: 12px;
+}
+
+.deck-page-deck-options {
+    background-color: $white;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+
+.fa-info {
+    padding: 10px 15px 10px 15px;
+    border-radius: 50%;
+    border: 1px solid $lightest-gray;
+    
+}
+
+.deck-options-left h4 {
+    margin: 0px;
+    font-size: 11px;
+    color: $light-gray;
+}
+
+.deck-options-left h3 {
+    margin-top: 8px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    color: $dark-gray;
+}
+
+.deck-options-right i {
+    margin-left: 5px;
+}
+
+.deck-options-right i:hover {
+    transition: color 0.15s ease;
+    color: $yellow;
+    cursor: pointer;
+}
+
+.deck-options-right .fa-plus, .deck-options-right .fa-pen, .deck-options-right .fa-ellipsis-h {
+    padding: 10px;
+    border-radius: 50%;
+    border: 1px solid $lightest-gray;
+}
+
+.tooltip-options {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-options .tooltiptext-plus {
+  visibility: hidden;
+  width: 140px;
+  background-color: $purple;
+  color: #fff;
+  text-align: center;
+  padding: 6px 0;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: 50%;
+  margin-left: -70px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+.tooltip-options .tooltiptext-pen {
+  visibility: hidden;
+  width: 40px;
+  background-color: $purple;
+  color: #fff;
+  text-align: center;
+  padding: 6px 0;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: 50%;
+  margin-left: -21px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+.tooltip-options .tooltiptext-info {
+  visibility: hidden;
+  width: 40px;
+  background-color: $purple;
+  color: #fff;
+  text-align: center;
+  padding: 6px 0;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: 50%;
+  margin-left: -21px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+.tooltip-options .tooltiptext-plus::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent $purple transparent;
+}
+
+.tooltip-options:hover .tooltiptext-plus {
+  visibility: visible;
+}
+
+.tooltip-options .tooltiptext-pen::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent $purple transparent;
+}
+
+.tooltip-options:hover .tooltiptext-pen {
+  visibility: visible;
+}
+
+.tooltip-options .tooltiptext-info::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent $purple transparent;
+}
+
+.tooltip-options:hover .tooltiptext-info {
+  visibility: visible;
 }
