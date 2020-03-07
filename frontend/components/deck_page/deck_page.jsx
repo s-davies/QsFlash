@@ -53,10 +53,17 @@ class DeckPage extends React.Component {
             } else if (prg === this.props.cards.length + 1) {
                 prg = 1;
             }
-            if (this.state.curTar.style.transform === "rotateX(180deg)") {
-                this.state.curTar.style.transition = "transform 0s";
-                this.state.curTar.style.transform = "rotateX(0deg)"
+            if (this.state.curTar) {
+                if (this.state.curTar.style.transform === "rotateX(180deg)") {
+
+                    this.state.curTar.style.transition = "transform 0s";
+                    this.state.curTar.style.transform = "rotateX(0deg)"
+                }
+            } else {
+                const ele = document.getElementsByClassName("flip-card-inner")[0]
+                this.setState({ curTar: ele });
             }
+            
             this.setState({ progress: prg, flipped: false });
             
         }
@@ -171,8 +178,14 @@ class DeckPage extends React.Component {
                             <i className="fas fa-info"></i>
                             <span className="tooltiptext-info">Info</span>
                         </div>
-                       
-                        <i className="fas fa-ellipsis-h"></i>
+                        <div className="info-dropdown">
+                            <i className="fas fa-ellipsis-h info-dropbtn"></i>
+                            <div className="info-dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="deck-page-bottom">

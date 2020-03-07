@@ -231,7 +231,7 @@ class DeckForm extends React.Component {
                     }
 
                 }
-                this.setState({ redirect: this.props.formType === "Create Deck" ? `${deck.deck.id}/flash-cards` : `${deck.deck.id}/flash-cards` })
+                this.setState({ redirect: `/${deck.deck.id}/flash-cards` })
             })
             for (let i = 0; i < this.state.removedCards.length; i++) {
                 const card = this.state.removedCards[i];
@@ -246,6 +246,7 @@ class DeckForm extends React.Component {
     
     render() {
         if (this.state.redirect) {
+            debugger
             return <Redirect to={this.state.redirect} />
         }
         

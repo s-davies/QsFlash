@@ -315,3 +315,64 @@
 .tooltip-options:hover .tooltiptext-info {
   visibility: visible;
 }
+
+/* Dropdown Button */
+// .info-dropbtn {
+//   background-color: #4CAF50;
+//   color: white;
+//   padding: 16px;
+//   font-size: 16px;
+//   border: none;
+// }
+
+/* The container <div> - needed to position the dropdown content */
+.info-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.info-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: $purple;
+  min-width: 160px;
+//   box-shadow: 0px 0px 8px $gray;
+  z-index: 1;
+  right: 7px;
+  top: 50px;
+}
+
+/* Links inside the dropdown */
+.info-dropdown-content a {
+  color: $white;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+.info-dropdown-content:before {
+    content:"";
+    position: absolute;
+    right: 0px;
+    top: -12px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 12px 12px 12px;
+    border-color: transparent transparent $purple transparent;
+    z-index:2;
+}
+
+.info-dropdown-content a:hover {
+    background-color: $yellow;
+    color: $dark-gray;
+}
+
+.info-dropdown:hover .info-dropdown-content {display: block;}
+
+.flip-card div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
