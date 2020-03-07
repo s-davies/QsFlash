@@ -348,7 +348,33 @@
   color: $white;
   padding: 8px 12px;
   text-decoration: none;
-  display: block;
+  display: flex;
+}
+
+.copy-link:hover, .trophy-link:hover, .object-link:hover {
+    background-color: $yellow;
+    color: $dark-gray;
+}
+
+.fa-copy {
+    padding-right: 11px;
+}
+
+.fa-trophy {
+    padding-right: 7px;
+}
+
+.fa-object-group {
+    padding-right: 9px;
+}
+
+.fa-trash-alt {
+    padding-right: 11px;
+}
+
+.trash-link:hover {
+    background-color: $red;
+    color: $dark-gray;
 }
 
 .info-dropdown-content:before {
@@ -364,10 +390,7 @@
     z-index:2;
 }
 
-.info-dropdown-content a:hover {
-    background-color: $yellow;
-    color: $dark-gray;
-}
+
 
 .info-dropdown:hover .info-dropdown-content {display: block;}
 
@@ -375,4 +398,66 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+//info modal
+.info-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 4; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.show-modal {
+    display: block;
+}
+
+.info-div-box {
+    display: flex;
+    flex-direction: column;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+//   padding: 20px;
+  height: 360px;
+  border: 1px solid #888;
+  width: 600px; /* Could be more or less, depending on screen size */
+  color: $light-gray;
+}
+
+.info-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $purple;
+    height: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 32px;
+    color: $white;
+    font-weight: 700;
+}
+
+.info-banner h1 {
+    background-color: $purple;
+    padding: 0px;
+}
+
+.info-banner div {
+    // background-color: $dark-purple;
+    border: 3px solid $dark-purple;
+    padding: 8px 14px 8px 14px;
+    border-radius: 100%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.info-banner div:hover {
+    background-color: $dark-purple;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 
 class DeckPage extends React.Component {
@@ -11,7 +11,8 @@ class DeckPage extends React.Component {
             progress: null,
             deckStudy: null,
             setProgress: false,
-            curTar: null
+            curTar: null,
+            cls: "info-modal"
         };
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -42,6 +43,21 @@ class DeckPage extends React.Component {
     componentWillUnmount() {
         this.componentCleanup();
         window.removeEventListener('beforeunload', this.componentCleanup);
+    }
+
+    showForm() {
+        if (this.state.cls === "info-modal") {
+            this.setState({ cls: "info-modal show-modal" })
+        } else {
+            this.setState({ cls: "info-modal" })
+        }
+    }
+
+    hideForm(e) {
+        if (e.target.className === "info-modal show-modal" ||
+            e.target.className === "close-form") {
+            this.setState({ cls: "info-modal" })
+        }
     }
 
 
@@ -170,20 +186,63 @@ class DeckPage extends React.Component {
                             <i className="fas fa-plus"></i>
                             <span className="tooltiptext-plus">Add set to class or folder</span>
                         </div>
-                        <div className="tooltip-options">
-                            <i className="fas fa-pen"></i>
-                            <span className="tooltiptext-pen">Edit</span>
-                        </div>
-                        <div className="tooltip-options">
+                        <Link to={`/${this.props.deck.id}/edit`}>
+                            <div className="tooltip-options">
+                                <i className="fas fa-pen"></i>
+                                <span className="tooltiptext-pen">Edit</span>
+                            </div>
+                        </Link>
+                        <div onClick={this.showForm.bind(this)} className="tooltip-options">
                             <i className="fas fa-info"></i>
                             <span className="tooltiptext-info">Info</span>
                         </div>
                         <div className="info-dropdown">
                             <i className="fas fa-ellipsis-h info-dropbtn"></i>
                             <div className="info-dropdown-content">
-                                <a href="#">Link 1</a>
-                                <a href="#">Link 2</a>
-                                <a href="#">Link 3</a>
+                                <a href="#" className="copy-link"><i className="far fa-copy"></i><p>Customize</p></a>
+                                <a href="#" className="trophy-link"><i className="fas fa-trophy"></i><p>Scores</p></a>
+                                <a href="#" className="object-link"><i className="far fa-object-group"></i><p>Combine</p></a>
+                                <a href="#" className="trash-link"><i className="fas fa-trash-alt"></i><p>Delete</p></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div onClick={this.hideForm.bind(this)} className={this.state.cls}>
+                    <div className='info-div-box'>
+                        <div className="info-banner">
+                            <h1 className="form-title">Info</h1>
+                            <div onClick={this.hideForm.bind(this)} className="close-form">X</div>
+                        </div>
+                        <div className="info-modal-main">
+                            <Link to="/">{this.props.creator.username}</Link>
+                            <p>Created</p>
+                        </div>
+                        <div className="info-modal-description">
+                            <h2>DESCRIPTION</h2>
+                            <p>{this.props.deck.description}</p>
+                        </div>
+                        <div className="info-modal-boxes">
+                            <div className="info-modal-studiers">
+                                <h1>{this.props.deckStudies.length}</h1>
+                                <h3>{this.props.deckStudies.length === 1 ? "STUDIER" : "STUDIERS"}</h3>
+                            </div>
+                            <div className="info-modal-studiers">
+                                <h1>1</h1>
+                                <h3>Class</h3>
+                            </div>
+                            <div className="info-modal-studiers">
+                                <h1>1</h1>
+                                <h3>Folder</h3>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="info-modal-visibility0">
+                                <h3>VIEWABLE BY</h3>
+                                <p>{this.props.deck.viewability}</p>
+                            </div>
+                            <div className="info-modal-editability">
+                                <h3>EDITABLE BY</h3>
+                                <p>{this.props.deck.editability}</p>
                             </div>
                         </div>
                     </div>
