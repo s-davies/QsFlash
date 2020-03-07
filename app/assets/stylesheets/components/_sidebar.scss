@@ -4,6 +4,7 @@
     flex-direction: column;
     width: 270px;
     background: $white;
+    min-height: calc(100vh - 80px);
 }
 
 .sidebar-link {

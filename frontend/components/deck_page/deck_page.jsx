@@ -167,8 +167,9 @@ class DeckPage extends React.Component {
                                 <label>{this.state.progress}/{this.props.cards.length}</label>
                                 <button onClick={this.handleProgress(1).bind(this)}><i className="fas fa-arrow-right"></i></button>
                             </div>
-                            <div className="tooltip-fullscreen">
+                            <div className="tooltip-options">
                                 <button className="fullscreen-button"><i className="fas fa-expand"></i></button>
+                                <span className="tooltiptext-fullscreen">Fullscreen</span>
                             </div>
                         </div>
                     </div>
@@ -213,36 +214,38 @@ class DeckPage extends React.Component {
                             <h1 className="form-title">Info</h1>
                             <div onClick={this.hideForm.bind(this)} className="close-form">X</div>
                         </div>
-                        <div className="info-modal-main">
-                            <Link to="/">{this.props.creator.username}</Link>
-                            <p>Created</p>
-                        </div>
-                        <div className="info-modal-description">
-                            <h2>DESCRIPTION</h2>
-                            <p>{this.props.deck.description}</p>
-                        </div>
-                        <div className="info-modal-boxes">
-                            <div className="info-modal-studiers">
-                                <h1>{this.props.deckStudies.length}</h1>
-                                <h3>{this.props.deckStudies.length === 1 ? "STUDIER" : "STUDIERS"}</h3>
+                        <div className="info-modal-top">
+                            <div className="info-modal-main">
+                                <Link to="/">{this.props.creator.username}</Link>
+                                <p>Created</p>
                             </div>
-                            <div className="info-modal-studiers">
-                                <h1>1</h1>
-                                <h3>Class</h3>
+                            <div className="info-modal-description">
+                                <h2>DESCRIPTION</h2>
+                                <p>{this.props.deck.description}</p>
                             </div>
-                            <div className="info-modal-studiers">
-                                <h1>1</h1>
-                                <h3>Folder</h3>
+                            <div className="info-modal-boxes">
+                                <div className="info-modal-box">
+                                    <h1>{this.props.deckStudies.length}</h1>
+                                    <h3>{this.props.deckStudies.length === 1 ? "STUDIER" : "STUDIERS"}</h3>
+                                </div>
+                                <div className="info-modal-box">
+                                    <h1>1</h1>
+                                    <h3>CLASS</h3>
+                                </div>
+                                <div className="info-modal-box">
+                                    <h1>1</h1>
+                                    <h3>FOLDER</h3>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div className="info-modal-visibility0">
-                                <h3>VIEWABLE BY</h3>
-                                <p>{this.props.deck.viewability}</p>
+                        <div className="info-modal-bottom">
+                            <div className="info-modal-visibility">
+                                <p className="info-modal-vp">VIEWABLE BY</p>
+                                <p>{this.props.deck.visibility}</p>
                             </div>
                             <div className="info-modal-editability">
-                                <h3>EDITABLE BY</h3>
-                                <p>{this.props.deck.editability}</p>
+                                <p className="info-modal-vp">EDITABLE BY</p>
+                                <p>{this.props.creator.username}</p>
                             </div>
                         </div>
                     </div>

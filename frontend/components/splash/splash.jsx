@@ -44,6 +44,17 @@ class Splash extends React.Component {
                                 <a href="https://github.com/s-davies/QsFlash/wiki">Learn more about this project</a>
                             </div>
                         </div>
+                        <footer className="splash-footer">
+                            <div className="splash-footer-left">
+                                <p>Created by Steven Davies</p>
+                                <a href="https://github.com/s-davies"><i className="fab fa-github-square"></i></a>
+                                <a href="https://www.linkedin.com/in/steven-davies-bb700119b/"><i className="fab fa-linkedin"></i></a>
+                            </div>
+                            <div className="splash-footer-right">
+                                <i className="fas fa-question-circle"></i>
+                                <p>Help Center</p>
+                            </div>
+                        </footer>
                     </div>
                     <div className="splash-right">
                         <img key={this.state.img} className="splash-img" src={this.state.img === 1 ? window.qsflashSplash1 : this.state.img === 2 ? window.qsflashSplash2 : window.qsflashSplash3} alt="QsFlash"/>
@@ -56,9 +67,13 @@ class Splash extends React.Component {
                             :
                                 <p>“I’ll sleep when exams are over” students</p>
                         }
+                        {/* <div className="splash-footer-right">
+                            <i className="fas fa-question-circle"></i>
+                            <p>Help Center</p>
+                        </div> */}
                     </div>
                 </div>
-                <footer className="splash-footer">
+                {/* <footer className="splash-footer">
                     <div className="splash-footer-left">
                         <p>Created by Steven Davies</p>
                         <a href="https://github.com/s-davies"><i className="fab fa-github-square"></i></a>
@@ -68,7 +83,7 @@ class Splash extends React.Component {
                         <i className="fas fa-question-circle"></i>
                         <p>Help Center</p>
                     </div>
-                </footer>
+                </footer> */}
             </div>
         )
     }

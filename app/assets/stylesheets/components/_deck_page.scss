@@ -175,6 +175,11 @@
     font-size: 12px;
 }
 
+.deck-page-card-switch button:hover {
+  transition: color 0.15s ease;
+    color: $yellow;
+}
+
 .deck-page-deck-options {
     background-color: $white;
     display: flex;
@@ -221,6 +226,37 @@
 .tooltip-options {
   position: relative;
   display: inline-block;
+}
+
+.tooltip-options .tooltiptext-fullscreen {
+  visibility: hidden;
+  width: 80px;
+  background-color: $purple;
+  color: #fff;
+  text-align: center;
+  padding: 6px 0;
+  position: absolute;
+  z-index: 1;
+  top: 180%;
+  left: 50%;
+  margin-left: -43px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+.tooltip-options .tooltiptext-fullscreen::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent $purple transparent;
+}
+
+.tooltip-options:hover .tooltiptext-fullscreen {
+  visibility: visible;
 }
 
 .tooltip-options .tooltiptext-plus {
@@ -425,7 +461,7 @@
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
 //   padding: 20px;
-  height: 360px;
+  // height: 620px;
   border: 1px solid #888;
   width: 600px; /* Could be more or less, depending on screen size */
   color: $light-gray;
@@ -447,6 +483,8 @@
 .info-banner h1 {
     background-color: $purple;
     padding: 0px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .info-banner div {
@@ -461,3 +499,114 @@
 .info-banner div:hover {
     background-color: $dark-purple;
 }
+
+.info-modal-top {
+  background-color: $lightest-gray;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+}
+
+.info-modal-main {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40px;
+}
+
+.info-modal-main a {
+  font-size: 15px;
+  color: $teal;
+  width: 40px;
+}
+
+.info-modal-main a:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
+}
+
+.info-modal-main p {
+  color: $dark-gray;
+  font-size: 13px;
+}
+
+.info-modal-description {
+  font-size: 18px;
+  font-weight: 700;
+  color: $dark-gray;
+}
+
+.info-modal-description h2 {
+  font-size: 17px;
+  padding-bottom: 30px;
+}
+
+.info-modal-description p {
+  font-size: 15px;
+  padding-bottom: 40px;
+}
+
+.info-modal-boxes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-modal-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 170px;
+  width: 170px;
+  background-color: $teal;
+}
+.info-modal-box:hover {
+  transition: background-color 0.15s ease;
+  background-color: $yellow;
+  cursor: pointer;
+}
+
+.info-modal-box h1 {
+  padding: 0;
+  background-color: transparent;
+  color: $white;
+  font-size: 48px;
+}
+
+.info-modal-box h3 {
+  margin: 0;
+  color: $white;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.info-modal-box:hover h1,  .info-modal-box:hover h3 {
+  transition: color 0.15s ease;
+  color: $dark-gray;
+  
+}
+
+.info-modal-bottom {
+  display: flex;
+  margin: 34px;
+}
+
+.info-modal-bottom p {
+  color: $dark-gray;
+  font-size: 12px;
+}
+
+.info-modal-visibility {
+  padding-right: 50px;
+}
+
+.info-modal-vp {
+  padding-bottom: 10px;
+}
+
+.info-modal-editability, .info-modal-visibility{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
