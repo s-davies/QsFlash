@@ -9,7 +9,7 @@ import {
 
 import { AuthRoute, ProtectedRoute } from '../../util/route_util';
 
-class MainContent extends React.Component {
+class Latest extends React.Component {
 
     constructor(props) {
         super(props)
@@ -26,29 +26,32 @@ class MainContent extends React.Component {
 
 
     render() {
-        
+
         return (
             <div className="latest">
                 <div className="latest-header">
-                    <h1>Recent</h1>
-                    <Link to="/"><p>View all</p><i class="fas fa-chevron-right"></i></Link>
+                    <h1>RECENT</h1>
+                    <Link to="/"><p>View all</p><i className="fas fa-chevron-right"></i></Link>
                 </div>
-                {this.props.decks.map(deck => (
-                    <div className="medium-deck-tile">
-                        <div className="medium-deck-tile-top">
-                            <div className="medium-deck-tile-top-left">
-                                <h3>{deck.title}</h3>
-                                <p>{deck.card_count}</p>
+                <div className="medium-deck-tiles">
+                    { this.props.decks.map(deck => (
+                        <div className="medium-deck-tile">
+                            <div className="medium-deck-tile-inner">
+                                <div className="medium-deck-tile-right">
+                                    <h3>{deck.title}</h3>
+                                    <p>{deck.cardCount} terms {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</p>
+                                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                                </div>
+                                <div className="medium-deck-tile-right" >
+                                    
+                                </div>
                             </div>
                         </div>
-                        <div className="medium-deck-tile-bottom" >
-                            <p>{this.props.users[this.props.deck.ownerId]}</p>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         )
     }
 }
 
-export default MainContent;
+export default Latest;
