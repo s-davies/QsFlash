@@ -13,11 +13,13 @@ class DeckPage extends React.Component {
             setProgress: false,
             curTar: null,
             cls: "info-modal",
+            deleteCls: "delete-modal",
             star1cls: null,
             star2cls: null,
             star3cls: null,
             star4cls: null,
             star5cls: null,
+            redirect: null
         };
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -51,11 +53,15 @@ class DeckPage extends React.Component {
         window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
-    showForm() {
+    showDeleteModal() {
+        if (this.state.deleteCls === "delete-modal") {
+            this.setState({ deleteCls: "delete-modal show-modal" })
+        }
+    }
+
+    showForm(e) {
         if (this.state.cls === "info-modal") {
             this.setState({ cls: "info-modal show-modal" })
-        } else {
-            this.setState({ cls: "info-modal" })
         }
     }
 
@@ -63,6 +69,9 @@ class DeckPage extends React.Component {
         if (e.target.className === "info-modal show-modal" ||
             e.target.className === "close-form") {
             this.setState({ cls: "info-modal" })
+        } else if (e.target.className === "delete-modal show-modal" ||
+            e.target.className === "delete-close-form") {
+            this.setState({ deleteCls: "delete-modal" })
         }
     }
 
@@ -108,15 +117,57 @@ class DeckPage extends React.Component {
 
     handleRating(num) {
         return e => {
-            let newDeckStudy = this.state.deckStudy
-            if (newDeckStudy) {
-                newDeckStudy.rating = num;
-                this.props.updateDeckStudy(newDeckStudy);
+            if (this.props.currentUser.id !== this.state.deckStudy.studierId) {
+                let newDeckStudy = this.state.deckStudy
+                if (newDeckStudy) {
+                    newDeckStudy.rating = num;
+                    this.props.updateDeckStudy(newDeckStudy);
+                }
+            }
+        }
+    }
+
+    handleDelete() {
+        this.props.deleteDeck(this.props.deck.id);
+        this.setState({redirect: "/latest"});
+    }
+
+    unhighlightStars() {
+        if (this.props.creator.id !== this.state.deckStudy.studierId) {
+            this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })
+        }
+    }
+
+    highlightStars(num) {
+        return e => {
+            if (this.props.creator.id !== this.state.deckStudy.studierId) {
+                switch (num) {
+                    case 1:
+                        this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })
+                        break;
+                    case 2:
+                        this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })
+                        break;
+                    case 3:
+                        this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })
+                        break;
+                    case 4:
+                        this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })
+                        break;
+                    case 5:
+                        this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        }
         if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false) return null;
         let cardStyles = {
             height: '250px',
@@ -127,182 +178,182 @@ class DeckPage extends React.Component {
         const classColorName = this.state.deckStudy.rating ? "rating-stars rating-purple" : "rating-stars rating-yellow";
         if (showRating < 1) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })} 
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})} 
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)} 
+                    onMouseOut={this.unhighlightStars.bind(this)} 
                 className={this.state.star1cls ? this.state.star1cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })} 
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })} 
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)} 
+                    onMouseOut={this.unhighlightStars.bind(this)} 
                 className={this.state.star2cls ? this.state.star2cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })} 
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })} 
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)} 
+                    onMouseOut={this.unhighlightStars.bind(this)} 
                 className={this.state.star3cls ? this.state.star3cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })} 
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })} 
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)} 
+                    onMouseOut={this.unhighlightStars.bind(this)} 
                 className={this.state.star4cls ? this.state.star4cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })} 
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })} 
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)} 
+                    onMouseOut={this.unhighlightStars.bind(this)} 
                 className={this.state.star5cls ? this.state.star5cls : "far fa-star"}></i>
             </div>
         } else if (showRating >= 1 && showRating < 1.5) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "far fa-star"}></i>
             </div>
         } else if (showRating >= 1.5 && showRating < 2) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "fas fa-star-half-alt"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "far fa-star"}></i>
             </div>
         } else if (showRating >= 2 && showRating < 2.5) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "far fa-star"}></i>
             </div>
         } else if (showRating >= 2.5 && showRating < 3) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "fas fa-star-half-alt"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "far fa-star"}></i>
             </div>
         } else if (showRating >= 3 && showRating < 3.5) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" } )}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "fas fa-star"}></i>
-                        <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "far fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "far fa-star"}></i>
             </div>
         } else if (showRating >= 3.5 && showRating < 4) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "fas fa-star-half-alt"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "far fa-star"}></i>
             </div>
         } else if (showRating >= 4 && showRating < 4.5) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "far fa-star"}></i>
             </div>
         } else if (showRating >= 4.5 && showRating < 5) {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "fas fa-star-half-alt"}></i>
             </div>
         } else {
             stars = <div className={classColorName}>
-                <i onClick={this.handleRating(1).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "far fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null})}
+                <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star1cls ? this.state.star1cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(2).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "far fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(2).bind(this)} onMouseOver={this.highlightStars(2).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star2cls ? this.state.star2cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(3).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "far fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(3).bind(this)} onMouseOver={this.highlightStars(3).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star3cls ? this.state.star3cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(4).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "far fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(4).bind(this)} onMouseOver={this.highlightStars(4).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star4cls ? this.state.star4cls : "fas fa-star"}></i>
-                <i onClick={this.handleRating(5).bind(this)} onMouseOver={() => this.setState({ star1cls: "fas fa-star rating-purple", star2cls: "fas fa-star rating-purple", star3cls: "fas fa-star rating-purple", star4cls: "fas fa-star rating-purple", star5cls: "fas fa-star rating-purple" })}
-                    onMouseOut={() => this.setState({ star1cls: null, star2cls: null, star3cls: null, star4cls: null, star5cls: null })}
+                <i onClick={this.handleRating(5).bind(this)} onMouseOver={this.highlightStars(5).bind(this)}
+                    onMouseOut={this.unhighlightStars.bind(this)}
                     className={this.state.star5cls ? this.state.star5cls : "fas fa-star"}></i>
             </div>
         } 
@@ -343,8 +394,9 @@ class DeckPage extends React.Component {
                 <header className="deck-page-header">
                     <h1>{this.props.deck.title}</h1>
                     <div className="rating-div">
-                        {this.props.avgRating === 0 ? <span>Leave the first rating</span> : <span>{showRating}</span>}
+                        {this.props.avgRating !== 0 ? <span>{showRating}</span> : this.props.creator.id === this.props.currentUser.id ? "" : <span>Leave the first rating</span> }
                         {stars}
+                        <p>{this.props.numRatings === 0 ? this.props.currentUser.id === this.props.creator.id ? "No Reviews" : "" : this.props.numRatings === 1 ? "1 Review" : `${this.props.numRatings} Reviews`}</p>
                     </div>
                 </header>
                 <div className="deck-page-top">
@@ -440,11 +492,11 @@ class DeckPage extends React.Component {
                         <div className="info-dropdown">
                             <i className="fas fa-ellipsis-h info-dropbtn"></i>
                             <div className="info-dropdown-content">
-                                <a href="#" className="copy-link"><i className="far fa-copy"></i><p>Customize</p></a>
-                                <a href="#" className="trophy-link"><i className="fas fa-trophy"></i><p>Scores</p></a>
-                                <a href="#" className="object-link"><i className="far fa-object-group"></i><p>Combine</p></a>
+                                <span className="copy-link"><i className="far fa-copy"></i><p>Customize</p></span>
+                                <span className="trophy-link"><i className="fas fa-trophy"></i><p>Scores</p></span>
+                                <span className="object-link"><i className="far fa-object-group"></i><p>Combine</p></span>
                                 {this.props.creator.id === this.props.currentUser.id ? 
-                                <a href="#" className="trash-link"><i className="fas fa-trash-alt"></i><p>Delete</p></a> : "" }
+                                <span className="trash-link" onClick={this.showDeleteModal.bind(this)}><i className="fas fa-trash-alt"></i><p>Delete</p></span> : "" }
                             </div>
                         </div>
                     </div>
@@ -490,6 +542,23 @@ class DeckPage extends React.Component {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div onClick={this.hideForm.bind(this)} className={this.state.deleteCls}>
+                    <div className='delete-div-box'>
+                        <div className="delete-banner">
+                            <h1 className="form-title">Delete this deck?</h1>
+                            <div onClick={this.hideForm.bind(this)} className="delete-close-form">X</div>
+                        </div>
+                        <div className="delete-content">
+                            <h1>{this.props.deck.title}</h1>
+                            <p>You are about to delete this deck and all of its data. No one will be able to access this deck ever again.</p>
+                            <strong>Are you absolutely positive? There's no undo.</strong>
+                            <div className="delete-buttons">
+                                <button onClick={this.hideForm.bind(this)} className="cancel-button">Cancel</button>
+                                <button onClick={this.handleDelete.bind(this)} className="delete-deck-button">Yes, delete deck</button>
+                            </div>
+                        </div>
+                    </div>  
                 </div>
                 <div className="deck-page-bottom">
 

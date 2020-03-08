@@ -1,6 +1,5 @@
 class Deck < ApplicationRecord
     validates :title, :visibility, :editability, presence: true
-    validates :rating, :inclusion => 1..5, allow_nil: true
 
     belongs_to :owner,
         foreign_key: :owner_id,

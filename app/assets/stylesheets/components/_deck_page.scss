@@ -33,6 +33,11 @@
   color: $dark-gray;
 }
 
+.rating-div p {
+  padding-left: 10px;
+  color: $dark-gray;
+}
+
 .rating-stars i {
   padding-right: 5px;
 
@@ -401,11 +406,12 @@
 }
 
 /* Links inside the dropdown */
-.info-dropdown-content a {
+.info-dropdown-content span {
   color: $white;
   padding: 8px 12px;
   text-decoration: none;
   display: flex;
+  cursor: pointer;
 }
 
 .copy-link:hover, .trophy-link:hover, .object-link:hover {
@@ -479,11 +485,10 @@
 .info-div-box {
     display: flex;
     flex-direction: column;
-  background-color: #fefefe;
+  background-color: $white;
   margin: 15% auto; /* 15% from the top and centered */
 //   padding: 20px;
   // height: 620px;
-  border: 1px solid #888;
   width: 600px; /* Could be more or less, depending on screen size */
   color: $light-gray;
 }
@@ -629,6 +634,128 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+//delete modal
+.delete-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 4; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.show-modal {
+    display: block;
+}
+
+.delete-div-box {
+    display: flex;
+    flex-direction: column;
+  background-color: $white;
+  margin: 15% auto; /* 15% from the top and centered */
+//   padding: 20px;
+  // height: 620px;
+  width: 600px; /* Could be more or less, depending on screen size */
+  color: $light-gray;
+}
+
+.delete-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $purple;
+    height: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 32px;
+    color: $white;
+    font-weight: 700;
+}
+
+.delete-banner h1 {
+    background-color: $purple;
+    padding: 0px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.delete-banner div {
+    // background-color: $dark-purple;
+    border: 3px solid $dark-purple;
+    padding: 8px 14px 8px 14px;
+    border-radius: 100%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.delete-banner div:hover {
+    background-color: $dark-purple;
+}
+
+.delete-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.delete-content h1 {
+  color: $dark-gray;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 40px;
+}
+
+.delete-content p {
+  color: $dark-gray;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 17px;
+}
+
+.delete-content strong {
+  color: $dark-gray;
+  padding-top: 15px;
+  padding-bottom: 20px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.delete-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-button, .delete-deck-button {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 260px;
+  font-size: 18px;
+  color: $white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.cancel-button {
+  background-color: $dark-gray;
+}
+
+.cancel-button:hover {
+  background-color: $gray;
+}
+
+.delete-deck-button {
+  background-color: $red;
+}
+
+.delete-deck-button:hover {
+  background-color: $light-red;
 }
 
 .rating-stars {

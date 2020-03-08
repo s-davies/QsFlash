@@ -246,7 +246,6 @@ class DeckForm extends React.Component {
     
     render() {
         if (this.state.redirect) {
-            debugger
             return <Redirect to={this.state.redirect} />
         }
         
