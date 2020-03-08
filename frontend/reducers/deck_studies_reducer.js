@@ -11,6 +11,7 @@ const deckStudiesReducer = (state = {}, action) => {
             newState = action.deckStudies;
             return newState;
         case RECEIVE_DECK_STUDY:
+            newState = {};
             newState[action.deckStudy.id] = action.deckStudy;
             return newState;
         default:

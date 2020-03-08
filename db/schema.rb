@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_05_193008) do
+ActiveRecord::Schema.define(version: 2020_03_07_221826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "card_studies", force: :cascade do |t|
+    t.boolean "starred", null: false
+    t.integer "correctness_count", null: false
+    t.integer "learn_count", null: false
+    t.integer "write_count", null: false
+    t.integer "spell_count", null: false
+    t.integer "test_count", null: false
+    t.integer "card_id", null: false
+    t.integer "studier_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id", "studier_id"], name: "index_card_studies_on_card_id_and_studier_id", unique: true
+  end
 
   create_table "cards", force: :cascade do |t|
     t.integer "order", null: false
@@ -31,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_03_05_193008) do
     t.integer "studier_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "rating"
     t.index ["deck_id", "studier_id"], name: "index_deck_studies_on_deck_id_and_studier_id", unique: true
   end
 

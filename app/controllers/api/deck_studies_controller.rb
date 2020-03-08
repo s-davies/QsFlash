@@ -1,5 +1,6 @@
 class Api::DeckStudiesController < ApplicationController
     def index
+        # debugger
         @deck_studies = DeckStudy.where(deck_id: params[:deck_id])
         render :index
     end
@@ -39,7 +40,7 @@ class Api::DeckStudiesController < ApplicationController
     private
 
     def deck_study_params
-        params.require(:deck_study).permit(:progress, :deck_id, :studier_id)
+        params.require(:deck_study).permit(:progress, :deck_id, :studier_id, :rating)
     end
 
 

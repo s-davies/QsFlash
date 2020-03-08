@@ -8,12 +8,30 @@ import DeckPage from './deck_page'
 const mapStateToProps = (state, ownProps) => {
     let creator = state.entities.decks[ownProps.match.params.deckId] === undefined ? {} : state.entities.users[state.entities.decks[ownProps.match.params.deckId].ownerId]
     // debugger
+    let deckStudies = Object.values(state.entities.deckStudies);
+    let ratSum = 0
+    let ratCount = 0
+    for (let i = 0; i < deckStudies.length; i++) {
+        const deckStudy = deckStudies[i];
+        if (deckStudy.rating) {
+            ratSum += deckStudy.rating
+            ratCount += 1;
+        }
+    }
+    let avgRating;
+    if (ratCount === 0) {
+        avgRating = 0;
+    } else {
+        let avgRatingUnrounded = ratSum / ratCount;
+        avgRating = (Math.round(avgRatingUnrounded * 10) / 10).toFixed(1);
+    }
     return {
         deck: state.entities.decks[ownProps.match.params.deckId],
         cards: Object.keys(state.entities.cards).map(key => state.entities.cards[key]).sort((a, b) => (a.order > b.order) ? 1 : -1),
-        deckStudies: Object.values(state.entities.deckStudies),
+        deckStudies: deckStudies,
         creator: creator,
-        currentUser: state.entities.users[state.session.id]
+        currentUser: state.entities.users[state.session.id],
+        avgRating: avgRating
         // deckStudies: Object.values(state.entities.deckStudies)
     }
 };

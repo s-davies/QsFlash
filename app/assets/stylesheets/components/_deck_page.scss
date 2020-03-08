@@ -11,10 +11,31 @@
 .deck-page h1 {
     font-size: 32px;
     font-weight: 700;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: $white;
+    // padding-top: 40px;
+    padding-bottom: 10px;
     // padding-left: 60px;
+}
+
+.deck-page-header {
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.rating-div {
+  display: flex;
+}
+
+.rating-div span {
+  padding-right: 10px;
+  color: $dark-gray;
+}
+
+.rating-stars i {
+  padding-right: 5px;
+
 }
 
 .deck-page-top {
@@ -608,5 +629,18 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.rating-stars {
+  font-size: 15px;
+}
+
+.rating-purple {
+  color: $purple;
+  cursor: pointer;
+}
+
+.rating-yellow {
+  color: $yellow;
 }
 

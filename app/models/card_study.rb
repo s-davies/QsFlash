@@ -1,0 +1,2 @@
+class CardStudy < ApplicationRecord
+end
