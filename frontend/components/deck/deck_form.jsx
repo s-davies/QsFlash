@@ -70,6 +70,7 @@ class DeckForm extends React.Component {
                 this.setState({ cards: sortedCards })
             })
         }
+        window.addEventListener('beforeunload', this.componentCleanup);
     }
 
     onDragEnd(result) {
@@ -218,6 +219,7 @@ class DeckForm extends React.Component {
         }
         if (allErrors.length === 0) {
             let that = this;
+            this.state.deck.cardCount = filledInCards.length;
             this.props.deckAction(this.state.deck).then(deck => {
                 for (let i = 0; i < filledInCards.length; i++) {
                     const card = filledInCards[i];

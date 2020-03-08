@@ -1,6 +1,6 @@
 class Api::DecksController < ApplicationController
     def index
-        @decks = Deck.all
+        @decks = Deck.where(owner_id: current_user.id)
         render :index
     end
 
@@ -37,6 +37,6 @@ class Api::DecksController < ApplicationController
     private
 
     def deck_params
-        params.require(:deck).permit(:title, :description, :visibility, :editability)
+        params.require(:deck).permit(:title, :description, :visibility, :editability, :card_count)
     end
 end

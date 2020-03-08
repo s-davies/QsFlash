@@ -9,14 +9,14 @@ import {
 
 import { AuthRoute, ProtectedRoute } from '../../util/route_util';
 import SidebarContainer from '../sidebar/sidebar_container'
-import MainContent from '../main_content/main_content'
+import Latest from '../latest/latest'
 
 class UserContent extends React.Component {
     render() {
         return(
             <div className="content-area">
                 <SidebarContainer />
-                <MainContent />
+                <Latest />
             </div>
         )
     }

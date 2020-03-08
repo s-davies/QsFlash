@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { createDeck } from '../../actions/deck_actions';
+import { createDeck} from '../../actions/deck_actions';
 import { createCard } from '../../actions/card_actions';
 import DeckForm from './deck_form';
 
