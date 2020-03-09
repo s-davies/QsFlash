@@ -1,13 +1,8 @@
-import React from 'react'
+import React from 'react';
 import {
-    Route,
-    Redirect,
-    Switch,
     Link,
-    HashRouter
+    Redirect
 } from 'react-router-dom';
-
-import { AuthRoute, ProtectedRoute } from '../../util/route_util';
 
 class Latest extends React.Component {
 
@@ -15,12 +10,13 @@ class Latest extends React.Component {
         super(props)
         this.state = {
             decks: [],
-            decksSorted: false
+            decksSorted: false,
+            redirect: null
         }
     }
 
     componentDidMount() {
-        this.props.fetchDecks();
+        this.props.fetchDecks().then(() => this.sortDecks());
         this.props.fetchUsers();
     }
 
@@ -60,7 +56,7 @@ class Latest extends React.Component {
             let createdSecond2 = deck2.updatedAt.slice(17, 19);
             if (createdSecond2[0] === "0") createdSecond2 = createdSecond2.slice(1);
             createdSecond2 = parseInt(createdSecond2);
-            
+
             if (createdYear1 > createdYear2) return -1;
             if (createdYear2 > createdYear1) return 1;
             if (createdMonth1 > createdMonth2) return -1;
@@ -78,21 +74,28 @@ class Latest extends React.Component {
         this.setState({decks: sortedDecks, decksSorted: true});
     }
 
+    handleRedirect(deckId) {
+        return e => {
+            this.setState({ redirect: `/${deckId}/flash-cards` })
+        }
+    }
 
     render() {
-        if (this.props.decks.length > 0 && this.state.decksSorted === false) {
-            this.sortDecks();
+
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
         }
 
         return (
             <div className="latest">
                 <div className="latest-header">
                     <h1>RECENT</h1>
-                    <Link to="/"><p>View all</p><i className="fas fa-chevron-right"></i></Link>
+                    <Link to={`/${this.props.currentUser.id}/recent`}><p>View all</p><i className="fas fa-chevron-right"></i></Link>
                 </div>
                 <div className="medium-deck-tiles">
-                    { this.state.decks.map(deck => (
-                        <div className="medium-deck-tile">
+                    { this.state.decks.map((deck, index) => (
+                        index > 5 ? "" :
+                        <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="medium-deck-tile">
                             <div className="medium-deck-tile-inner">
                                 <div className="medium-deck-tile-right">
                                     <h3>{deck.title}</h3>

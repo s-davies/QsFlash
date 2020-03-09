@@ -5,6 +5,8 @@
     width: 270px;
     background: $white;
     min-height: calc(100vh - 80px);
+    position: relative;
+    z-index: 1;
 }
 
 .sidebar-link {
