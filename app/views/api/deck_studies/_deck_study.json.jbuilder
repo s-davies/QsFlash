@@ -1,1 +1,1 @@
-json.extract! deck_study, :id, :progress, :deck_id, :studier_id, :rating, :updated_at
+json.extract! deck_study, :id, :progress, :deck_id, :studier_id, :rating, :created_at, :updated_at

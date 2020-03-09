@@ -155,8 +155,7 @@ class Created extends React.Component {
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
-                    <p>{deck.cardCount} terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <p>{deck.cardCount} Terms </p>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -174,8 +173,7 @@ class Created extends React.Component {
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
-                    <p>{deck.cardCount} terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <p>{deck.cardCount} Terms </p>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -193,8 +191,7 @@ class Created extends React.Component {
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
-                    <p>{deck.cardCount} terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <p>{deck.cardCount} Terms </p>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -212,8 +209,7 @@ class Created extends React.Component {
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
-                    <p>{deck.cardCount} terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <p>{deck.cardCount} Terms </p>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -231,8 +227,7 @@ class Created extends React.Component {
                 <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
                   <div className="small-deck-tile-inner">
                     <div className="small-deck-tile-top">
-                      <p>{deck.cardCount} terms </p>
-                      <Link>{this.props.users[deck.ownerId].username}</Link>
+                      <p>{deck.cardCount} Terms </p>
                     </div>
                     <div className="small-deck-tile-bottom" >
                       <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>

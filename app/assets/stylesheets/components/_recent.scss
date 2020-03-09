@@ -46,6 +46,14 @@
   font-size: 15px;
 }
 
+.user-header-links a:hover {
+  color: $yellow;
+}
+
+.user-header-links .user-header-selected:hover {
+  color: $dark-gray;
+}
+
 .user-header-links a:first-child {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -83,12 +91,13 @@
 
 .small-deck-tile-top p {
   padding-right: 8px;
-  border-right: 2px solid $lightest-gray;
+  
 }
 
 .small-deck-tile-top a {
   padding-left: 8px;
   color: $teal;
+  border-left: 2px solid $lightest-gray;
 }
 
 .small-deck-tile-top a:hover {

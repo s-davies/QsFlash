@@ -6,6 +6,7 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import NavbarContainer from './navbar/navbar_container'
 import UserContent from './user_content/user_content'
 import UserDecks from './user_decks/user_decks';
+import StudiedDecks from './user_decks/studied_wrapper';
 import CreatedDecks from './user_decks/created_wrapper';
 import Splash from './splash/splash'
 import CreateDeckFormContainer from './deck/create_deck_form_container'
@@ -22,6 +23,7 @@ const App = () => (
       <ProtectedRoute exact path="/latest" component={UserContent} />
       <ProtectedRoute exact path="/:userId/recent" component={UserDecks} />
       <ProtectedRoute exact path="/:userId/created" component={CreatedDecks} />
+      <ProtectedRoute exact path="/:userId/studied" component={StudiedDecks} />
       <ProtectedRoute exact path="/:deckId/flash-cards" component={DeckPageContainer} />
     </div>
   </div>

@@ -5,7 +5,7 @@ import {
   Redirect
 } from 'react-router-dom';
 
-class Recent extends React.Component {
+class Studied extends React.Component {
 
   constructor(props) {
     super(props)
@@ -28,7 +28,16 @@ class Recent extends React.Component {
     if (currentDeckIdx === sortedDecks.length - 1) {
         this.props.fetchDeckStudy(deck.id)
         .then(() => {
-          deck.deckStudyUpdatedAt = this.props.deckStudy.updatedAt
+          deck.deckStudyUpdatedAt = this.props.deckStudy.updatedAt;
+          deck.deckStudyCreatedAt = this.props.deckStudy.createdAt;
+          //filtering out decks that have been looked at but not actually studied
+          //will need to update this for saying games count as study
+          let newSortedDecks = [];
+          for (let i = 0; i < sortedDecks.length; i++) {
+            const sdeck = sortedDecks[i];
+            if (sdeck.deckStudyCreatedAt !== sdeck.deckStudyUpdatedAt) newSortedDecks.push(sdeck);
+          }
+          sortedDecks = newSortedDecks;
           sortedDecks.sort((deck1, deck2) => {
             const createdYear1 = parseInt(deck1.deckStudyUpdatedAt.slice(0, 4));
             let createdMonth1 = deck1.deckStudyUpdatedAt.slice(5, 7);
@@ -83,6 +92,7 @@ class Recent extends React.Component {
       } else {
         this.props.fetchDeckStudy(deck.id).then(() => {
           deck.deckStudyUpdatedAt = this.props.deckStudy.updatedAt;
+          deck.deckStudyCreatedAt = this.props.deckStudy.createdAt;
           this.sortDecks(sortedDecks, currentDeckIdx + 1);
         });
       }
@@ -261,4 +271,4 @@ class Recent extends React.Component {
   }
 }
 
-export default Recent;
+export default Studied;
