@@ -1,0 +1,17 @@
+.recent-divider {
+    font-size: 12px;
+    padding-bottom: 20px;
+    display: flex;
+}
+
+.recent-divider p {
+    padding-right: 10px;
+}
+
+.recent-divider span {
+    border-bottom: 1px solid $lighter-gray;
+    flex: 1;
+    display: flex;
+    position: relative;
+    top: -7px;
+}

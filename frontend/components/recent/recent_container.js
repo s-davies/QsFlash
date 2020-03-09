@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchDecks } from '../../actions/deck_actions';
+import { fetchDeckStudy } from '../../actions/deck_study_actions'
 import { fetchCards } from '../../actions/card_actions';
 import { fetchUsers } from '../../actions/session_actions';
 import Recent from './recent';
@@ -14,6 +15,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     decks: allDecks,
+    deckStudy: Object.values(state.entities.deckStudies)[0],
     createdDecksCount: createdDecksCt,
     users: state.entities.users,
     currentUser: state.entities.users[state.session.id],
@@ -24,7 +26,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
   fetchDecks: () => dispatch(fetchDecks()),
   fetchCards: (deckId) => dispatch(fetchCards(deckId)),
-  fetchUsers: () => dispatch(fetchUsers())
+  fetchUsers: () => dispatch(fetchUsers()),
+  fetchDeckStudy: deckId => dispatch(fetchDeckStudy(deckId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Recent);

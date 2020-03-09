@@ -147,7 +147,7 @@ class Created extends React.Component {
           <div className="small-deck-tiles">
             {today.length > 0 ? 
               <div className="recent-divider">
-                <p>Today</p>
+                <p>TODAY</p>
                 <span></span>
               </div> : ""
             }
@@ -166,7 +166,7 @@ class Created extends React.Component {
             ))}
             {thisMonth.length > 0 ?
               <div className="recent-divider">
-                <p>This month</p>
+                <p>THIS MONTH</p>
                 <span></span>
               </div> : ""
             }
@@ -185,7 +185,7 @@ class Created extends React.Component {
             ))}
             {lastMonth.length > 0 ?
               <div className="recent-divider">
-                <p>Last month</p>
+                <p>LAST MONTH</p>
                 <span></span>
               </div> : ""
             }
@@ -204,7 +204,7 @@ class Created extends React.Component {
             ))}
             {thisYear.length > 0 ?
               <div className="recent-divider">
-                <p>This year</p>
+                <p>THIS YEAR</p>
                 <span></span>
               </div> : ""
             }
@@ -223,7 +223,7 @@ class Created extends React.Component {
             ))}
             {lastYear.length > 0 ?
               <div className="recent-divider">
-                <p>Last year</p>
+                <p>LAST YEAR</p>
                 <span></span>
               </div> : ""
             }
