@@ -14,7 +14,7 @@ class User < ApplicationRecord
         dependent: :destroy
 
     has_many :deck_studies,
-        foreign_key: :deck_id,
+        foreign_key: :studier_id,
         class_name: :DeckStudy,
         dependent: :destroy
 

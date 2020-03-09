@@ -11,7 +11,7 @@ class Deck < ApplicationRecord
         dependent: :destroy
 
     has_many :deck_studies,
-        foreign_key: :studier_id,
+        foreign_key: :deck_id,
         class_name: :DeckStudy,
         dependent: :destroy
 

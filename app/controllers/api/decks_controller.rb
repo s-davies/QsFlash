@@ -1,6 +1,7 @@
 class Api::DecksController < ApplicationController
     def index
-        @decks = Deck.where(owner_id: current_user.id)
+        @decks = current_user.decks_studied
+        
         render :index
     end
 
