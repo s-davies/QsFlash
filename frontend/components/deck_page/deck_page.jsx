@@ -31,7 +31,6 @@ class DeckPage extends React.Component {
         if (this.state.setProgress === false) {
             this.props.fetchDeckStudy(dId).then(() => this.setState({ progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }, () => this.props.fetchDeckStudies(dId)))
         } else {
-            // debugger
             // this.props.fetchDeckStudies(dId)
         }
         window.addEventListener('beforeunload', this.componentCleanup);
@@ -102,7 +101,6 @@ class DeckPage extends React.Component {
     }
 
     handleFlip(e) {
-        // debugger
         if (e.currentTarget.style.transform === "rotateX(180deg)") {
             e.currentTarget.style.transition = "transform 0.6s"
             e.currentTarget.style.transform = "rotateX(0deg)"

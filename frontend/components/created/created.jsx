@@ -5,14 +5,14 @@ import {
   Redirect
 } from 'react-router-dom';
 
-class Recent extends React.Component {
+class Created extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
       decks: [],
       decksSorted: false,
-      redirect: null
+      redirect: null,
     }
   }
 
@@ -89,6 +89,35 @@ class Recent extends React.Component {
 
     if (!this.props.user) return null;
 
+    const currentDay = (new Date()).getDate();
+    const currentMonth = (new Date()).getMonth();
+    const currentYear = (new Date()).getFullYear();
+    let today = [];
+    let thisMonth = [];
+    let lastMonth = [];
+    let thisYear = [];
+    let lastYear = [];
+
+    for (let i = 0; i < this.state.decks.length; i++) {
+      const deck = this.state.decks[i];
+      const updatedDay = parseInt(deck.updatedAt.slice(8, 10));
+      const updatedMonth = parseInt(deck.updatedAt.slice(5, 7));
+      const updatedYear = parseInt(deck.updatedAt.slice(0, 4));
+
+      if ( currentDay === updatedDay && currentMonth + 1 === updatedMonth && currentYear === updatedYear ||
+        currentDay === updatedDay - 1 && currentMonth + 1 === updatedMonth && currentYear === updatedYear) {
+        today.push(deck);
+      } else if (currentMonth + 1 === updatedMonth && currentYear === updatedYear) {
+        thisMonth.push(deck);
+      } else if (currentMonth === updatedMonth && currentYear === updatedYear || currentMonth === 0 && updatedMonth === 12) {
+        lastMonth.push(deck);
+      } else if (currentYear === updatedYear) {
+        thisYear.push(deck);
+      } else {
+        lastYear.push(deck);
+      }
+    }
+    
     return (
       <div className="recent">
         <div className="user-header">
@@ -116,13 +145,89 @@ class Recent extends React.Component {
         </div>
         <div className="recent-bottom">
           <div className="small-deck-tiles">
-            {this.state.decks.map((deck, index) => (
-              (new Date()).getDate() === parseInt(deck.updatedAt.slice(8, 10)) ?
-              <>
-                <div className="recent-divider">
-                  <p>TODAY</p>
-                  <span></span>
+            {today.length > 0 ? 
+              <div className="recent-divider">
+                <p>Today</p>
+                <span></span>
+              </div> : ""
+            }
+            {today.map((deck, index) => (
+              <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
+                <div className="small-deck-tile-inner">
+                  <div className="small-deck-tile-top">
+                    <p>{deck.cardCount} terms </p>
+                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                  </div>
+                  <div className="small-deck-tile-bottom" >
+                    <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
+                  </div>
                 </div>
+              </div>
+            ))}
+            {thisMonth.length > 0 ?
+              <div className="recent-divider">
+                <p>This month</p>
+                <span></span>
+              </div> : ""
+            }
+            {thisMonth.map((deck, index) => (
+              <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
+                <div className="small-deck-tile-inner">
+                  <div className="small-deck-tile-top">
+                    <p>{deck.cardCount} terms </p>
+                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                  </div>
+                  <div className="small-deck-tile-bottom" >
+                    <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {lastMonth.length > 0 ?
+              <div className="recent-divider">
+                <p>Last month</p>
+                <span></span>
+              </div> : ""
+            }
+            {lastMonth.map((deck, index) => (
+              <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
+                <div className="small-deck-tile-inner">
+                  <div className="small-deck-tile-top">
+                    <p>{deck.cardCount} terms </p>
+                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                  </div>
+                  <div className="small-deck-tile-bottom" >
+                    <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {thisYear.length > 0 ?
+              <div className="recent-divider">
+                <p>This year</p>
+                <span></span>
+              </div> : ""
+            }
+            {thisYear.map((deck, index) => (
+              <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
+                <div className="small-deck-tile-inner">
+                  <div className="small-deck-tile-top">
+                    <p>{deck.cardCount} terms </p>
+                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                  </div>
+                  <div className="small-deck-tile-bottom" >
+                    <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {lastYear.length > 0 ?
+              <div className="recent-divider">
+                <p>Last year</p>
+                <span></span>
+              </div> : ""
+            }
+            {lastYear.map((deck, index) => (
                 <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
                   <div className="small-deck-tile-inner">
                     <div className="small-deck-tile-top">
@@ -134,19 +239,6 @@ class Recent extends React.Component {
                     </div>
                   </div>
                 </div>
-                </>
-                :
-                <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this) } className="small-deck-tile">
-                  <div className="small-deck-tile-inner">
-                    <div className="small-deck-tile-top">
-                      <p>{deck.cardCount} terms </p>
-                      <Link>{this.props.users[deck.ownerId].username}</Link>
-                    </div>
-                    <div className="small-deck-tile-bottom" >
-                    <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
-                    </div>
-                  </div>
-                </div>
             ))}
           </div>
         </div>
@@ -155,4 +247,4 @@ class Recent extends React.Component {
   }
 }
 
-export default Recent;
+export default Created;

@@ -61,3 +61,49 @@
   background-color: $yellow;
   color: $dark-gray;
 }
+
+.small-deck-tile {
+  background-color: $white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.small-deck-tile-inner {
+  
+}
+
+.small-deck-tile-top {
+  display: flex;
+  padding-bottom: 5px;
+}
+
+.small-deck-tile-top p {
+  padding-right: 8px;
+  border-right: 2px solid $lightest-gray;
+}
+
+.small-deck-tile-top a {
+  padding-left: 8px;
+  color: $teal;
+}
+
+.small-deck-tile-top a:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
+}
+
+.small-deck-tile-bottom h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 22px;
+}
+
+.small-deck-tile-bottom .fa-lock {
+  font-size: 16px;
+  color: $light-gray;
+  padding-left: 5px;
+}

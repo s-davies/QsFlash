@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_08_091720) do
+ActiveRecord::Schema.define(version: 2020_03_09_031749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,12 +53,11 @@ ActiveRecord::Schema.define(version: 2020_03_08_091720) do
     t.string "title", null: false
     t.string "visibility", null: false
     t.string "editability", null: false
-    t.string "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description"
     t.integer "card_count", null: false
-    t.index ["owner_id"], name: "index_decks_on_owner_id"
+    t.integer "owner_id", null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -70,7 +70,6 @@ class DeckForm extends React.Component {
                 this.setState({ cards: sortedCards })
             })
         }
-        window.addEventListener('beforeunload', this.componentCleanup);
     }
 
     onDragEnd(result) {
@@ -136,7 +135,8 @@ class DeckForm extends React.Component {
         this.setState({ tempEdit: e.target.value });
     }
 
-    handleAccessibilityChange() {
+    handleAccessibilityChange(e) {
+        e.preventDefault();
         let newDeck = Object.assign({}, this.state.deck);
         newDeck.visibility = this.state.tempVis;
         newDeck.editability = this.state.tempEdit;
