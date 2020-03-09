@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchDecks } from '../../actions/deck_actions';
-import { fetchDeckStudy } from '../../actions/deck_study_actions'
+import { fetchDeckStudy, deleteDeckStudy, createDeckStudy } from '../../actions/deck_study_actions'
 import { fetchCards } from '../../actions/card_actions';
 import { fetchUsers } from '../../actions/session_actions';
 import Studied from './studied';
@@ -27,7 +27,9 @@ const mapDispatchToProps = dispatch => ({
   fetchDecks: () => dispatch(fetchDecks()),
   fetchCards: (deckId) => dispatch(fetchCards(deckId)),
   fetchUsers: () => dispatch(fetchUsers()),
-  fetchDeckStudy: deckId => dispatch(fetchDeckStudy(deckId))
+  fetchDeckStudy: deckId => dispatch(fetchDeckStudy(deckId)),
+  deleteDeckStudy: deckStudyId => dispatch(deleteDeckStudy(deckStudyId)),
+  createDeckStudy: deckStudy => dispatch(createDeckStudy(deckStudy))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Studied);

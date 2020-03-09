@@ -1,6 +1,7 @@
 import {
     RECEIVE_ALL_DECK_STUDIES,
-    RECEIVE_DECK_STUDY
+    RECEIVE_DECK_STUDY,
+    REMOVE_DECK_STUDY
 } from '../actions/deck_study_actions';
 
 const deckStudiesReducer = (state = {}, action) => {
@@ -13,6 +14,9 @@ const deckStudiesReducer = (state = {}, action) => {
         case RECEIVE_DECK_STUDY:
             newState = {};
             newState[action.deckStudy.id] = action.deckStudy;
+            return newState;
+        case REMOVE_DECK_STUDY:
+            delete newState[action.deckStudyId];
             return newState;
         default:
             return state;

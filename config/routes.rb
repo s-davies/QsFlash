@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :deck_studies, only: [:index, :show]
     end
     resources :cards, only: [:create, :destroy, :update, :show]
-    resources :deck_studies, only: [:create, :update]
+    resources :deck_studies, only: [:create, :update, :destroy]
     resource :session, only: [:create, :destroy]
   end
 

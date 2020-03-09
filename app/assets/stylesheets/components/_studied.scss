@@ -1,0 +1,64 @@
+.dsdelete-dropbtn {
+  color: $dark-gray;
+  font-size: 20px;
+}
+.dsdelete-dropbtn:hover {
+  color: $yellow;
+}
+
+.dsdelete-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dsdelete-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: $purple;
+  min-width: 160px;
+//   box-shadow: 0px 0px 8px $gray;
+  z-index: 1;
+  right: -2px;
+  top: 25px;
+}
+
+/* Links inside the dropdown */
+.dsdelete-dropdown-content span {
+  color: $white;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: flex;
+  cursor: pointer;
+}
+
+.fa-trash-alt {
+    padding-right: 11px;
+    color: $white;
+}
+
+.trash-link:hover {
+    background-color: $red;
+    color: $dark-gray;
+}
+
+.trash-link:hover i {
+    color: $dark-gray;
+}
+
+.dsdelete-dropdown-content:before {
+    content:"";
+    position: absolute;
+    right: 0px;
+    top: -12px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 12px 12px 12px;
+    border-color: transparent transparent $purple transparent;
+    z-index:2;
+}
+
+
+
+.dsdelete-dropdown:hover .dsdelete-dropdown-content {display: block;}

@@ -9,6 +9,10 @@ import {
 } from 'react-router-dom';
 
 class Sidebar extends React.Component {
+    componentDidMount() {
+        this.props.fetchDecks()
+    }
+
     render() {
         return(
             <aside className="sidebar">
@@ -34,7 +38,7 @@ class Sidebar extends React.Component {
                 <NavLink to="/sets" activeClassName="sidebar-selected" className="sidebar-link sidebar-sets">
                     <div className="sidebar-link-text">
                         <i className="fas fa-clone"></i>
-                        <p>Sets</p>
+                        <p>Decks ({this.props.createdDecksCount})</p>
                     </div>
                 </NavLink>
                 <NavLink to="/sets" activeClassName="sidebar-selected" className="sidebar-link sidebar-folders">

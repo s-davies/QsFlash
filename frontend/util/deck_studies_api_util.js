@@ -27,3 +27,10 @@ export const updateDeckStudy = (deckStudy) => (
         data: { deckStudy }
     })
 );
+
+export const deleteDeckStudy = (deckStudyId) => (
+    $.ajax({
+        method: 'DELETE',
+        url: `/api/deck_studies/${deckStudyId}`
+    })
+);

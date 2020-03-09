@@ -17,16 +17,16 @@ class Api::DeckStudiesController < ApplicationController
         render :show
     end
 
-    # def create
-    #     @deck_study = DeckStudy.new(deck_study_params)
-    #     @deck_study.progress = 1
-    #     @deck_study.studier = current_user.id
-    #     if @deck_study.save
-    #         render :show
-    #     else
-    #         render json: @deck_study.errors.full_messages, status: 422
-    #     end
-    # end
+    def create
+        @deck_study = DeckStudy.new(deck_study_params)
+        # @deck_study.progress = 1
+        # @deck_study.studier = current_user.id
+        if @deck_study.save
+            render :show
+        else
+            render json: @deck_study.errors.full_messages, status: 422
+        end
+    end
 
     def update
         @deck_study = DeckStudy.find_by(id: params[:id])
@@ -35,6 +35,11 @@ class Api::DeckStudiesController < ApplicationController
         else
             render json: @deck_study.errors.full_messages, status: 422
         end
+    end
+
+    def destroy
+        @deckStudy = DeckStudy.find_by(id: params[:id])
+        @deckStudy.destroy
     end
 
     private

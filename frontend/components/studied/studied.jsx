@@ -12,7 +12,8 @@ class Studied extends React.Component {
     this.state = {
       decks: [],
       decksSorted: false,
-      redirect: null
+      redirect: null,
+      dummy: null
     }
   }
 
@@ -28,6 +29,8 @@ class Studied extends React.Component {
     if (currentDeckIdx === sortedDecks.length - 1) {
         this.props.fetchDeckStudy(deck.id)
         .then(() => {
+          deck.deckStudyId = this.props.deckStudy.id;
+          deck.deckStudyStudierId = this.props.deckStudy.studierId;
           deck.deckStudyUpdatedAt = this.props.deckStudy.updatedAt;
           deck.deckStudyCreatedAt = this.props.deckStudy.createdAt;
           //filtering out decks that have been looked at but not actually studied
@@ -91,6 +94,8 @@ class Studied extends React.Component {
         });
       } else {
         this.props.fetchDeckStudy(deck.id).then(() => {
+          deck.deckStudyId = this.props.deckStudy.id;
+          deck.deckStudyStudierId = this.props.deckStudy.studierId;
           deck.deckStudyUpdatedAt = this.props.deckStudy.updatedAt;
           deck.deckStudyCreatedAt = this.props.deckStudy.createdAt;
           this.sortDecks(sortedDecks, currentDeckIdx + 1);
@@ -101,10 +106,21 @@ class Studied extends React.Component {
 
   handleRedirect(deckId) {
     return e => {
-      this.setState({ redirect: `/${deckId}/flash-cards`})
+      if (e.target.className !== "trash-link" && e.target.className !== "user-page-link") {
+        this.setState({ redirect: `/${deckId}/flash-cards`})
+      }
     }
   }
 
+  handleDelete(deckStudyId, dkOwnerId, dsOwnerId, dkId) {
+    return e => {
+      if (dkOwnerId === dsOwnerId) {
+        this.props.deleteDeckStudy(deckStudyId).then(() => this.props.createDeckStudy({ progress: 1, rating: null, studierId: dsOwnerId, deckId: dkId })).then(() => this.props.fetchDecks()).then(() => this.sortDecks(this.props.decks, 0));
+      } else {
+        this.props.deleteDeckStudy(deckStudyId);
+      }
+    }
+  }
 
   render() {
     if (this.state.redirect) {
@@ -177,15 +193,27 @@ class Studied extends React.Component {
             }
             {today.map((deck, index) => (
                 <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this) } className="small-deck-tile">
-                  <div className="small-deck-tile-inner">
+                  <div className="small-deck-tile-left">
                     <div className="small-deck-tile-top">
                       <p>{deck.cardCount} Terms </p>
-                      <Link>{this.props.users[deck.ownerId].username}</Link>
+                      <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                     </div>
                     <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                     </div>
                   </div>
+                  {/* <div className="small-deck-tile-right">
+                    <i className="fas fa-ellipsis-h"></i>
+                  </div> */}
+                {this.props.user.id === this.props.currentUser.id ?
+                  <div className="small-deck-tile-right dsdelete-dropdown">
+                    <i className="fas fa-ellipsis-h dsdelete-dropbtn"></i>
+                    <div className="dsdelete-dropdown-content">
+                      
+                      <span className="trash-link" onClick={this.handleDelete(deck.deckStudyId, deck.ownerId, deck.deckStudyStudierId, deck.id).bind(this)} ><i className="fas fa-trash-alt"></i><p>Remove</p></span>
+                    </div>
+                  </div>
+                : "" }
                 </div>
             ))}
             {thisMonth.length > 0 ?
@@ -196,14 +224,17 @@ class Studied extends React.Component {
             }
             {thisMonth.map((deck, index) => (
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
-                <div className="small-deck-tile-inner">
+                <div className="small-deck-tile-left">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                   </div>
+                </div>
+                <div className="small-deck-tile-right">
+                  <i className="fas fa-ellipsis-h"></i>
                 </div>
               </div>
             ))}
@@ -215,14 +246,17 @@ class Studied extends React.Component {
             }
             {lastMonth.map((deck, index) => (
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
-                <div className="small-deck-tile-inner">
+                <div className="small-deck-tile-left">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                   </div>
+                </div>
+                <div className="small-deck-tile-right">
+                  <i className="fas fa-ellipsis-h"></i>
                 </div>
               </div>
             ))}
@@ -234,14 +268,17 @@ class Studied extends React.Component {
             }
             {thisYear.map((deck, index) => (
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
-                <div className="small-deck-tile-inner">
+                <div className="small-deck-tile-left">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                   </div>
+                </div>
+                <div className="small-deck-tile-right">
+                  <i className="fas fa-ellipsis-h"></i>
                 </div>
               </div>
             ))}
@@ -253,14 +290,17 @@ class Studied extends React.Component {
             }
             {lastYear.map((deck, index) => (
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
-                <div className="small-deck-tile-inner">
+                <div className="small-deck-tile-left">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                   </div>
+                </div>
+                <div className="small-deck-tile-right">
+                  <i className="fas fa-ellipsis-h"></i>
                 </div>
               </div>
             ))}
