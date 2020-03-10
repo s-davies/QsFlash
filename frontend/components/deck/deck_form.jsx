@@ -242,16 +242,17 @@ class DeckForm extends React.Component {
                     card.deckId = deck.deck.id
                     card.order = i + 1;
                     if (!isOldCard) {
-                        that.props.createCard(card).then(card => this.props.createCardStudy({
+                        that.props.createCard(card).then(card => {
+                            this.props.createCardStudy({
                             starred: false,
-                            correctness_count: 0,
-                            learn_count: 0,
-                            write_count: 0,
-                            spell_count: 0,
-                            test_count: 0,
-                            card_id: card.id,
-                            deck_id: card.deckId
-                        }));
+                            correctnessCount: 0,
+                            learnCount: 0,
+                            writeCount: 0,
+                            spellCount: 0,
+                            testCount: 0,
+                            cardId: card.card.id,
+                            deckId: card.card.deckId
+                        })});
                     } else {
                         that.props.updateCard(card);
                     }

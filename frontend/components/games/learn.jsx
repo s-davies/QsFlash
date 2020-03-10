@@ -9,16 +9,14 @@ class Learn extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      
-    }
+      cards: Object.assign([], this.props.cards)
+    };
   }
 
   componentDidMount() {
-    this.props.fetchDecks().then(() => this.sortDecks(this.props.decks, 0));
-    this.props.fetchUsers();
+    this.props.fetchCards().then(() => this.props.fetchCardStudies());
+    
   }
-
-
 
   handleRedirect(deckId) {
     return e => {
@@ -34,28 +32,8 @@ class Learn extends React.Component {
 
 
     return (
-      <div className="latest">
-        <div className="latest-header">
-          <h1>RECENT</h1>
-          <Link to={`/${this.props.currentUser.id}/recent`}><p>View all</p><i className="fas fa-chevron-right"></i></Link>
-        </div>
-        <div className="medium-deck-tiles">
-          {this.state.decks.map((deck, index) => (
-            index > 5 ? "" :
-              <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="medium-deck-tile">
-                <div className="medium-deck-tile-inner">
-                  <div className="medium-deck-tile-right">
-                    <h3>{deck.title}</h3>
-                    <p>{deck.cardCount} terms {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
-                  </div>
-                  <div className="medium-deck-tile-right" >
-
-                  </div>
-                </div>
-              </div>
-          ))}
-        </div>
+      <div className="learn">
+        
       </div>
     )
   }

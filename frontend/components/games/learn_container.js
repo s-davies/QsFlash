@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import { fetchCardStudies } from '';
+import { fetchCards } from '../../actions/card_actions'
+import { fetchCardStudies } from '../../actions/card_study_actions';
 import Learn from './learn';
 
 const mapStateToProps = (state) => {
@@ -11,7 +12,7 @@ const mapStateToProps = (state) => {
     card.correctness_count = cardStudies[card.id].correctnessCount;
     card.learn_count = cardStudies[card.id].learnCount;
   }
-
+  cards = cards.sort((a, b) => (a.order > b.order) ? 1 : -1);
   return {
     cards: cards,
     currentUser: state.entities.users[state.session.id]

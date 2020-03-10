@@ -400,7 +400,7 @@ class DeckPage extends React.Component {
                 <div className="deck-page-top">
                     <div className="deck-page-learn">
                         <h3>STUDY</h3>
-                        <Link to="/" >
+                        <Link to={`/${this.props.deck.id}/learn`} >
                             <i className="fab fa-buffer"></i>
                             <label>Flashcards</label>
                         </Link>
