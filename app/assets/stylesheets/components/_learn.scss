@@ -39,6 +39,12 @@
   font-size: 18px;
 }
 
+.game-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .game-sidebar-header {
   display: flex;
   align-items: center;
@@ -94,6 +100,17 @@
   width: 200px;
   border-radius: 5px;
   position: relative;
+  margin: 20px;
+}
+
+.learn-card-correct {
+  border: 2px solid $green;
+  padding: 15px 10px;
+  width: 200px;
+  border-radius: 5px;
+  position: relative;
+  margin: 20px;
+  background-color: $green;
 }
 
 .learn-card-answer:hover {
@@ -163,4 +180,201 @@
 
 #learn-mastery-0 {
   color: $dark-gray;
+}
+
+.learn-options-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid $lighter-gray;
+  border-radius: 5px;
+  padding: 12px;
+  margin: 20px;
+  color: $teal;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.learn-options-button i {
+  padding-right: 10px;
+}
+
+.learn-options-button:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
+}
+
+//options modal
+.options-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 4; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.show-modal {
+    display: block;
+}
+
+.options-div-box {
+    display: flex;
+    flex-direction: column;
+  background-color: $white;
+  margin: 15% auto; /* 15% from the top and centered */
+//   padding: 20px;
+  // height: 620px;
+  width: 600px; /* Could be more or less, depending on screen size */
+  color: $light-gray;
+}
+
+.options-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $purple;
+    height: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 32px;
+    color: $white;
+    font-weight: 700;
+}
+
+.options-banner h1 {
+    background-color: $purple;
+    padding: 0px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.options-banner div {
+    // background-color: $dark-purple;
+    border: 3px solid $dark-purple;
+    padding: 8px 14px 8px 14px;
+    border-radius: 100%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.options-banner div:hover {
+    background-color: $dark-purple;
+}
+
+.options-content {
+  background-color: $white;
+}
+
+.options-content span {
+  color: $dark-gray;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.options-content p {
+  color: $teal;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.options-content p:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
+  cursor: pointer;
+}
+
+.options-radio-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.options-reset-div {
+  display: flex;
+  flex-direction: column;
+  padding-left: 140px;
+}
+
+.options-radio-div button {
+  padding: 8px 20px;
+  font-size: 15px;
+}
+
+.options-radio-div button:first-of-type {
+  border-left: 2px solid $lighter-gray;
+  border-top: 2px solid $lighter-gray;
+  border-bottom: 2px solid $lighter-gray;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.options-radio-div button:last-of-type {
+  border-right: 2px solid $lighter-gray;
+  border-top: 2px solid $lighter-gray;
+  border-bottom: 2px solid $lighter-gray;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.options-selected {
+  background-color: $yellow;
+  color: $dark-gray;
+}
+
+.options-unselected {
+  background-color: $white;
+  color: $teal;
+}
+
+.options-unselected:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
+}
+
+.options-top {
+  display: flex;
+  padding: 25px;
+  border-bottom: 1px solid $lightest-gray;
+}
+
+.options-bottom {
+  display: flex;
+  padding: 25px;
+}
+
+.options-audio-div {
+  display: flex;
+  flex-direction: column;
+  padding-left: 120px;
+}
+
+//select-drop-down
+
+.options-field {
+    display: flex;
+    flex-direction: column;
+    color: $dark-gray;
+    font-size: 13px;
+}
+
+.options-field select{
+    height: 38px;
+    width: 120px;
+    background-color: $white;
+    font-family: $cabin;
+    font-size: 15px;
+    color: $teal;
+    border: 2px solid $lighter-gray;
+}
+
+.options-field select:hover{
+    transition: color 0.2s ease;
+    color: $yellow;
+    cursor: pointer;
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchCards } from '../../actions/card_actions'
-import { fetchCardStudies } from '../../actions/card_study_actions';
+import { fetchCardStudies, updateCardStudy } from '../../actions/card_study_actions';
 import Learn from './learn';
 
 function shuffleArray(array) {
@@ -37,7 +37,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchCards: (deckId) => dispatch(fetchCards(deckId)),
-  fetchCardStudies: deckId => dispatch(fetchCardStudies(deckId))
+  fetchCardStudies: deckId => dispatch(fetchCardStudies(deckId)),
+  updateCardStudy: cardStudy => dispatch(updateCardStudy(cardStudy))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Learn);
