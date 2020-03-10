@@ -11,4 +11,5 @@ class DeckStudy < ApplicationRecord
     belongs_to :studier,
         foreign_key: :studier_id,
         class_name: :User
+
 end

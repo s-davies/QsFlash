@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import DeckForm from './deck_form';
 import { fetchDeck, updateDeck } from '../../actions/deck_actions';
 import { updateCard, createCard, deleteCard, fetchCards} from '../../actions/card_actions';
+import { createCardStudy } from '../../actions/card_study_actions';
 
 class EditDeckForm extends React.Component {
     componentDidMount() {
@@ -20,6 +21,7 @@ class EditDeckForm extends React.Component {
                 updateCard={updateCard}
                 deleteCard={deleteCard}
                 fetchCards={fetchCards}
+                createCardStudy={createCardStudy}
                 cards={cards}
                 formType={formType}
                 deck={deck} />
@@ -40,7 +42,8 @@ const mapDispatchToProps = dispatch => ({
     createCard: (card) => dispatch(createCard(card)),
     updateCard: (card) => dispatch(updateCard(card)),
     deleteCard: (cardId) => dispatch(deleteCard(cardId)),
-    fetchCards: (deckId) => dispatch(fetchCards(deckId))
+    fetchCards: (deckId) => dispatch(fetchCards(deckId)),
+    createCardStudy: cardStudy => dispatch(createCardStudy(cardStudy))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditDeckForm);

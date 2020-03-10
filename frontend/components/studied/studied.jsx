@@ -124,7 +124,7 @@ class Studied extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
+      return <Redirect push to={this.state.redirect} />
     }
 
     if (!this.props.user) return null;

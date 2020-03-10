@@ -18,6 +18,11 @@ class User < ApplicationRecord
         class_name: :DeckStudy,
         dependent: :destroy
 
+    has_many :card_studies,
+        foreign_key: :studier_id,
+        class_name: :CardStudy,
+        dependent: :destroy
+
     has_many :decks_studied, through: :deck_studies, source: :deck
 
     def self.find_by_credentials(username, password)

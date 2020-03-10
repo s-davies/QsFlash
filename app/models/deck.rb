@@ -15,5 +15,10 @@ class Deck < ApplicationRecord
         class_name: :DeckStudy,
         dependent: :destroy
 
+    has_many :card_studies,
+        foreign_key: :deck_id,
+        class_name: :CardStudy,
+        dependent: :destroy
+
     has_many :studiers, through: :deck_studies, source: :studier
 end

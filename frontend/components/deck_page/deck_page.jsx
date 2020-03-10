@@ -164,7 +164,7 @@ class DeckPage extends React.Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to={this.state.redirect} />
+            return <Redirect push to={this.state.redirect} />
         }
         if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false) return null;
         let cardStyles = {

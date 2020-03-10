@@ -1,0 +1,1 @@
+json.extract! card_study, :id, :starred, :correctness_count, :learn_count, :write_count, :spell_count, :test_count, :card_id, :deck_id, :studier_id

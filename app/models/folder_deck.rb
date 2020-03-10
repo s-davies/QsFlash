@@ -1,0 +1,2 @@
+class FolderDeck < ApplicationRecord
+end

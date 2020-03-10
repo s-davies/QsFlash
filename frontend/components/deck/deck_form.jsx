@@ -72,6 +72,21 @@ class DeckForm extends React.Component {
         }
     }
 
+    // componentCleanup() {
+    //     // whatever you want to do when the component is unmounted or page refreshes
+    //     // let newDeckStudy = this.state.deckStudy
+    //     // if (newDeckStudy) {
+    //     //     newDeckStudy.progress = this.state.progress;
+    //     //     this.props.updateDeckStudy(newDeckStudy)
+    //     // }
+    //     debugger
+    // }
+
+    // componentWillUnmount() {
+    //     this.componentCleanup();
+    //     window.removeEventListener('beforeunload', this.componentCleanup);
+    // }
+
     onDragEnd(result) {
         // dropped outside the list
         if (!result.destination) {
@@ -227,7 +242,16 @@ class DeckForm extends React.Component {
                     card.deckId = deck.deck.id
                     card.order = i + 1;
                     if (!isOldCard) {
-                        that.props.createCard(card);
+                        that.props.createCard(card).then(card => this.props.createCardStudy({
+                            starred: false,
+                            correctness_count: 0,
+                            learn_count: 0,
+                            write_count: 0,
+                            spell_count: 0,
+                            test_count: 0,
+                            card_id: card.id,
+                            deck_id: card.deckId
+                        }));
                     } else {
                         that.props.updateCard(card);
                     }
@@ -248,7 +272,7 @@ class DeckForm extends React.Component {
     
     render() {
         if (this.state.redirect) {
-            return <Redirect to={this.state.redirect} />
+            return <Redirect push to={this.state.redirect} />
         }
         
         

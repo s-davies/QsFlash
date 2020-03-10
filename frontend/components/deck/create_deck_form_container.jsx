@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { createDeck} from '../../actions/deck_actions';
 import { createCard } from '../../actions/card_actions';
+import { createCardStudy } from '../../actions/card_study_actions';
 import DeckForm from './deck_form';
 
 const mSTP = (state) => ({
@@ -13,7 +14,8 @@ const mSTP = (state) => ({
 
 const mDTP = (dispatch) => ({
     deckAction: (deck) => dispatch(createDeck(deck)),
-    createCard: (card) => dispatch(createCard(card))
+    createCard: (card) => dispatch(createCard(card)),
+    createCardStudy: cardStudy => dispatch(createCardStudy(cardStudy))
 })
 
 export default connect(

@@ -5,9 +5,11 @@ Rails.application.routes.draw do
     resources :decks, only: [:create, :destroy, :update, :show, :index] do
       resources :cards, only: [:index]
       resources :deck_studies, only: [:index, :show]
+      resources :card_studies, only: [:index]
     end
     resources :cards, only: [:create, :destroy, :update, :show]
     resources :deck_studies, only: [:create, :update, :destroy]
+    resources :card_studies, only: [:create, :update, :destroy]
     resource :session, only: [:create, :destroy]
   end
 
