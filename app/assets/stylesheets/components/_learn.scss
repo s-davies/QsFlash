@@ -1,0 +1,116 @@
+.learn {
+  display: flex;
+}
+
+.game-sidebar{
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    background: $white;
+    min-height: calc(100vh - 80px);
+    position: relative;
+    z-index: 1;
+}
+
+.go-back {
+  display: flex;
+  padding: 20px;
+  border-bottom: 1px solid $lightest-gray;
+}
+
+.go-back:hover {
+  cursor: pointer;
+}
+
+.go-back:hover i {
+  transition: color 0.15s ease;
+  color: $yellow;
+}
+
+.go-back p {
+  color: $dark-gray;
+  font-size: 15px;
+}
+
+.go-back i {
+  color: $teal;
+  padding-right: 10px;
+  font-size: 18px;
+}
+
+.game-sidebar-header {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.game-sidebar-header i {
+  color: $purple;
+  font-size: 26px;
+  padding-right: 15px;
+}
+
+.game-sidebar-header p {
+  color: $dark-gray;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.learn-card {
+  background-color: $white;
+  display: flex;
+  flex: 1;
+  height: 600px;
+  margin-left: 20px;
+  margin-top: 25px;
+  border-top: 5px solid $light-purple;
+}
+
+.learn-card-inner {
+  padding-top: 40px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.learn-card-question {
+  font-size: 32px;
+}
+
+.learn-card-answers {
+  display: flex;
+}
+
+.learn-card-answer {
+  border: 2px solid $teal;
+  padding: 15px 10px;
+  width: 200px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.learn-card-answer:hover {
+  border: 2px solid $yellow;
+  cursor: pointer;
+}
+
+.learn-answer-circle {
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  border: 2px solid $light-gray;
+  position: absolute;
+  text-align: center;
+  background-color: $white;
+  color: $light-gray;
+  box-shadow: 0 0 0 3pt $white;
+  top: 0px;
+  left: -10px;
+}
