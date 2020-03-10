@@ -11,8 +11,9 @@ class Learn extends React.Component {
     this.state = {
       cards: [],
       remaining: 0,
-      familiar: 0,
-      mastered: 0
+      familiar: 1,
+      mastered: 0,
+
     };
   }
 
@@ -58,14 +59,16 @@ class Learn extends React.Component {
               <div className="learn-mastery-remaining">
                 <span>{this.state.remaining}</span>
                 <p>REMAINING</p>
+                <i class="fas fa-long-arrow-alt-down"></i>
               </div>
-              <div className="learn-mastery-familiar">
-                <span>0</span>
-                <p>FAMILIAR</p>
+              <div className="learn-mastery">
+                <span id={`learn-familiar-${this.state.familiar}`}>{this.state.familiar}</span>
+                <div><p>FAMILIAR</p><i className="fas fa-check"></i></div>
+                <i class="fas fa-long-arrow-alt-down"></i>
               </div>
-              <div className="learn-mastery-remaining">
-                <span>0</span>
-                <p>MASTERED</p>
+              <div className="learn-mastery">
+                <span id={`learn-mastery-${this.state.mastered}`}>{this.state.mastered}</span>
+                <div><p>MASTERED</p><i className="fas fa-check-double"></i></div>
               </div>
             </div>
           </div>
