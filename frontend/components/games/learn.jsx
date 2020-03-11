@@ -3,6 +3,8 @@ import {
   Link,
   Redirect
 } from 'react-router-dom';
+import Say from 'react-say';
+import { SayButton } from 'react-say';
 
 class Learn extends React.Component {
 
@@ -201,6 +203,25 @@ class Learn extends React.Component {
       i += 1;
     }
 
+    const textstyle = {
+      play: {
+        hover: {
+          backgroundColor: 'black',
+          color: 'white'
+        },
+        button: {
+          padding: '4',
+          fontFamily: 'Helvetica',
+          fontSize: '1.0em',
+          cursor: 'pointer',
+          pointerEvents: 'none',
+          outline: 'none',
+          backgroundColor: 'inherit',
+          border: 'none'
+        },
+      }
+    };
+
 
     return (
       <div className="learn">
@@ -297,6 +318,12 @@ class Learn extends React.Component {
           <div className="learn-card-inner">
             <div className="learn-card-question">
               <p>{mcAns[0].term}</p>
+              <SayButton
+                onClick={event => console.log(event)}
+                text={`${mcAns[0].term}`}
+              >
+                <i class="fas fa-volume-up"></i>
+              </SayButton>
             </div>
             <div className="learn-card-answers">
                 {mcAns.length === 2 ?
