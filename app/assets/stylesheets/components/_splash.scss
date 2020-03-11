@@ -8,7 +8,7 @@
 .splash-content {
     display: flex;
     // flex-flow: column;
-    // flex: 1 1 auto;
+    flex: 1 1 auto;
     // background-color: $dark-purple;
 }
 
@@ -29,13 +29,13 @@
 }
 
 .splash-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: space-between;
     flex: 1;
     background-color: $purple;
-    height: 100%;
+    // height: 100%;
 }
 
 .splash-left-div {
@@ -46,10 +46,11 @@
 .splash-left-div h1 {
     font-size: 44px;
     font-weight: 700;
+    padding-top: 10px;
 }
 
 .splash-title-div {
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     
 }
 
@@ -57,6 +58,7 @@
     display: flex;
     align-items: center;
     font-size: 18px;
+    padding-top: 40px;
 }
 
 .splash-signup-div a {
@@ -89,7 +91,10 @@
 
 
 .splash-right h4 {
-    padding-top: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    padding-top: 40px;
     color: $white;
     font-size: 24px;
 }
@@ -97,6 +102,8 @@
 .splash-right > p {
     color: $white;
     font-size: 18px;
+    padding-top: 40px;
+    text-align: center;
 }
 
 

@@ -84,6 +84,7 @@
   display: flex;
   // flex: 0.5;
   min-height: 300px;
+  min-width: 500px;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -484,4 +485,54 @@
   transition: background-color 0.15s ease;
   color: $dark-gray;
   background-color: $yellow;
+}
+
+.learn-finished {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.learn-finished span {
+  font-size: 64px;
+}
+
+.learn-finished h1 {
+  font-size: 32px;
+  font-weight: 700;
+  padding-top: 20px;
+}
+
+.learn-finished p {
+  font-size: 18px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.learn-finished button {
+  color: $white;
+  background-color: $teal;
+  font-size: 16px;
+  padding: 15px 25px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.learn-finished button:hover {
+  transition: color 0.15s ease;
+  transition: background-color 0.15s ease;
+  color: $dark-gray;
+  background-color: $yellow;
+}
+
+.learn-finished a {
+  font-size: 16px;
+  color: $teal
+}
+
+.learn-finished a:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
 }

@@ -6,7 +6,7 @@ import {
 import Say from 'react-say';
 import { SayButton } from 'react-say';
 
-class Learn extends React.Component {
+class Spell extends React.Component {
 
   constructor(props) {
     super(props)
@@ -53,7 +53,8 @@ class Learn extends React.Component {
           if (card.learnCount === 2) mast.push(card);
         }
         const remAndFam = rem.concat(fam);
-        this.setState({ allCards: Object.assign([], that.props.cards), remainingAndFamiliar: remAndFam, remainingCards: rem, familiarCards: fam, masteredCards: mast})});
+        this.setState({ allCards: Object.assign([], that.props.cards), remainingAndFamiliar: remAndFam, remainingCards: rem, familiarCards: fam, masteredCards: mast })
+      });
   }
 
   handleRedirect(deckId) {
@@ -81,7 +82,7 @@ class Learn extends React.Component {
 
   handleAnswerTypeChange() {
     if (this.state.optAnsType === "Term") {
-      this.setState({optAnsType: "Definition"});
+      this.setState({ optAnsType: "Definition" });
     } else {
       this.setState({ optAnsType: "Term" });
     }
@@ -90,7 +91,7 @@ class Learn extends React.Component {
   handleStudyStarredChange(opt) {
     return e => {
       if (opt === "All") {
-        this.setState({ allCls: "options-selected", starredCls: "options-unselected"});
+        this.setState({ allCls: "options-selected", starredCls: "options-unselected" });
       } else {
         this.setState({ starredCls: "options-selected", allCls: "options-unselected" });
       }
@@ -119,9 +120,9 @@ class Learn extends React.Component {
         let famCards = Object.assign([], this.state.familiarCards);
         let mastCards = Object.assign([], this.state.masteredCards);
         if (card.learnCount === 1) {
-          remCards = this.state.remainingCards.filter(cd => cd.cardStudyId !== card.cardStudyId );
+          remCards = this.state.remainingCards.filter(cd => cd.cardStudyId !== card.cardStudyId);
           famCards.push(card);
-          this.setState({ 
+          this.setState({
             remainingCards: remCards,
             familiarCards: famCards
           });
@@ -136,7 +137,7 @@ class Learn extends React.Component {
         }
         switch (answerNum) {
           case 1:
-            this.setState({mc1Correct: true});
+            this.setState({ mc1Correct: true });
             break;
           case 2:
             this.setState({ mc2Correct: true });
@@ -150,15 +151,14 @@ class Learn extends React.Component {
           default:
             break;
         }
-        if (remCards.concat(famCards).length !== 0) {
         setTimeout(() => {
-          this.setState({ 
-          twoArr: this.shuffle(this.state.twoArr),
-          threeArr: this.shuffle(this.state.threeArr),
-          fourArr: this.shuffle(this.state.fourArr),
-          remainingAndFamiliar: this.shuffle(remCards.concat(famCards)),
-          allCards: this.shuffle(this.state.allCards)
-        })
+          this.setState({
+            twoArr: this.shuffle(this.state.twoArr),
+            threeArr: this.shuffle(this.state.threeArr),
+            fourArr: this.shuffle(this.state.fourArr),
+            remainingAndFamiliar: this.shuffle(remCards.concat(famCards)),
+            allCards: this.shuffle(this.state.allCards)
+          })
           switch (answerNum) {
             case 1:
               this.setState({ mc1Correct: null });
@@ -175,27 +175,27 @@ class Learn extends React.Component {
             default:
               break;
           }
-      },
-        2000
-        ); }
+        },
+          2000
+        );
       } else {
-        this.setState({lastAnswer: answer, lastQuestion: card});
-        
+        this.setState({ lastAnswer: answer, lastQuestion: card });
+
       }
-      
+
     };
   }
 
   resetDecks() {
-    this.setState({ 
-      lastAnswer: null, 
+    this.setState({
+      lastAnswer: null,
       lastQuestion: null,
       twoArr: this.shuffle(this.state.twoArr),
       threeArr: this.shuffle(this.state.threeArr),
       fourArr: this.shuffle(this.state.fourArr),
       remainingAndFamiliar: this.shuffle(this.state.remainingAndFamiliar),
       allCards: this.shuffle(this.state.allCards)
-     });
+    });
   }
 
   resetProgress() {
@@ -231,7 +231,7 @@ class Learn extends React.Component {
   }
 
   render() {
-
+    debugger
     if (this.state.redirect) {
       return <Redirect push to={this.state.redirect} />
     }
@@ -248,9 +248,7 @@ class Learn extends React.Component {
         if (i === 3) break;
       }
     }
-    // if (mcAns[0] === undefined) {
-    //   debugger
-    // }
+    
     const textstyle = {
       play: {
         hover: {
@@ -269,7 +267,7 @@ class Learn extends React.Component {
         },
       }
     };
-    
+
     return (
       <div className="learn">
         <div className="game-sidebar">
@@ -311,13 +309,13 @@ class Learn extends React.Component {
               </div>
               <div className="options-content">
                 <div className="options-top">
-                <div className="options-radio-div">
-                  <span>STUDY STARRED</span>
-                  <div>
+                  <div className="options-radio-div">
+                    <span>STUDY STARRED</span>
+                    <div>
                       <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
                       <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred</button>
+                    </div>
                   </div>
-                </div>
                   {/* <span>ANSWER WITH</span>
                   <label>Term
                     <input type="checkbox" checked="checked"/>
@@ -329,33 +327,33 @@ class Learn extends React.Component {
                   </label>
                     */}
                   <div className="options-audio-div options-field">
-                      <span>ANSWER WITH</span>
-                      <select value={this.state.optAnsType} onChange={this.handleAnswerTypeChange.bind(this)}>
-                        <option value="Term">
-                          Term
+                    <span>ANSWER WITH</span>
+                    <select value={this.state.optAnsType} onChange={this.handleAnswerTypeChange.bind(this)}>
+                      <option value="Term">
+                        Term
                         </option>
-                        <option value="Definition">Definition</option>
-                      </select>
-                    </div>
-              </div>
+                      <option value="Definition">Definition</option>
+                    </select>
+                  </div>
+                </div>
                 <div className="options-middle">
 
                 </div>
                 <div className="options-bottom">
-                    <div className="options-radio-div">
-                      <span>AUDIO</span>
-                      <div>
-                        <button onClick={this.handleAudioChange("Off").bind(this)} className={this.state.offCls}>Off</button>
-                        <button onClick={this.handleAudioChange("On").bind(this)} className={this.state.onCls}>On</button>
+                  <div className="options-radio-div">
+                    <span>AUDIO</span>
+                    <div>
+                      <button onClick={this.handleAudioChange("Off").bind(this)} className={this.state.offCls}>Off</button>
+                      <button onClick={this.handleAudioChange("On").bind(this)} className={this.state.onCls}>On</button>
 
-                      </div>
                     </div>
-                    <div className="options-reset-div">
-                      <span>RESET PROGRESS</span>
-                      <div>
-                        <p>START OVER</p>
-                      </div>
+                  </div>
+                  <div className="options-reset-div">
+                    <span>RESET PROGRESS</span>
+                    <div>
+                      <p>START OVER</p>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -363,7 +361,7 @@ class Learn extends React.Component {
         </div>
         <div className="learn-card">
           <div className="learn-card-inner">
-            {this.state.allCards.length === this.state.masteredCards.length ? 
+            {this.state.allCards.length === this.state.masteredCards.length ?
               <div className="learn-finished">
                 <span>🏆</span>
                 <h1>Congratulations, you've learned everything!</h1>
@@ -372,161 +370,161 @@ class Learn extends React.Component {
                 <Link to={`/${this.state.allCards[0].deckId}/flash-cards`}>Finish</Link>
               </div>
               :
-            <>
-            {/* for wrong answer */}
-            {this.state.lastAnswer ?
-              <div className="learn-wrong-answer">
-                <div className="learn-wrong-answer-top">
-                  <span>😕 Study this one!</span>
-                </div>
-                <div className="learn-wrong-answer-mid">
-                  <span>DEFINTION</span>
-                  <div>
-                    <p>{this.state.lastQuestion.definition}</p>
-                    <SayButton
-                      onClick={event => console.log(event)}
-                      text={`${this.state.lastQuestion.definition}`}
-                    >
-                      <i className="fas fa-volume-up"></i>
-                    </SayButton>
-                  </div>
-                  <span>CORRECT ANSWER</span>
-                  <div>
-                    <p>{this.state.lastQuestion.term}</p>
-                    <SayButton
-                      onClick={event => console.log(event)}
-                      text={`${this.state.lastQuestion.term}`}
-                    >
-                      <i className="fas fa-volume-up"></i>
-                    </SayButton>
-                  </div>
-                </div>
-                <div className="learn-wrong-answer-bottom">
-                  <span>YOU SAID</span>
-                  <div>
-                    <p>{this.state.lastAnswer.term}</p>
-                    <SayButton
-                      onClick={event => console.log(event)}
-                      text={`${this.state.lastAnswer.term}`}
-                    >
-                      <i className="fas fa-volume-up"></i>
-                    </SayButton>
-                  </div>
-                  <button onClick={this.resetDecks.bind(this)} >Continue</button>
-                </div>
-              </div>
-              :
               <>
-            <div className="learn-card-question">
-              <p>{mcAns[0].term}</p>
-              <SayButton
-                onClick={event => console.log(event)}
-                text={`${mcAns[0].term}`}
-              >
-                <i className="fas fa-volume-up"></i>
-              </SayButton>
-            </div>
-            <div className="learn-card-answers">
-            
-              {mcAns.length === 2 ?
-              <>
-                {this.state.mc1Correct ? 
-                  <div className="learn-card-correct">
-                    <p>Correct! 😀</p>
+                {/* for wrong answer */}
+                {this.state.lastAnswer ?
+                  <div className="learn-wrong-answer">
+                    <div className="learn-wrong-answer-top">
+                      <span>😕 Study this one!</span>
+                    </div>
+                    <div className="learn-wrong-answer-mid">
+                      <span>DEFINTION</span>
+                      <div>
+                        <p>{this.state.lastQuestion.definition}</p>
+                        <SayButton
+                          onClick={event => console.log(event)}
+                          text={`${this.state.lastQuestion.definition}`}
+                        >
+                          <i className="fas fa-volume-up"></i>
+                        </SayButton>
+                      </div>
+                      <span>CORRECT ANSWER</span>
+                      <div>
+                        <p>{this.state.lastQuestion.term}</p>
+                        <SayButton
+                          onClick={event => console.log(event)}
+                          text={`${this.state.lastQuestion.term}`}
+                        >
+                          <i className="fas fa-volume-up"></i>
+                        </SayButton>
+                      </div>
+                    </div>
+                    <div className="learn-wrong-answer-bottom">
+                      <span>YOU SAID</span>
+                      <div>
+                        <p>{this.state.lastAnswer.term}</p>
+                        <SayButton
+                          onClick={event => console.log(event)}
+                          text={`${this.state.lastAnswer.term}`}
+                        >
+                          <i className="fas fa-volume-up"></i>
+                        </SayButton>
+                      </div>
+                      <button onClick={this.resetDecks.bind(this)} >Continue</button>
+                    </div>
                   </div>
                   :
-                  <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[0]], 1).bind(this)}>
-                    <p>{mcAns[this.state.twoArr[0]].definition}</p>
-                    <span className="learn-answer-circle">1</span>
-                  </div>}
-                {this.state.mc2Correct ?
-                  <div className="learn-card-correct">
-                    <p>Correct! 😀</p>
-                  </div>
-                  :
-                  <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[1]], 2).bind(this)}>
-                    <p>{mcAns[this.state.twoArr[1]].definition}</p>
-                    <span className="learn-answer-circle">2</span>
-                  </div>}
-                </>
-                : ""}
-                {mcAns.length === 3 ?
-                <>
-                  {this.state.mc1Correct ?
-                    <div className="learn-card-correct" >
-                      <p>Correct! 😀</p>
+                  <>
+                    <div className="learn-card-question">
+                      <p>{mcAns[0].term}</p>
+                      <SayButton
+                        onClick={event => console.log(event)}
+                        text={`${mcAns[0].term}`}
+                      >
+                        <i className="fas fa-volume-up"></i>
+                      </SayButton>
                     </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[0]], 1).bind(this)}>
-                      <p>{mcAns[this.state.threeArr[0]].definition}</p>
-                      <span className="learn-answer-circle">1</span>
-                    </div>}
-                  {this.state.mc2Correct ?
-                    <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
+                    <div className="learn-card-answers">
+
+                      {mcAns.length === 2 ?
+                        <>
+                          {this.state.mc1Correct ?
+                            <div className="learn-card-correct">
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[0]], 1).bind(this)}>
+                              <p>{mcAns[this.state.twoArr[0]].definition}</p>
+                              <span className="learn-answer-circle">1</span>
+                            </div>}
+                          {this.state.mc2Correct ?
+                            <div className="learn-card-correct">
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[1]], 2).bind(this)}>
+                              <p>{mcAns[this.state.twoArr[1]].definition}</p>
+                              <span className="learn-answer-circle">2</span>
+                            </div>}
+                        </>
+                        : ""}
+                      {mcAns.length === 3 ?
+                        <>
+                          {this.state.mc1Correct ?
+                            <div className="learn-card-correct" >
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[0]], 1).bind(this)}>
+                              <p>{mcAns[this.state.threeArr[0]].definition}</p>
+                              <span className="learn-answer-circle">1</span>
+                            </div>}
+                          {this.state.mc2Correct ?
+                            <div className="learn-card-correct">
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[1]], 2).bind(this)}>
+                              <p>{mcAns[this.state.threeArr[1]].definition}</p>
+                              <span className="learn-answer-circle">2</span>
+                            </div>}
+                          {this.state.mc3Correct ?
+                            <div className="learn-card-correct">
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[2]], 3).bind(this)}>
+                              <p>{mcAns[this.state.threeArr[2]].definition}</p>
+                              <span className="learn-answer-circle">3</span>
+                            </div>}
+                        </>
+                        : ""}
+                      {mcAns.length > 3 ?
+                        <>
+                          {this.state.mc1Correct ?
+                            <div className="learn-card-correct">
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[0]], 1).bind(this)}>
+                              <p>{mcAns[this.state.fourArr[0]].definition}</p>
+                              <span className="learn-answer-circle">1</span>
+                            </div>}
+
+                          {this.state.mc2Correct ?
+                            <div className="learn-card-correct">
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[1]], 2).bind(this)}>
+                              <p>{mcAns[this.state.fourArr[1]].definition}</p>
+                              <span className="learn-answer-circle">2</span>
+                            </div>}
+                          {this.state.mc3Correct ?
+                            <div className="learn-card-correct">
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[2]], 3).bind(this)}>
+                              <p>{mcAns[this.state.fourArr[2]].definition}</p>
+                              <span className="learn-answer-circle">3</span>
+                            </div>}
+                          {this.state.mc4Correct ?
+                            <div className="learn-card-correct">
+                              <p>Correct! 😀</p>
+                            </div>
+                            :
+                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[3]], 4).bind(this)}>
+                              <p>{mcAns[this.state.fourArr[3]].definition}</p>
+                              <span className="learn-answer-circle">4</span>
+                            </div>}
+                        </>
+                        : ""}
+
+
                     </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[1]], 2).bind(this)}>
-                      <p>{mcAns[this.state.threeArr[1]].definition}</p>
-                      <span className="learn-answer-circle">2</span>
-                    </div>}
-                  {this.state.mc3Correct ?
-                    <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
-                    </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[2]], 3).bind(this)}>
-                      <p>{mcAns[this.state.threeArr[2]].definition}</p>
-                      <span className="learn-answer-circle">3</span>
-                    </div>}
-                </> 
-                : ""}
-                {mcAns.length > 3 ?
-                <>
-                  {this.state.mc1Correct ?
-                    <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
-                    </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[0]], 1).bind(this)}>
-                      <p>{mcAns[this.state.fourArr[0]].definition}</p>
-                      <span className="learn-answer-circle">1</span>
-                    </div>}
-                
-                  {this.state.mc2Correct ?
-                    <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
-                    </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[1]], 2).bind(this)}>
-                      <p>{mcAns[this.state.fourArr[1]].definition}</p>
-                      <span className="learn-answer-circle">2</span>
-                    </div>}
-                  {this.state.mc3Correct ?
-                    <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
-                    </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[2]], 3).bind(this)}>
-                      <p>{mcAns[this.state.fourArr[2]].definition}</p>
-                      <span className="learn-answer-circle">3</span>
-                    </div>}
-                  {this.state.mc4Correct ?
-                    <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
-                    </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[3]], 4).bind(this)}>
-                      <p>{mcAns[this.state.fourArr[3]].definition}</p>
-                      <span className="learn-answer-circle">4</span>
-                    </div>}
-                </> 
-                : ""}
-                
-                
-            </div>
-              </>
-            }
+                  </>
+                }
               </>
             }
           </div>
@@ -536,4 +534,4 @@ class Learn extends React.Component {
   }
 }
 
-export default Learn;
+export default Spell;

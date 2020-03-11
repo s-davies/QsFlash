@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
   let cards = Object.keys(state.entities.cards).map(key => state.entities.cards[key]);
   let cardKeys = {};
   let cardStudies = Object.values(state.entities.cardStudies);
-  
+
   if (Object.values(cardStudies).length > 0 && cards.length === cardStudies.length) {
     for (let i = 0; i < cardStudies.length; i++) {
       const cardStudy = cardStudies[i];

@@ -412,7 +412,7 @@ class DeckPage extends React.Component {
                             <i className="fas fa-pencil-alt"></i>
                             <label>Write</label>
                         </Link>
-                        <Link to="/" >
+                        <Link to={`/${this.props.deck.id}/spell`} >
                             <i className="fas fa-volume-up"></i>
                             <label>Spell</label>
                         </Link>

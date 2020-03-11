@@ -113,6 +113,9 @@ class SessionForm extends React.Component {
 
   componentDidMount() {
     this.props.fetchUsers();
+    if (this.props.formType === "Log in") {
+      this.setState({ username: "DemoUser", password: "DemoUser", submitDisabled: false});
+    }
   }
 
   render() {
