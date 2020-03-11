@@ -10,14 +10,13 @@ class Learn extends React.Component {
     super(props)
     this.state = {
       allCards: [],
+      remainingAndFamiliar: [],
       remainingCards: [],
+      familiarCards: [],
       masteredCards: [],
       twoArr: this.shuffle([0, 1]),
       threeArr: this.shuffle([0, 1, 2]),
       fourArr: this.shuffle([0, 1, 2, 3]),
-      remaining: 0,
-      familiar: 0,
-      mastered: 0,
       optionsCls: "options-modal",
       optStarred: false,
       allCls: "options-selected",
@@ -39,7 +38,17 @@ class Learn extends React.Component {
     this.props.fetchCards(this.props.match.params.deckId)
       .then(() => this.props.fetchCardStudies(this.props.match.params.deckId))
       .then(() => {
-        this.setState({ allCards: Object.assign([], that.props.cards), remainingCards: Object.assign([], that.props.cards), remaining: that.props.cards.length})});
+        const rem = [];
+        const fam = [];
+        const mast = [];
+        for (let i = 0; i < this.props.cards.length; i++) {
+          const card = this.props.cards[i];
+          if (card.learnCount === 0) rem.push(card);
+          if (card.learnCount === 1) fam.push(card);
+          if (card.learnCount === 2) mast.push(card);
+        }
+        const remAndFam = rem.concat(fam);
+        this.setState({ allCards: Object.assign([], that.props.cards), remainingAndFamiliar: remAndFam, remainingCards: rem, familiarCards: fam, masteredCards: mast})});
   }
 
   handleRedirect(deckId) {
@@ -95,10 +104,31 @@ class Learn extends React.Component {
 
   answerMultipleChoice(answer, answerNum) {
     return e => {
-
-      if (answer.term === this.state.allCards[0].term && answer.definition === this.state.allCards[0].definition) {
+      const card = Object.assign({}, this.state.remainingAndFamiliar[0]);
+      if (answer.term === card.term && answer.definition === card.definition) {
         console.log("hi there");
-        
+        card.learnCount += 1;
+        card.correctnessCount += 1;
+        this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, learnCount: card.learnCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
+        let remCards = Object.assign([], this.state.remainingCards);
+        let famCards = Object.assign([], this.state.familiarCards);
+        let mastCards = Object.assign([], this.state.masteredCards);
+        if (card.learnCount === 1) {
+          remCards = this.state.remainingCards.filter(cd => cd.cardStudyId !== card.cardStudyId );
+          famCards.push(card);
+          this.setState({ 
+            remainingCards: remCards,
+            familiarCards: famCards
+          });
+        }
+        if (card.learnCount === 2) {
+          famCards = this.state.familiarCards.filter(cd => cd.cardStudyId !== card.cardStudyId);
+          mastCards.push(card)
+          this.setState({
+            familiarCards: famCards,
+            masteredCards: mastCards
+          });
+        }
         switch (answerNum) {
           case 1:
             this.setState({mc1Correct: true});
@@ -120,6 +150,7 @@ class Learn extends React.Component {
           twoArr: this.shuffle(this.state.twoArr),
           threeArr: this.shuffle(this.state.threeArr),
           fourArr: this.shuffle(this.state.fourArr),
+          remainingAndFamiliar: this.shuffle(remCards.concat(famCards)),
           allCards: this.shuffle(this.state.allCards)
         })
           switch (answerNum) {
@@ -163,6 +194,14 @@ class Learn extends React.Component {
     // debugger
     if (this.state.allCards.length === 0) return null;
 
+    const mcAns = [this.state.remainingAndFamiliar[0]];
+    let i = 0;
+    while (mcAns.length < 4 || i < this.state.allCards.length) {
+      if (this.state.allCards[i] !== mcAns[0]) mcAns.push(this.state.allCards[i]);
+      i += 1;
+    }
+
+
     return (
       <div className="learn">
         <div className="game-sidebar">
@@ -177,17 +216,17 @@ class Learn extends React.Component {
             </span>
             <div className="learn-mastery-counts">
               <div className="learn-mastery-remaining">
-                <span>{this.state.remaining}</span>
+                <span>{this.state.remainingCards.length}</span>
                 <p>REMAINING</p>
                 <i className="fas fa-long-arrow-alt-down"></i>
               </div>
               <div className="learn-mastery">
-                <span id={`learn-familiar-${this.state.familiar}`}>{this.state.familiar}</span>
+                <span id={`learn-familiar-${this.state.familiarCards.length}`}>{this.state.familiarCards.length}</span>
                 <div><p>FAMILIAR</p><i className="fas fa-check"></i></div>
                 <i className="fas fa-long-arrow-alt-down"></i>
               </div>
               <div className="learn-mastery">
-                <span id={`learn-mastery-${this.state.mastered}`}>{this.state.mastered}</span>
+                <span id={`learn-mastery-${this.state.masteredCards.length}`}>{this.state.masteredCards.length}</span>
                 <div><p>MASTERED</p><i className="fas fa-check-double"></i></div>
               </div>
             </div>
@@ -257,18 +296,18 @@ class Learn extends React.Component {
         <div className="learn-card">
           <div className="learn-card-inner">
             <div className="learn-card-question">
-              <p>{this.state.allCards[0].term}</p>
+              <p>{mcAns[0].term}</p>
             </div>
             <div className="learn-card-answers">
-                {this.state.allCards.length === 2 ?
+                {mcAns.length === 2 ?
                 <>
                 {this.state.mc1Correct ? 
                     <div className="learn-card-correct">
                       <p>Correct! 😀</p>
                     </div>
                     :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.twoArr[0]], 1).bind(this)}>
-                      <p>{this.state.allCards[this.state.twoArr[0]].definition}</p>
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[0]], 1).bind(this)}>
+                      <p>{mcAns[this.state.twoArr[0]].definition}</p>
                       <span className="learn-answer-circle">1</span>
                     </div>}
                   {this.state.mc2Correct ?
@@ -276,22 +315,22 @@ class Learn extends React.Component {
                       <p>Correct! 😀</p>
                     </div>
                     :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.twoArr[1]], 2).bind(this)}>
-                      <p>{this.state.allCards[this.state.twoArr[1]].definition}</p>
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[1]], 2).bind(this)}>
+                      <p>{mcAns[this.state.twoArr[1]].definition}</p>
                       <span className="learn-answer-circle">2</span>
                     </div>}
                 </>
                 : ""
                 }
-                {this.state.allCards.length === 3 ?
+                {mcAns.length === 3 ?
                 <>
                   {this.state.mc1Correct ?
                     <div className="learn-card-correct" >
                       <p>Correct! 😀</p>
                     </div>
                     :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.threeArr[0]], 1).bind(this)}>
-                      <p>{this.state.allCards[this.state.threeArr[0]].definition}</p>
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[0]], 1).bind(this)}>
+                      <p>{mcAns[this.state.threeArr[0]].definition}</p>
                       <span className="learn-answer-circle">1</span>
                     </div>}
                     {this.state.mc2Correct ?
@@ -299,8 +338,8 @@ class Learn extends React.Component {
                         <p>Correct! 😀</p>
                       </div>
                       :
-                      <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.threeArr[1]], 2).bind(this)}>
-                        <p>{this.state.allCards[this.state.threeArr[1]].definition}</p>
+                      <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[1]], 2).bind(this)}>
+                        <p>{mcAns[this.state.threeArr[1]].definition}</p>
                         <span className="learn-answer-circle">2</span>
                       </div>}
                   {this.state.mc3Correct ?
@@ -308,13 +347,13 @@ class Learn extends React.Component {
                       <p>Correct! 😀</p>
                     </div>
                     :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.threeArr[2]], 3).bind(this)}>
-                      <p>{this.state.allCards[this.state.threeArr[2]].definition}</p>
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[2]], 3).bind(this)}>
+                      <p>{mcAns[this.state.threeArr[2]].definition}</p>
                       <span className="learn-answer-circle">3</span>
                     </div>}
                 
                 </> : ""}
-                {this.state.allCards.length > 3 ?
+                {mcAns.length > 3 ?
                   <>
                 {
                   this.state.mc1Correct ?
@@ -322,8 +361,8 @@ class Learn extends React.Component {
                       <p>Correct! 😀</p>
                     </div>
                     :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.fourArr[0]], 1).bind(this)}>
-                      <p>{this.state.allCards[this.state.fourArr[0]].definition}</p>
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[0]], 1).bind(this)}>
+                      <p>{mcAns[this.state.fourArr[0]].definition}</p>
                       <span className="learn-answer-circle">1</span>
                     </div>
                 }
@@ -332,8 +371,8 @@ class Learn extends React.Component {
                 <p>Correct! 😀</p>
               </div>
               :
-                      <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.fourArr[1]], 2).bind(this)}>
-                <p>{this.state.allCards[this.state.fourArr[1]].definition}</p>
+                      <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[1]], 2).bind(this)}>
+                <p>{mcAns[this.state.fourArr[1]].definition}</p>
                 <span className="learn-answer-circle">2</span>
               </div>}
                   {this.state.mc3Correct ?
@@ -341,8 +380,8 @@ class Learn extends React.Component {
                   <p>Correct! 😀</p>
                 </div>
                 :
-                <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.fourArr[2]], 3).bind(this)}>
-                  <p>{this.state.allCards[this.state.fourArr[2]].definition}</p>
+                <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[2]], 3).bind(this)}>
+                  <p>{mcAns[this.state.fourArr[2]].definition}</p>
                   <span className="learn-answer-circle">3</span>
                 </div>}
                   {this.state.mc4Correct ?
@@ -350,8 +389,8 @@ class Learn extends React.Component {
                       <p>Correct! 😀</p>
                     </div>
                     :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(this.state.allCards[this.state.fourArr[3]], 4).bind(this)}>
-                      <p>{this.state.allCards[this.state.fourArr[3]].definition}</p>
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[3]], 4).bind(this)}>
+                      <p>{mcAns[this.state.fourArr[3]].definition}</p>
                       <span className="learn-answer-circle">4</span>
                     </div>}
                 </> 

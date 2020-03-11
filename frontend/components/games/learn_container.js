@@ -15,13 +15,14 @@ const mapStateToProps = (state) => {
   let cardKeys = {};
   let cardStudies = Object.values(state.entities.cardStudies);
   
-  if (Object.values(cardStudies).length > 0) {
+  if (Object.values(cardStudies).length > 0 && cards.length === cardStudies.length) {
     for (let i = 0; i < cardStudies.length; i++) {
       const cardStudy = cardStudies[i];
       cardKeys[cardStudy.cardId] = cardStudy;
     }
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
+      card.cardStudyId = cardKeys[card.id].id;
       card.starred = cardKeys[card.id].starred;
       card.correctnessCount = cardKeys[card.id].correctnessCount;
       card.learnCount = cardKeys[card.id].learnCount;
