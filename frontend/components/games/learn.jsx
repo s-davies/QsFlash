@@ -237,7 +237,6 @@ class Learn extends React.Component {
     }
     // debugger
     if (this.state.allCards.length === 0) return null;
-    if (this.props.cardStudies.length !== this.state.allCards.length) return null;
     const mcAns = [this.state.remainingAndFamiliar[0]];
     let i = 0;
 

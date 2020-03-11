@@ -32,7 +32,6 @@ const mapStateToProps = (state) => {
   // cards = cards.sort((a, b) => (a.order > b.order) ? 1 : -1);
   return {
     cards: cards,
-    cardStudies: cardStudies,
     currentUser: state.entities.users[state.session.id]
   }
 };
