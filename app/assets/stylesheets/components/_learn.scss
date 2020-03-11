@@ -79,10 +79,8 @@
 }
 
 .learn-card-inner {
-  padding-top: 40px;
   padding-bottom: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  
   display: flex;
   // flex: 0.5;
   min-height: 300px;
@@ -92,6 +90,9 @@
 
 .learn-card-question {
   font-size: 32px;
+  padding-top: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
   display: flex;
   flex: 1;
   justify-content: space-between;
@@ -106,6 +107,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .learn-card-answer {
@@ -395,4 +398,57 @@
 
 .text-to-speech{
   background-color: red;
+}
+
+.learn-wrong-answer {
+  min-width: 500px;
+}
+
+.learn-wrong-answer span {
+  padding-bottom: 15px;
+}
+
+.learn-wrong-answer-top {
+  border-bottom: 1px solid $lightest-gray;
+  padding: 20px 30px;
+}
+
+.learn-wrong-answer-top span {
+  font-size: 36px;
+  font-weight: 700;
+  color: $red;
+}
+
+.learn-wrong-answer-mid {
+  margin: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $lightest-gray;
+}
+
+.learn-wrong-answer-mid span {
+  font-size: 12px;
+  padding-bottom: 15px;
+}
+
+.learn-wrong-answer-mid span:first-of-type {
+  color: $gray;
+}
+
+.learn-wrong-answer-mid span:last-of-type {
+  color: $green;
+}
+
+.learn-wrong-answer-mid p:first-of-type {
+  padding-bottom: 20px;
+}
+
+.learn-wrong-answer-bottom {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.learn-wrong-answer-bottom span {
+  color: $red;
+  font-size: 12px;
+  padding-bottom: 20px;
 }

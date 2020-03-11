@@ -28,10 +28,12 @@ class Learn extends React.Component {
       optAudio: false,
       offCls: "options-selected",
       onCls: "options-unselected",
-      mc1Correct: false,
-      mc2Correct: false,
-      mc3Correct: false,
-      mc4Correct: false
+      mc1Correct: null,
+      mc2Correct: null,
+      mc3Correct: null,
+      mc4Correct: null,
+      lastAnswer: null,
+      lastQuestion: null
     };
   }
 
@@ -157,16 +159,16 @@ class Learn extends React.Component {
         })
           switch (answerNum) {
             case 1:
-              this.setState({ mc1Correct: false });
+              this.setState({ mc1Correct: null });
               break;
             case 2:
-              this.setState({ mc2Correct: false });
+              this.setState({ mc2Correct: null });
               break;
             case 3:
-              this.setState({ mc3Correct: false });
+              this.setState({ mc3Correct: null });
               break;
             case 4:
-              this.setState({ mc4Correct: false });
+              this.setState({ mc4Correct: null });
               break;
             default:
               break;
@@ -174,9 +176,12 @@ class Learn extends React.Component {
       },
         2000
         );
+      } else {
+        this.setState({lastAnswer: answer, lastQuestion: card});
+        
       }
       
-    }
+    };
   }
 
   shuffle(array) {
@@ -316,6 +321,25 @@ class Learn extends React.Component {
         </div>
         <div className="learn-card">
           <div className="learn-card-inner">
+            {/* for wrong answer */}
+            {this.state.lastAnswer ?
+              <div className="learn-wrong-answer">
+                <div className="learn-wrong-answer-top">
+                  <span>😕 Study this one!</span>
+                </div>
+                <div className="learn-wrong-answer-mid">
+                  <label>DEFINTION</label>
+                  <p>{this.state.lastQuestion.definition}</p>
+                  <span>CORRECT ANSWER</span>
+                  <p>{this.state.lastQuestion.term}</p>
+                </div>
+                <div className="learn-wrong-answer-bottom">
+                  <span>YOU SAID</span>
+                  <p>{this.state.lastAnswer.term}</p>
+                </div>
+              </div>
+              :
+              <>
             <div className="learn-card-question">
               <p>{mcAns[0].term}</p>
               <SayButton
@@ -326,29 +350,29 @@ class Learn extends React.Component {
               </SayButton>
             </div>
             <div className="learn-card-answers">
-                {mcAns.length === 2 ?
-                <>
+            
+              {mcAns.length === 2 ?
+              <>
                 {this.state.mc1Correct ? 
-                    <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
-                    </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[0]], 1).bind(this)}>
-                      <p>{mcAns[this.state.twoArr[0]].definition}</p>
-                      <span className="learn-answer-circle">1</span>
-                    </div>}
-                  {this.state.mc2Correct ?
-                    <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
-                    </div>
-                    :
-                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[1]], 2).bind(this)}>
-                      <p>{mcAns[this.state.twoArr[1]].definition}</p>
-                      <span className="learn-answer-circle">2</span>
-                    </div>}
+                  <div className="learn-card-correct">
+                    <p>Correct! 😀</p>
+                  </div>
+                  :
+                  <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[0]], 1).bind(this)}>
+                    <p>{mcAns[this.state.twoArr[0]].definition}</p>
+                    <span className="learn-answer-circle">1</span>
+                  </div>}
+                {this.state.mc2Correct ?
+                  <div className="learn-card-correct">
+                    <p>Correct! 😀</p>
+                  </div>
+                  :
+                  <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[1]], 2).bind(this)}>
+                    <p>{mcAns[this.state.twoArr[1]].definition}</p>
+                    <span className="learn-answer-circle">2</span>
+                  </div>}
                 </>
-                : ""
-                }
+                : ""}
                 {mcAns.length === 3 ?
                 <>
                   {this.state.mc1Correct ?
@@ -360,15 +384,15 @@ class Learn extends React.Component {
                       <p>{mcAns[this.state.threeArr[0]].definition}</p>
                       <span className="learn-answer-circle">1</span>
                     </div>}
-                    {this.state.mc2Correct ?
-                      <div className="learn-card-correct">
-                        <p>Correct! 😀</p>
-                      </div>
-                      :
-                      <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[1]], 2).bind(this)}>
-                        <p>{mcAns[this.state.threeArr[1]].definition}</p>
-                        <span className="learn-answer-circle">2</span>
-                      </div>}
+                  {this.state.mc2Correct ?
+                    <div className="learn-card-correct">
+                      <p>Correct! 😀</p>
+                    </div>
+                    :
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[1]], 2).bind(this)}>
+                      <p>{mcAns[this.state.threeArr[1]].definition}</p>
+                      <span className="learn-answer-circle">2</span>
+                    </div>}
                   {this.state.mc3Correct ?
                     <div className="learn-card-correct">
                       <p>Correct! 😀</p>
@@ -378,12 +402,11 @@ class Learn extends React.Component {
                       <p>{mcAns[this.state.threeArr[2]].definition}</p>
                       <span className="learn-answer-circle">3</span>
                     </div>}
-                
-                </> : ""}
+                </> 
+                : ""}
                 {mcAns.length > 3 ?
-                  <>
-                {
-                  this.state.mc1Correct ?
+                <>
+                  {this.state.mc1Correct ?
                     <div className="learn-card-correct">
                       <p>Correct! 😀</p>
                     </div>
@@ -391,26 +414,26 @@ class Learn extends React.Component {
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[0]], 1).bind(this)}>
                       <p>{mcAns[this.state.fourArr[0]].definition}</p>
                       <span className="learn-answer-circle">1</span>
+                    </div>}
+                
+                  {this.state.mc2Correct ?
+                    <div className="learn-card-correct">
+                      <p>Correct! 😀</p>
                     </div>
-                }
-                    {this.state.mc2Correct ?
-                      <div className="learn-card-correct">
-                <p>Correct! 😀</p>
-              </div>
-              :
-                      <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[1]], 2).bind(this)}>
-                <p>{mcAns[this.state.fourArr[1]].definition}</p>
-                <span className="learn-answer-circle">2</span>
-              </div>}
+                    :
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[1]], 2).bind(this)}>
+                      <p>{mcAns[this.state.fourArr[1]].definition}</p>
+                      <span className="learn-answer-circle">2</span>
+                    </div>}
                   {this.state.mc3Correct ?
-                <div className="learn-card-correct">
-                  <p>Correct! 😀</p>
-                </div>
-                :
-                <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[2]], 3).bind(this)}>
-                  <p>{mcAns[this.state.fourArr[2]].definition}</p>
-                  <span className="learn-answer-circle">3</span>
-                </div>}
+                    <div className="learn-card-correct">
+                      <p>Correct! 😀</p>
+                    </div>
+                    :
+                    <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[2]], 3).bind(this)}>
+                      <p>{mcAns[this.state.fourArr[2]].definition}</p>
+                      <span className="learn-answer-circle">3</span>
+                    </div>}
                   {this.state.mc4Correct ?
                     <div className="learn-card-correct">
                       <p>Correct! 😀</p>
@@ -421,9 +444,12 @@ class Learn extends React.Component {
                       <span className="learn-answer-circle">4</span>
                     </div>}
                 </> 
-                  : ""
-                }
+                : ""}
+                
+                
             </div>
+              </>
+            }
           </div>
         </div>
       </div>
