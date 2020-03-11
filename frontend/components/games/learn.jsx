@@ -184,6 +184,18 @@ class Learn extends React.Component {
     };
   }
 
+  resetDecks() {
+    this.setState({ 
+      lastAnswer: null, 
+      lastQuestion: null,
+      twoArr: this.shuffle(this.state.twoArr),
+      threeArr: this.shuffle(this.state.threeArr),
+      fourArr: this.shuffle(this.state.fourArr),
+      remainingAndFamiliar: this.shuffle(this.state.remainingAndFamiliar),
+      allCards: this.shuffle(this.state.allCards)
+     });
+  }
+
   shuffle(array) {
     let shuffled = Object.assign([], array);
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -321,6 +333,16 @@ class Learn extends React.Component {
         </div>
         <div className="learn-card">
           <div className="learn-card-inner">
+            {this.state.allCards.length === this.state.masteredCards.length ? 
+              <div>
+                <span>🏆</span>
+                <h1>Congratulations, you've learned everything!</h1>
+                <p>Keep reviewing your terms to make sure they stick</p>
+                <button>Review</button>
+                <Link to={`/${this.state.allCards[0].deckId}/flash-cards`}>Finish</Link>
+              </div>
+              :
+            <>
             {/* for wrong answer */}
             {this.state.lastAnswer ?
               <div className="learn-wrong-answer">
@@ -328,14 +350,39 @@ class Learn extends React.Component {
                   <span>😕 Study this one!</span>
                 </div>
                 <div className="learn-wrong-answer-mid">
-                  <label>DEFINTION</label>
-                  <p>{this.state.lastQuestion.definition}</p>
+                  <span>DEFINTION</span>
+                  <div>
+                    <p>{this.state.lastQuestion.definition}</p>
+                    <SayButton
+                      onClick={event => console.log(event)}
+                      text={`${this.state.lastQuestion.definition}`}
+                    >
+                      <i class="fas fa-volume-up"></i>
+                    </SayButton>
+                  </div>
                   <span>CORRECT ANSWER</span>
-                  <p>{this.state.lastQuestion.term}</p>
+                  <div>
+                    <p>{this.state.lastQuestion.term}</p>
+                    <SayButton
+                      onClick={event => console.log(event)}
+                      text={`${this.state.lastQuestion.term}`}
+                    >
+                      <i class="fas fa-volume-up"></i>
+                    </SayButton>
+                  </div>
                 </div>
                 <div className="learn-wrong-answer-bottom">
                   <span>YOU SAID</span>
-                  <p>{this.state.lastAnswer.term}</p>
+                  <div>
+                    <p>{this.state.lastAnswer.term}</p>
+                    <SayButton
+                      onClick={event => console.log(event)}
+                      text={`${this.state.lastAnswer.term}`}
+                    >
+                      <i class="fas fa-volume-up"></i>
+                    </SayButton>
+                  </div>
+                  <button onClick={this.resetDecks.bind(this)} >Continue</button>
                 </div>
               </div>
               :
@@ -448,6 +495,8 @@ class Learn extends React.Component {
                 
                 
             </div>
+              </>
+            }
               </>
             }
           </div>
