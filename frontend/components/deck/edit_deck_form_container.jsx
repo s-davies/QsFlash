@@ -11,11 +11,12 @@ class EditDeckForm extends React.Component {
     }
 
     render() {
-        const { deckAction, formType, deck, createCard, updateCard, deleteCard, cards, fetchCards} = this.props;
+        const { deckAction, formType, deck, createCard, updateCard, deleteCard, cards, fetchCards, ownProps} = this.props;
 
         if (!deck) return null;
         return (
             <DeckForm
+                ownProps={ownProps}
                 deckAction={deckAction}
                 createCard={createCard}
                 updateCard={updateCard}
@@ -31,6 +32,7 @@ class EditDeckForm extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
+    ownProps: ownProps,
     deck: state.entities.decks[ownProps.match.params.deckId],
     cards: Object.keys(state.entities.cards).map(key => state.entities.cards[key]),
     formType: 'Update Deck'

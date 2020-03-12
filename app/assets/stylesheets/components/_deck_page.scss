@@ -886,6 +886,15 @@
   padding: 25px 0px;
 }
 
+.deck-info-card div {
+  display: flex;
+  align-items: center;
+}
+
+.deck-info-card p {
+  padding: 25px 20px;
+}
+
 .deck-info-card section {
   flex: 0 1;
   margin-top: 10px;
@@ -915,6 +924,7 @@
   background-color: $teal;
   align-self: center;
   border-radius: 5px;
+  margin-top: 20px;
 }
 
 .deck-page-bottom > a:hover {
@@ -924,6 +934,16 @@
   background-color: $yellow
 }
 
-.rarely-missed .deck-info-card {
-  margin-bottom: 20px;
+.solid-star {
+  color: $yellow;
+  cursor: pointer;
+}
+
+.hollow-star {
+  color: $teal;
+  cursor: pointer;
+}
+
+.hollow-star:hover {
+  color: $yellow;
 }

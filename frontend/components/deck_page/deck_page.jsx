@@ -31,8 +31,10 @@ class DeckPage extends React.Component {
 
     componentDidMount() {
         const dId = this.props.match.params.deckId;
-        this.props.fetchDeck(dId).then(() => this.props.fetchUsers());
-        this.props.fetchCards(dId).then(() => this.props.fetchCardStudies(dId));
+        this.props.fetchDeck(dId).then(() => this.props.fetchUsers())
+        .then(() => this.props.fetchCards(dId)).then(() => {
+            this.props.fetchCardStudies(dId)
+        });
         if (this.state.setProgress === false) {
             this.props.fetchDeckStudy(dId).then(() => this.setState({ progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }, () => this.props.fetchDeckStudies(dId)))
         } else {
@@ -56,6 +58,7 @@ class DeckPage extends React.Component {
         this.componentCleanup();
         window.removeEventListener('beforeunload', this.componentCleanup);
     }
+
 
     showDeleteModal() {
         if (this.state.deleteCls === "delete-modal") {
@@ -179,6 +182,18 @@ class DeckPage extends React.Component {
             } else {
                 this.setState({ starredCls: "options-selected", allCls: "options-unselected" });
             }
+        }
+    }
+
+    starCard(card) {
+        return e => {
+            this.props.updateCardStudy({id: card.cardStudyId, starred: true}).then(() => this.props.fetchCardStudies(card.deckId) )
+        }
+    }
+
+    unstarCard(card) {
+        return e => {
+            this.props.updateCardStudy({ id: card.cardStudyId, starred: false }).then(() => this.props.fetchCardStudies(card.deckId))
         }
     }
 
@@ -412,21 +427,28 @@ class DeckPage extends React.Component {
         const usuallyMissed = [];
         const sometimesMissed = [];
         const rarelyMissed = [];
-        const starred = [];
+        let starred = 0;
 
         for (let i = 0; i < this.props.cards.length; i++) {
             const card = this.props.cards[i];
-            if (card.correctnessCount < -1) {
-                usuallyMissed.push(card);
-            } else if (card.correctnessCount > 1) {
-                rarelyMissed.push(card);
+            if (this.state.starredCls === "options-selected") {
+                if (card.starred && card.correctnessCount < -1) {
+                    usuallyMissed.push(card);
+                } else if (card.starred && card.correctnessCount > 1) {
+                    rarelyMissed.push(card);
+                } else if (card.starred) {
+                    sometimesMissed.push(card);
+                }
             } else {
-                sometimesMissed.push(card);
+                if (card.correctnessCount < -1) {
+                    usuallyMissed.push(card);
+                } else if (card.correctnessCount > 1) {
+                    rarelyMissed.push(card);
+                } else {
+                    sometimesMissed.push(card);
+                }
             }
-
-            if (card.starred) {
-                starred.push(card);
-            }
+            if (card.starred) starred += 1;
         }
 
         return (
@@ -614,7 +636,7 @@ class DeckPage extends React.Component {
                                         <div className="options-radio-div">
                                             <div>
                                                 <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
-                                                <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred ({starred.length})</button>
+                                                <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred ({starred})</button>
                                             </div>
                                         </div>
                                         <div id="deck-page-select" className="options-audio-div options-field">
@@ -648,7 +670,7 @@ class DeckPage extends React.Component {
                                                 <section></section>
                                                 <p>{card.definition}</p>
                                                 <div>
-                                                    {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                                                    {card.starred ? <i onClick={this.unstarCard(card).bind(this)} className="fas fa-star solid-star"></i> : <i onClick={this.starCard(card).bind(this)} className="far fa-star hollow-star"></i>}
                                                     <SayButton
                                                         onClick={event => console.log(event)}
                                                         text={`${card.term}`}
@@ -677,7 +699,7 @@ class DeckPage extends React.Component {
                                                 <section></section>
                                                 <p>{card.definition}</p>
                                                 <div>
-                                                    {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                                                    {card.starred ? <i onClick={this.unstarCard(card).bind(this)} className="fas fa-star solid-star"></i> : <i onClick={this.starCard(card).bind(this)} className="far fa-star hollow-star"></i>}
                                                     <SayButton
                                                         onClick={event => console.log(event)}
                                                         text={`${card.term}`}
@@ -706,7 +728,7 @@ class DeckPage extends React.Component {
                                                 <section></section>
                                                 <p>{card.definition}</p>
                                                 <div>
-                                                    {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                                                    {card.starred ? <i onClick={this.unstarCard(card).bind(this)} className="fas fa-star solid-star"></i> : <i onClick={this.starCard(card).bind(this)} className="far fa-star hollow-star"></i>}
                                                     <SayButton
                                                         onClick={event => console.log(event)}
                                                         text={`${card.term}`}

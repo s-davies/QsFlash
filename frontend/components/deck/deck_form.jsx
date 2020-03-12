@@ -270,6 +270,11 @@ class DeckForm extends React.Component {
         }
     }
 
+
+    goBackPage() {
+        this.props.ownProps.history.goBack();
+    }
+
     
     render() {
         if (this.state.redirect) {
@@ -280,7 +285,15 @@ class DeckForm extends React.Component {
         return (
             <div className="create-forms">
                 <Header className="deck-form-header">
-                    <h1>{this.props.formType === "Create Deck" ? "Create a new study deck" : "Edit study deck"}</h1>
+                    {/* <h1>{this.props.formType === "Create Deck" ? "Create a new study deck" : "Edit study deck"}</h1> */}
+                    {this.props.formType === "Create Deck" ? 
+                    <h1>Create a new sutdy deck</h1>
+                    :
+                    <div onClick={this.goBackPage.bind(this)} id="edit-back" className="go-back">
+                        <i className="fas fa-caret-left"></i>
+                        <p>Back</p>
+                    </div>
+                    }
                     <button className="teal" onClick={this.handleSubmit.bind(this)}>{this.props.formType === "Create Deck" ? "Create" : "Done"}</button>
                 </Header>
             <div className="deck-form">

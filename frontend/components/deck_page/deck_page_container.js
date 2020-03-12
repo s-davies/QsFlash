@@ -3,7 +3,7 @@ import { fetchDeck, deleteDeck } from '../../actions/deck_actions';
 import { fetchCards } from '../../actions/card_actions';
 import { fetchDeckStudy, fetchDeckStudies, updateDeckStudy } from '../../actions/deck_study_actions';
 import { fetchUsers } from '../../actions/session_actions';
-import { fetchCardStudies } from '../../actions/card_study_actions';
+import { fetchCardStudies, updateCardStudy } from '../../actions/card_study_actions';
 import DeckPage from './deck_page'
 
 const mapStateToProps = (state, ownProps) => {
@@ -64,7 +64,8 @@ const mapDispatchToProps = dispatch => ({
     fetchDeckStudies: (deckId) => dispatch(fetchDeckStudies(deckId)),
     updateDeckStudy: (deckStudy) => dispatch(updateDeckStudy(deckStudy)),
     fetchUsers: () => dispatch(fetchUsers()),
-    fetchCardStudies: deckId => dispatch(fetchCardStudies(deckId))
+    fetchCardStudies: deckId => dispatch(fetchCardStudies(deckId)),
+    updateCardStudy: cardStudy => dispatch(updateCardStudy(cardStudy))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckPage);
