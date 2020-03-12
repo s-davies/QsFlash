@@ -185,6 +185,24 @@ class DeckPage extends React.Component {
         }
     }
 
+    starAll(cards) {
+        return e => {
+            for (let i = 0; i < cards.length; i++) {
+                const card = cards[i];
+                this.props.updateCardStudy({ id: card.cardStudyId, starred: true }).then(() => this.props.fetchCardStudies(card.deckId))
+            }
+        }
+    }
+
+    unstarAll(cards) {
+        return e => {
+            for (let i = 0; i < cards.length; i++) {
+                const card = cards[i];
+                this.props.updateCardStudy({ id: card.cardStudyId, starred: false }).then(() => this.props.fetchCardStudies(card.deckId))
+            }
+        }
+    }
+
     starCard(card) {
         return e => {
             this.props.updateCardStudy({id: card.cardStudyId, starred: true}).then(() => this.props.fetchCardStudies(card.deckId) )
@@ -425,8 +443,11 @@ class DeckPage extends React.Component {
 
         //setting groups
         const usuallyMissed = [];
+        let usuallyMissedStarCount = 0;
         const sometimesMissed = [];
+        let sometimesMissedStarCount = 0;
         const rarelyMissed = [];
+        let rarelyMissedStarCount = 0;
         let starred = 0;
 
         for (let i = 0; i < this.props.cards.length; i++) {
@@ -448,7 +469,16 @@ class DeckPage extends React.Component {
                     sometimesMissed.push(card);
                 }
             }
-            if (card.starred) starred += 1;
+            if (card.starred && card.correctnessCount < -1) {
+                usuallyMissedStarCount += 1;
+                starred += 1;
+            } else if (card.starred && card.correctnessCount > 1) {
+                rarelyMissedStarCount += 1;
+                starred += 1;
+            } else if (card.starred) {
+                sometimesMissedStarCount += 1;
+                starred += 1;
+            }
         }
 
         return (
@@ -661,7 +691,11 @@ class DeckPage extends React.Component {
                                                 <span>Usually Missed</span>
                                                 <p>Your answers for these terms have usually been incorrect.</p>
                                             </div>
-                                            <button><i className="far fa-star"></i>Star All</button>
+                                            {usuallyMissedStarCount === usuallyMissed.length ? 
+                                            <button id="all-starred-1" onClick={this.unstarAll(usuallyMissed).bind(this)}><i className="fas fa-star"></i>Unstar All</button>
+                                            :
+                                            <button onClick={this.starAll(usuallyMissed).bind(this)}><i className="far fa-star" ></i>Star All</button>
+                                            }
                                         </header>
                                         {usuallyMissed.map(card => (
                                             <div key={card.id} className="deck-info-card">
@@ -690,7 +724,11 @@ class DeckPage extends React.Component {
                                                 <span>Sometimes Missed</span>
                                                 <p>Your answers for these terms have sometimes been correct.</p>
                                             </div>
-                                            <button><i className="far fa-star"></i>Star All</button>
+                                        {sometimesMissedStarCount === sometimesMissed.length ?
+                                            <button id="all-starred-2" onClick={this.unstarAll(sometimesMissed).bind(this)}><i className="fas fa-star"></i>Unstar All</button>
+                                            :
+                                            <button onClick={this.starAll(sometimesMissed).bind(this)}><i className="far fa-star" ></i>Star All</button>
+                                        }
                                         </header>
                                         {sometimesMissed.map(card => (
                                             <div key={card.id} className="deck-info-card">
@@ -719,7 +757,11 @@ class DeckPage extends React.Component {
                                                 <span>Rarely Missed</span>
                                                 <p>Your answers for these terms have usually been correct!</p>
                                             </div>
-                                            <button><i className="far fa-star"></i>Star All</button>
+                                        {rarelyMissedStarCount === rarelyMissed.length ?
+                                            <button id="all-starred-3" onClick={this.unstarAll(rarelyMissed).bind(this)}><i className="fas fa-star"></i>Unstar All</button>
+                                            :
+                                            <button onClick={this.starAll(rarelyMissed).bind(this)}><i className="far fa-star" ></i>Star All</button>
+                                        }
                                         </header>
                                         {rarelyMissed.map(card => (
                                             <div key={card.id} className="deck-info-card">
