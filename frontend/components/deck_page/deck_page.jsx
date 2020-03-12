@@ -442,45 +442,76 @@ class DeckPage extends React.Component {
         }
 
         //setting groups
+        let starred = 0;
         const usuallyMissed = [];
         let usuallyMissedStarCount = 0;
         const sometimesMissed = [];
         let sometimesMissedStarCount = 0;
         const rarelyMissed = [];
         let rarelyMissedStarCount = 0;
-        let starred = 0;
+        let cards;
+        let starredCards = [];
+        if (this.state.sortType === "Your stats") {
+            
+            
 
-        for (let i = 0; i < this.props.cards.length; i++) {
-            const card = this.props.cards[i];
-            if (this.state.starredCls === "options-selected") {
-                if (card.starred && card.correctnessCount < -1) {
-                    usuallyMissed.push(card);
-                } else if (card.starred && card.correctnessCount > 1) {
-                    rarelyMissed.push(card);
-                } else if (card.starred) {
-                    sometimesMissed.push(card);
-                }
-            } else {
-                if (card.correctnessCount < -1) {
-                    usuallyMissed.push(card);
-                } else if (card.correctnessCount > 1) {
-                    rarelyMissed.push(card);
+            for (let i = 0; i < this.props.cards.length; i++) {
+                const card = this.props.cards[i];
+                if (this.state.starredCls === "options-selected") {
+                    if (card.starred && card.correctnessCount < -1) {
+                        usuallyMissed.push(card);
+                    } else if (card.starred && card.correctnessCount > 1) {
+                        rarelyMissed.push(card);
+                    } else if (card.starred) {
+                        sometimesMissed.push(card);
+                    }
                 } else {
-                    sometimesMissed.push(card);
+                    if (card.correctnessCount < -1) {
+                        usuallyMissed.push(card);
+                    } else if (card.correctnessCount > 1) {
+                        rarelyMissed.push(card);
+                    } else {
+                        sometimesMissed.push(card);
+                    }
+                }
+                if (card.starred && card.correctnessCount < -1) {
+                    usuallyMissedStarCount += 1;
+                    starred += 1;
+                } else if (card.starred && card.correctnessCount > 1) {
+                    rarelyMissedStarCount += 1;
+                    starred += 1;
+                } else if (card.starred) {
+                    sometimesMissedStarCount += 1;
+                    starred += 1;
                 }
             }
-            if (card.starred && card.correctnessCount < -1) {
-                usuallyMissedStarCount += 1;
-                starred += 1;
-            } else if (card.starred && card.correctnessCount > 1) {
-                rarelyMissedStarCount += 1;
-                starred += 1;
-            } else if (card.starred) {
-                sometimesMissedStarCount += 1;
-                starred += 1;
+        } else if (this.state.sortType === "Original") {
+            cards = Object.assign([], this.props.cards);
+            for (let i = 0; i < this.props.cards.length; i++) {
+                const card = this.props.cards[i];
+                if (card.starred) {
+                    starredCards.push(card);
+                    starred += 1;
+                }
             }
+        } else if (this.state.sortType === "Alphabetical") {
+            cards = Object.assign([], this.props.cards);
+            cards.sort((card1, card2) => {
+                if (card1.term > card2.term) return 1;
+                if (card1.term < card2.term) return -1;
+            })
+            for (let i = 0; i < this.props.cards.length; i++) {
+                const card = this.props.cards[i];
+                if (card.starred) {
+                    starredCards.push(card);
+                    starred += 1;
+                }
+            }
+            starredCards.sort((card1, card2) => {
+                if (card1.term > card2.term) return 1;
+                if (card1.term < card2.term) return -1;
+            })
         }
-
         return (
             <div className="deck-page">
                 <div className="deck-page-top-wrapper">
@@ -671,8 +702,8 @@ class DeckPage extends React.Component {
                                         </div>
                                         <div id="deck-page-select" className="options-audio-div options-field">
                                             <select value={this.state.sortType} onChange={this.handleSortingChange.bind(this)}>
-                                                <option value="Your Stats">
-                                                    Your Stats
+                                                <option value="Your stats">
+                                                    Your stats
                                                 </option>
                                                 <option value="Original">
                                                     Original
@@ -684,6 +715,51 @@ class DeckPage extends React.Component {
                                         </div>
                                     </div>
                                 </header>
+                                {this.state.sortType !== "Your stats" ?
+                                <>
+                                    {this.state.starredCls === "options-selected" ?
+                                    starredCards.map(card => (
+                                            <div key={card.id} className="deck-info-card">
+                                                <label>{card.correctnessCount >= 0 ? `+${card.correctnessCount}` : card.correctnessCount}</label>
+                                                <p>{card.term}</p>
+                                                <section></section>
+                                                <p>{card.definition}</p>
+                                                <div>
+                                                    {card.starred ? <i onClick={this.unstarCard(card).bind(this)} className="fas fa-star solid-star"></i> : <i onClick={this.starCard(card).bind(this)} className="far fa-star hollow-star"></i>}
+                                                    <SayButton
+                                                        onClick={event => console.log(event)}
+                                                        text={`${card.term}`}
+                                                    >
+                                                        <i className="fas fa-volume-up"></i>
+                                                    </SayButton>
+                                                </div>
+                                            </div>
+                                        ))
+                                    
+                                    :
+                                        
+                                            cards.map(card => (
+                                                <div key={card.id} className="deck-info-card">
+                                                    <label>{card.correctnessCount >= 0 ? `+${card.correctnessCount}` : card.correctnessCount}</label>
+                                                    <p>{card.term}</p>
+                                                    <section></section>
+                                                    <p>{card.definition}</p>
+                                                    <div>
+                                                        {card.starred ? <i onClick={this.unstarCard(card).bind(this)} className="fas fa-star solid-star"></i> : <i onClick={this.starCard(card).bind(this)} className="far fa-star hollow-star"></i>}
+                                                        <SayButton
+                                                            onClick={event => console.log(event)}
+                                                            text={`${card.term}`}
+                                                        >
+                                                            <i className="fas fa-volume-up"></i>
+                                                        </SayButton>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        
+                                    }
+                                </>
+                                    :
+                                <>
                                 {usuallyMissed.length > 0 ?
                                     <div className="usually-missed deck-page-missed">
                                         <header className="usually-missed-header">
@@ -783,6 +859,7 @@ class DeckPage extends React.Component {
                                     </div>
                                     : ""
                                 }
+                                </>}
                                 <Link to={`/${this.props.deck.id}/edit`}>Add or Remove Terms</Link>
                             </div>
                         </div>
