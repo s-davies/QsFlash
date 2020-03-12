@@ -19,6 +19,17 @@
   flex: 0.6;
 }
 
+.deck-page-bottom-wrapper {
+  background-color: $lightest-gray;
+  display: flex;
+  justify-content: center;
+}
+
+.deck-page-bottom-wrapper-inner {
+  // max-width: 2000px;
+  flex: 0.6;
+}
+
 .deck-page h1 {
     font-size: 32px;
     font-weight: 700;
@@ -788,5 +799,131 @@
 .deck-page-cards-header {
   display: flex;
   justify-content: space-between;
+  align-content: center;
   margin-top: 30px;
+}
+
+.deck-page-cards-header span {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.deck-page-cards-header > div {
+  display: flex;
+  align-items: center;
+}
+
+#deck-page-select {
+  padding-left: 20px;
+}
+
+.deck-page-missed {
+  padding-top: 20px;
+}
+
+.deck-page-missed header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deck-page-missed header button {
+  font-size: 15px;
+  background-color: $white;
+  color: $teal;
+  padding: 8px 20px;
+  border: 2px solid $lighter-gray;
+  border-radius: 5px;
+}
+
+.deck-page-missed header button:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
+}
+
+.deck-page-missed header button i {
+  padding-right: 5px;
+}
+
+.deck-page-missed header div {
+  display: flex;
+  align-items: center;
+}
+
+.deck-page-missed header p {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.deck-page-missed header span{
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.usually-missed-header span, .usually-missed label {
+  color: $red;
+}
+
+
+.sometimes-missed-header span, .sometimes-missed label {
+  color: $orange;
+}
+
+.rarely-missed-header span, .rarely-missed label {
+  color: $green;
+}
+
+.deck-info-card {
+  display: flex;
+  justify-content: space-between;
+  background-color: $white;
+  padding: 0px 35px;
+  margin-top: 10px;
+}
+
+.deck-info-card p, .deck-info-card label, .deck-info-card div {
+  padding: 25px 0px;
+}
+
+.deck-info-card section {
+  flex: 0 1;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-left: 2px solid $lightest-gray;
+}
+
+.deck-info-card label {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.deck-info-card button {
+  padding-left: 10px;
+}
+
+.deck-page-bottom {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-page-bottom > a {
+  padding: 20px 50px;
+  color: $white;
+  font-size: 18px;
+  background-color: $teal;
+  align-self: center;
+  border-radius: 5px;
+}
+
+.deck-page-bottom > a:hover {
+  transition: color 0.15s ease;
+  transition: background-color 0.15s ease;
+  color: $dark-gray;
+  background-color: $yellow
+}
+
+.rarely-missed .deck-info-card {
+  margin-bottom: 20px;
 }

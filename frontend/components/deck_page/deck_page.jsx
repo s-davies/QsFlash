@@ -20,7 +20,11 @@ class DeckPage extends React.Component {
             star3cls: null,
             star4cls: null,
             star5cls: null,
-            redirect: null
+            redirect: null,
+            sortType: "Your stats",
+            allCls: "options-selected",
+            starredCls: "options-unselected",
+
         };
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -159,6 +163,21 @@ class DeckPage extends React.Component {
                     default:
                         break;
                 }
+            }
+        }
+    }
+
+    //card methods
+    handleSortingChange(e) {
+        this.setState({sortType: e.target.value})
+    }
+
+    handleStudyStarredChange(opt) {
+        return e => {
+            if (opt === "All") {
+                this.setState({ allCls: "options-selected", starredCls: "options-unselected" });
+            } else {
+                this.setState({ starredCls: "options-selected", allCls: "options-unselected" });
             }
         }
     }
@@ -585,105 +604,126 @@ class DeckPage extends React.Component {
                         </div> 
                     </div>
                 </div>
-                <div className="deck-page-bottom">
-                    <header className="deck-page-cards-header">
-                        <span>Terms in this set({this.props.cards.length})</span>
-                        <div>
-                            <div>
-                                <button>All</button>
-                                <button>Starred</button>
-                            </div>
-                            <select>
+                <div className="deck-page-bottom-wrapper">
+                    <div className="deck-page-bottom-wrapper-inner">
 
-                            </select>
-                        </div>
-                    </header>
-                    {usuallyMissed.length > 0 ?
-                        <div className="usually-missed">
-                            <header className="usually-missed-header">
-                                <div>
-                                    <span>Usually Missed</span>
-                                    <p>Your answers for these terms have usually been incorrect.</p>
-                                </div>
-                                <button><i className="far fa-star"></i>Star All</button>
-                            </header>
-                            {usuallyMissed.map(card => (
-                                <div key={card.id} className="deck-info-card">
-                                    <label>{card.correctnessCount}</label>
-                                    <p>{card.term}</p>
-                                    <p>{card.definition}</p>
+                            <div className="deck-page-bottom">
+                                <header className="deck-page-cards-header">
+                                    <span>Terms in this set ({this.props.cards.length})</span>
                                     <div>
-                                        {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
-                                        <SayButton
-                                            onClick={event => console.log(event)}
-                                            text={`${card.term}`}
-                                        >
-                                            <i className="fas fa-volume-up"></i>
-                                        </SayButton>
+                                        <div className="options-radio-div">
+                                            <div>
+                                                <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
+                                                <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred ({starred.length})</button>
+                                            </div>
+                                        </div>
+                                        <div id="deck-page-select" className="options-audio-div options-field">
+                                            <select value={this.state.sortType} onChange={this.handleSortingChange.bind(this)}>
+                                                <option value="Your Stats">
+                                                    Your Stats
+                                                </option>
+                                                <option value="Original">
+                                                    Original
+                                                </option>
+                                                <option value="Alphabetical">
+                                                    Alphabetical
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                        : ""
-                    }
-                    {sometimesMissed.length > 0 ?
-                        <div className="sometimes-missed">
-                            <header className="sometimes-missed-header">
-                                <div>
-                                    <span>Sometimes Missed</span>
-                                    <p>Your answers for these terms have sometimes been correct.</p>
-                                </div>
-                                <button><i className="far fa-star"></i>Star All</button>
-                            </header>
-                            {sometimesMissed.map(card => (
-                                <div key={card.id} className="deck-info-card">
-                                    <label>{card.correctnessCount}</label>
-                                    <p>{card.term}</p>
-                                    <p>{card.definition}</p>
-                                    <div>
-                                        {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
-                                        <SayButton
-                                            onClick={event => console.log(event)}
-                                            text={`${card.term}`}
-                                        >
-                                            <i className="fas fa-volume-up"></i>
-                                        </SayButton>
+                                </header>
+                                {usuallyMissed.length > 0 ?
+                                    <div className="usually-missed deck-page-missed">
+                                        <header className="usually-missed-header">
+                                            <div>
+                                                <span>Usually Missed</span>
+                                                <p>Your answers for these terms have usually been incorrect.</p>
+                                            </div>
+                                            <button><i className="far fa-star"></i>Star All</button>
+                                        </header>
+                                        {usuallyMissed.map(card => (
+                                            <div key={card.id} className="deck-info-card">
+                                                <label>{card.correctnessCount >= 0 ? `+${card.correctnessCount}` : card.correctnessCount}</label>
+                                                <p>{card.term}</p>
+                                                <section></section>
+                                                <p>{card.definition}</p>
+                                                <div>
+                                                    {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                                                    <SayButton
+                                                        onClick={event => console.log(event)}
+                                                        text={`${card.term}`}
+                                                    >
+                                                        <i className="fas fa-volume-up"></i>
+                                                    </SayButton>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                        : ""
-                    }
-                    {rarelyMissed.length > 0 ?
-                        <div className="rarely-missed">
-                            <header className="rarely-missed-header">
-                                <div>
-                                    <span>Rarely Missed</span>
-                                    <p>Your answers for these terms have usually been correct!</p>
-                                </div>
-                                <button><i className="far fa-star"></i>Star All</button>
-                            </header>
-                            {rarelyMissed.map(card => (
-                                <div key={card.id} className="deck-info-card">
-                                    <label>{card.correctnessCount}</label>
-                                    <p>{card.term}</p>
-                                    <p>{card.definition}</p>
-                                    <div>
-                                        {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
-                                        <SayButton
-                                            onClick={event => console.log(event)}
-                                            text={`${card.term}`}
-                                        >
-                                            <i className="fas fa-volume-up"></i>
-                                        </SayButton>
+                                    : ""
+                                }
+                                {sometimesMissed.length > 0 ?
+                                <div className="sometimes-missed deck-page-missed">
+                                        <header className="sometimes-missed-header">
+                                            <div>
+                                                <span>Sometimes Missed</span>
+                                                <p>Your answers for these terms have sometimes been correct.</p>
+                                            </div>
+                                            <button><i className="far fa-star"></i>Star All</button>
+                                        </header>
+                                        {sometimesMissed.map(card => (
+                                            <div key={card.id} className="deck-info-card">
+                                                <label>{card.correctnessCount >= 0 ? `+${card.correctnessCount}` : card.correctnessCount}</label>
+                                                <p>{card.term}</p>
+                                                <section></section>
+                                                <p>{card.definition}</p>
+                                                <div>
+                                                    {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                                                    <SayButton
+                                                        onClick={event => console.log(event)}
+                                                        text={`${card.term}`}
+                                                    >
+                                                        <i className="fas fa-volume-up"></i>
+                                                    </SayButton>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                </div>
-                            ))}
+                                    : ""
+                                }
+                                {rarelyMissed.length > 0 ?
+                                <div className="rarely-missed deck-page-missed">
+                                        <header className="rarely-missed-header">
+                                            <div>
+                                                <span>Rarely Missed</span>
+                                                <p>Your answers for these terms have usually been correct!</p>
+                                            </div>
+                                            <button><i className="far fa-star"></i>Star All</button>
+                                        </header>
+                                        {rarelyMissed.map(card => (
+                                            <div key={card.id} className="deck-info-card">
+                                                <label>{card.correctnessCount >= 0 ? `+${card.correctnessCount}` : card.correctnessCount}</label>
+                                                <p>{card.term}</p>
+                                                <section></section>
+                                                <p>{card.definition}</p>
+                                                <div>
+                                                    {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                                                    <SayButton
+                                                        onClick={event => console.log(event)}
+                                                        text={`${card.term}`}
+                                                    >
+                                                        <i className="fas fa-volume-up"></i>
+                                                    </SayButton>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    : ""
+                                }
+                                <Link to={`/${this.props.deck.id}/edit`}>Add or Remove Terms</Link>
+                            </div>
                         </div>
-                        : ""
-                    }
+                    </div>
                 </div>
-            </div>
             
         );
     }
