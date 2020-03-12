@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import Say from 'react-say';
 import { SayButton } from 'react-say';
+import ReactTestUtils from 'react-dom/test-utils'; // ES6
 
 class Spell extends React.Component {
 
@@ -28,12 +29,11 @@ class Spell extends React.Component {
       optAudio: false,
       offCls: "options-selected",
       onCls: "options-unselected",
-      mc1Correct: null,
-      mc2Correct: null,
-      mc3Correct: null,
-      mc4Correct: null,
       lastAnswer: null,
-      lastQuestion: null
+      lastQuestion: null,
+      correct: null,
+      spellVal: "",
+      wordToSpell: null
     };
 
   }
@@ -48,13 +48,16 @@ class Spell extends React.Component {
         const mast = [];
         for (let i = 0; i < this.props.cards.length; i++) {
           const card = this.props.cards[i];
-          if (card.learnCount === 0) rem.push(card);
-          if (card.learnCount === 1) fam.push(card);
-          if (card.learnCount === 2) mast.push(card);
+          if (card.spellCount === 0) rem.push(card);
+          if (card.spellCount === 1) fam.push(card);
+          if (card.spellCount === 2) mast.push(card);
         }
         const remAndFam = rem.concat(fam);
-        this.setState({ allCards: Object.assign([], that.props.cards), remainingAndFamiliar: remAndFam, remainingCards: rem, familiarCards: fam, masteredCards: mast })
+        const rFShuffled = that.shuffle(remAndFam)
+        this.setState({ allCards: Object.assign([], that.props.cards), remainingAndFamiliar: rFShuffled, wordToSpell: rFShuffled[0], remainingCards: rem, familiarCards: fam, masteredCards: mast })
+        
       });
+    
   }
 
   handleRedirect(deckId) {
@@ -108,91 +111,11 @@ class Spell extends React.Component {
     }
   }
 
-  answerMultipleChoice(answer, answerNum) {
-    return e => {
-      const card = Object.assign({}, this.state.remainingAndFamiliar[0]);
-      if (answer.term === card.term && answer.definition === card.definition) {
-        console.log("hi there");
-        card.learnCount += 1;
-        card.correctnessCount += 1;
-        this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, learnCount: card.learnCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
-        let remCards = Object.assign([], this.state.remainingCards);
-        let famCards = Object.assign([], this.state.familiarCards);
-        let mastCards = Object.assign([], this.state.masteredCards);
-        if (card.learnCount === 1) {
-          remCards = this.state.remainingCards.filter(cd => cd.cardStudyId !== card.cardStudyId);
-          famCards.push(card);
-          this.setState({
-            remainingCards: remCards,
-            familiarCards: famCards
-          });
-        }
-        if (card.learnCount === 2) {
-          famCards = this.state.familiarCards.filter(cd => cd.cardStudyId !== card.cardStudyId);
-          mastCards.push(card)
-          this.setState({
-            familiarCards: famCards,
-            masteredCards: mastCards
-          });
-        }
-        switch (answerNum) {
-          case 1:
-            this.setState({ mc1Correct: true });
-            break;
-          case 2:
-            this.setState({ mc2Correct: true });
-            break;
-          case 3:
-            this.setState({ mc3Correct: true });
-            break;
-          case 4:
-            this.setState({ mc4Correct: true });
-            break;
-          default:
-            break;
-        }
-        setTimeout(() => {
-          this.setState({
-            twoArr: this.shuffle(this.state.twoArr),
-            threeArr: this.shuffle(this.state.threeArr),
-            fourArr: this.shuffle(this.state.fourArr),
-            remainingAndFamiliar: this.shuffle(remCards.concat(famCards)),
-            allCards: this.shuffle(this.state.allCards)
-          })
-          switch (answerNum) {
-            case 1:
-              this.setState({ mc1Correct: null });
-              break;
-            case 2:
-              this.setState({ mc2Correct: null });
-              break;
-            case 3:
-              this.setState({ mc3Correct: null });
-              break;
-            case 4:
-              this.setState({ mc4Correct: null });
-              break;
-            default:
-              break;
-          }
-        },
-          2000
-        );
-      } else {
-        this.setState({ lastAnswer: answer, lastQuestion: card });
-
-      }
-
-    };
-  }
-
   resetDecks() {
     this.setState({
       lastAnswer: null,
       lastQuestion: null,
-      twoArr: this.shuffle(this.state.twoArr),
-      threeArr: this.shuffle(this.state.threeArr),
-      fourArr: this.shuffle(this.state.fourArr),
+      correct: null,
       remainingAndFamiliar: this.shuffle(this.state.remainingAndFamiliar),
       allCards: this.shuffle(this.state.allCards)
     });
@@ -201,23 +124,20 @@ class Spell extends React.Component {
   resetProgress() {
     for (let i = 0; i < this.state.allCards.length; i++) {
       const card = this.state.allCards[i];
-      this.props.updateCardStudy({ id: card.cardStudyId, learnCount: 0 }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
+      this.props.updateCardStudy({ id: card.cardStudyId, spellCount: 0 }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
     }
+    const acShuffled = this.shuffle(this.state.allCards);
     this.setState({
       lastAnswer: null,
       lastQuestion: null,
-      twoArr: this.shuffle(this.state.twoArr),
-      threeArr: this.shuffle(this.state.threeArr),
-      fourArr: this.shuffle(this.state.fourArr),
-      remainingCards: this.shuffle(this.state.allCards),
+      correct: null,
+      remainingCards: acShuffled,
       familiarCards: [],
       masteredCards: [],
-      remainingAndFamiliar: this.shuffle(this.state.allCards),
-      allCards: this.shuffle(this.state.allCards),
-      mc1Correct: null,
-      mc2Correct: null,
-      mc3Correct: null,
-      mc4Correct: null
+      remainingAndFamiliar: acShuffled,
+      allCards: acShuffled,
+      wordToSpell: acShuffled[0],
+      spellVal: ""
     });
   }
 
@@ -230,24 +150,72 @@ class Spell extends React.Component {
     return shuffled;
   }
 
+  checkSpelling() {
+    if (this.state.wordToSpell.term.toLowerCase() === this.state.spellVal.toLowerCase()) {
+      const card = Object.assign({}, this.state.wordToSpell);
+      card.spellCount += 1;
+      card.correctnessCount += 1;
+      this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, spellCount: card.spellCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
+      let remCards = Object.assign([], this.state.remainingCards);
+      let famCards = Object.assign([], this.state.familiarCards);
+      let mastCards = Object.assign([], this.state.masteredCards);
+      if (card.spellCount === 1) {
+        remCards = this.state.remainingCards.filter(cd => cd.cardStudyId !== card.cardStudyId);
+        famCards.push(card);
+        this.setState({
+          remainingCards: remCards,
+          familiarCards: famCards
+        });
+      }
+      if (card.spellCount === 2) {
+        famCards = this.state.familiarCards.filter(cd => cd.cardStudyId !== card.cardStudyId);
+        mastCards.push(card)
+        this.setState({
+          familiarCards: famCards,
+          masteredCards: mastCards
+        });
+      }
+      const rFShuffled = this.shuffle(remCards.concat(famCards))
+      this.setState({
+        correct: true,
+        remainingAndFamiliar: rFShuffled,
+        allCards: this.shuffle(this.state.allCards)
+      });
+      // if (remCards.concat(famCards).length !== 0) {
+        setTimeout(() => {
+          this.setState({
+            spellVal: "",
+            wordToSpell: this.state.remainingAndFamiliar[0],
+            correct: null
+          })
+        }, 1000);
+      // } else {
+      //   this.setState({
+      //     correct: null
+      //   })
+      // }
+
+    } else {
+      const lastAns = this.state.spellVal;
+      this.setState({ lastAnswer: lastAns, lastQuestion: this.state.wordToSpell, spellVal: ""})
+    }
+  }
+
+  handleSpellChange(e) {
+    e.preventDefault();
+    this.setState({spellVal: e.target.value});
+  }
+
+
   render() {
-    debugger
+
     if (this.state.redirect) {
       return <Redirect push to={this.state.redirect} />
     }
-    // debugger
+    
     if (this.state.allCards.length === 0) return null;
-    if (this.props.cardStudies.length !== this.state.allCards.length) return null;
-    const mcAns = [this.state.remainingAndFamiliar[0]];
-    let i = 0;
 
-    if (this.state.remainingAndFamiliar.length > 0) {
-      while (i < this.state.allCards.length) {
-        if (this.state.allCards[i].term !== mcAns[0].term && this.state.allCards[i].definition !== mcAns[0].definition) mcAns.push(this.state.allCards[i]);
-        i += 1;
-        if (i === 3) break;
-      }
-    }
+
     
     const textstyle = {
       play: {
@@ -267,7 +235,7 @@ class Spell extends React.Component {
         },
       }
     };
-
+    debugger
     return (
       <div className="learn">
         <div className="game-sidebar">
@@ -277,8 +245,8 @@ class Spell extends React.Component {
               <p>Back</p>
             </div>
             <span className="game-sidebar-header">
-              <i className="fas fa-brain"></i>
-              <p>LEARN</p>
+              <i className="fas fa-volume-up"></i>
+              <p>SPELL</p>
             </span>
             <div className="learn-mastery-counts">
               <div className="learn-mastery-remaining">
@@ -360,8 +328,8 @@ class Spell extends React.Component {
           </div>
         </div>
         <div className="learn-card">
-          <div className="learn-card-inner">
-            {this.state.allCards.length === this.state.masteredCards.length ?
+          <div className="spell-card-inner">
+            {this.state.allCards.length === this.state.masteredCards.length && !this.state.correct?
               <div className="learn-finished">
                 <span>🏆</span>
                 <h1>Congratulations, you've learned everything!</h1>
@@ -374,20 +342,22 @@ class Spell extends React.Component {
                 {/* for wrong answer */}
                 {this.state.lastAnswer ?
                   <div className="learn-wrong-answer">
+                    <Say text={`${this.state.wordToSpell.term}. ${this.state.wordToSpell.term.split("").join(", ")}`} />
                     <div className="learn-wrong-answer-top">
                       <span>😕 Study this one!</span>
                     </div>
                     <div className="learn-wrong-answer-mid">
-                      <span>DEFINTION</span>
+                      {/* <span>DEFINTION</span>
                       <div>
                         <p>{this.state.lastQuestion.definition}</p>
                         <SayButton
+                          
                           onClick={event => console.log(event)}
                           text={`${this.state.lastQuestion.definition}`}
                         >
                           <i className="fas fa-volume-up"></i>
                         </SayButton>
-                      </div>
+                      </div> */}
                       <span>CORRECT ANSWER</span>
                       <div>
                         <p>{this.state.lastQuestion.term}</p>
@@ -402,10 +372,10 @@ class Spell extends React.Component {
                     <div className="learn-wrong-answer-bottom">
                       <span>YOU SAID</span>
                       <div>
-                        <p>{this.state.lastAnswer.term}</p>
+                        <p>{this.state.lastAnswer}</p>
                         <SayButton
                           onClick={event => console.log(event)}
-                          text={`${this.state.lastAnswer.term}`}
+                          text={`${this.state.lastAnswer}`}
                         >
                           <i className="fas fa-volume-up"></i>
                         </SayButton>
@@ -413,115 +383,44 @@ class Spell extends React.Component {
                       <button onClick={this.resetDecks.bind(this)} >Continue</button>
                     </div>
                   </div>
+                  : this.state.correct ? 
+                  <div>
+                    <Say text="Correct" /> 
+                      <div className="spell-field">
+                        <SayButton
+                          onClick={event => console.log(event)}
+                          text={`${this.state.wordToSpell.term}`}
+                        >
+                          <i className="fas fa-volume-up"></i>
+                        </SayButton>
+                        <form onSubmit={this.checkSpelling.bind(this)}>
+                          <input className="spell-field-green" onChange={this.handleSpellChange.bind(this)} type="text" placeholder="Type what you hear" spellCheck="false" value={this.state.spellVal} />
+                          <label>ANSWER</label>
+                          <input type="submit" value="" />
+                        </form>
+                      </div>
+                      <div className="spell-card-answers">
+                        <p>{this.state.wordToSpell.definition}</p>
+                      </div>
+                  </div>
                   :
                   <>
-                    <div className="learn-card-question">
-                      <p>{mcAns[0].term}</p>
-                      <SayButton
-                        onClick={event => console.log(event)}
-                        text={`${mcAns[0].term}`}
-                      >
-                        <i className="fas fa-volume-up"></i>
-                      </SayButton>
+                    <div className="spell-field">
+                      <Say text={`${this.state.wordToSpell.term}`} />
+                        <SayButton
+                          onClick={event => console.log(event)}
+                          text={`${this.state.wordToSpell.term}`}
+                          >
+                          <i className="fas fa-volume-up"></i>
+                        </SayButton>
+                      <form onSubmit={this.checkSpelling.bind(this)}>
+                        <input onChange={this.handleSpellChange.bind(this)} type="text" placeholder="Type what you hear" spellCheck="false" value={this.state.spellVal} autoFocus/>
+                        <label>ANSWER</label>
+                        <input type="submit" value=""/>
+                      </form>
                     </div>
-                    <div className="learn-card-answers">
-
-                      {mcAns.length === 2 ?
-                        <>
-                          {this.state.mc1Correct ?
-                            <div className="learn-card-correct">
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[0]], 1).bind(this)}>
-                              <p>{mcAns[this.state.twoArr[0]].definition}</p>
-                              <span className="learn-answer-circle">1</span>
-                            </div>}
-                          {this.state.mc2Correct ?
-                            <div className="learn-card-correct">
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[1]], 2).bind(this)}>
-                              <p>{mcAns[this.state.twoArr[1]].definition}</p>
-                              <span className="learn-answer-circle">2</span>
-                            </div>}
-                        </>
-                        : ""}
-                      {mcAns.length === 3 ?
-                        <>
-                          {this.state.mc1Correct ?
-                            <div className="learn-card-correct" >
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[0]], 1).bind(this)}>
-                              <p>{mcAns[this.state.threeArr[0]].definition}</p>
-                              <span className="learn-answer-circle">1</span>
-                            </div>}
-                          {this.state.mc2Correct ?
-                            <div className="learn-card-correct">
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[1]], 2).bind(this)}>
-                              <p>{mcAns[this.state.threeArr[1]].definition}</p>
-                              <span className="learn-answer-circle">2</span>
-                            </div>}
-                          {this.state.mc3Correct ?
-                            <div className="learn-card-correct">
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[2]], 3).bind(this)}>
-                              <p>{mcAns[this.state.threeArr[2]].definition}</p>
-                              <span className="learn-answer-circle">3</span>
-                            </div>}
-                        </>
-                        : ""}
-                      {mcAns.length > 3 ?
-                        <>
-                          {this.state.mc1Correct ?
-                            <div className="learn-card-correct">
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[0]], 1).bind(this)}>
-                              <p>{mcAns[this.state.fourArr[0]].definition}</p>
-                              <span className="learn-answer-circle">1</span>
-                            </div>}
-
-                          {this.state.mc2Correct ?
-                            <div className="learn-card-correct">
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[1]], 2).bind(this)}>
-                              <p>{mcAns[this.state.fourArr[1]].definition}</p>
-                              <span className="learn-answer-circle">2</span>
-                            </div>}
-                          {this.state.mc3Correct ?
-                            <div className="learn-card-correct">
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[2]], 3).bind(this)}>
-                              <p>{mcAns[this.state.fourArr[2]].definition}</p>
-                              <span className="learn-answer-circle">3</span>
-                            </div>}
-                          {this.state.mc4Correct ?
-                            <div className="learn-card-correct">
-                              <p>Correct! 😀</p>
-                            </div>
-                            :
-                            <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[3]], 4).bind(this)}>
-                              <p>{mcAns[this.state.fourArr[3]].definition}</p>
-                              <span className="learn-answer-circle">4</span>
-                            </div>}
-                        </>
-                        : ""}
-
-
+                    <div className="spell-card-answers">
+                      <p>{this.state.wordToSpell.definition}</p>
                     </div>
                   </>
                 }

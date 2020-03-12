@@ -244,7 +244,7 @@ class Learn extends React.Component {
       while (i < this.state.allCards.length) {
         if (this.state.allCards[i].term !== mcAns[0].term && this.state.allCards[i].definition !== mcAns[0].definition) mcAns.push(this.state.allCards[i]);
         i += 1;
-        if (i === 3) break;
+        if (mcAns.length === 4) break;
       }
     }
     // if (mcAns[0] === undefined) {

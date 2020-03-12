@@ -1,0 +1,62 @@
+.spell-field {
+  padding: 30px;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 2px solid $lightest-gray;
+  margin-bottom: 30px;
+}
+
+.spell-field > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.spell-field i {
+  font-size: 18px;
+  padding-right: 15px;
+  padding-top: 10px;
+}
+
+.spell-field input {
+  border-bottom: 2px solid $dark-gray;
+  padding-bottom: 8px;
+  font-size: 32px;
+  margin-bottom: 10px;
+  min-width: 500px;
+}
+
+.spell-field input[type="submit"] {
+  display: none;
+}
+
+.spell-field input:focus {
+  border-bottom: 4px solid $yellow;
+  margin-bottom: 8px;
+}
+
+.spell-field input::placeholder {
+  color: $lighter-gray;
+}
+
+.spell-field label {
+  font-size: 12px;
+  color: $gray;
+}
+
+.spell-card-answers p {
+  font-size: 20px;
+  padding: 0px 30px;
+}
+
+.spell-card-inner {
+  padding-bottom: 30px;
+  
+  display: flex;
+  min-width: 500px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.spell-field-green {
+  color: $green;
+}

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { fetchCards } from '../../actions/card_actions'
 import { fetchCardStudies, updateCardStudy } from '../../actions/card_study_actions';
-import Learn from './learn';
+import Spell from './spell';
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -25,14 +25,13 @@ const mapStateToProps = (state) => {
       card.cardStudyId = cardKeys[card.id].id;
       card.starred = cardKeys[card.id].starred;
       card.correctnessCount = cardKeys[card.id].correctnessCount;
-      card.learnCount = cardKeys[card.id].learnCount;
+      card.spellCount = cardKeys[card.id].spellCount;
     }
     shuffleArray(cards);
   }
   // cards = cards.sort((a, b) => (a.order > b.order) ? 1 : -1);
   return {
     cards: cards,
-    cardStudies: cardStudies,
     currentUser: state.entities.users[state.session.id]
   }
 };
@@ -43,4 +42,4 @@ const mapDispatchToProps = dispatch => ({
   updateCardStudy: cardStudy => dispatch(updateCardStudy(cardStudy))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Learn);
+export default connect(mapStateToProps, mapDispatchToProps)(Spell);
