@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
+import { SayButton } from 'react-say';
 
 class DeckPage extends React.Component {
 
@@ -27,7 +28,7 @@ class DeckPage extends React.Component {
     componentDidMount() {
         const dId = this.props.match.params.deckId;
         this.props.fetchDeck(dId).then(() => this.props.fetchUsers());
-        this.props.fetchCards(dId);
+        this.props.fetchCards(dId).then(() => this.props.fetchCardStudies(dId));
         if (this.state.setProgress === false) {
             this.props.fetchDeckStudy(dId).then(() => this.setState({ progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }, () => this.props.fetchDeckStudies(dId)))
         } else {
@@ -166,7 +167,7 @@ class DeckPage extends React.Component {
         if (this.state.redirect) {
             return <Redirect push to={this.state.redirect} />
         }
-        if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false) return null;
+        if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false || this.props.cards[0].cardStudyId === undefined) return null;
         let cardStyles = {
             height: '250px',
             width: '410px',
@@ -387,6 +388,28 @@ class DeckPage extends React.Component {
         } else {
             createdText = <p>Created today</p>
         }
+
+        //setting groups
+        const usuallyMissed = [];
+        const sometimesMissed = [];
+        const rarelyMissed = [];
+        const starred = [];
+
+        for (let i = 0; i < this.props.cards.length; i++) {
+            const card = this.props.cards[i];
+            if (card.correctnessCount < -1) {
+                usuallyMissed.push(card);
+            } else if (card.correctnessCount > 1) {
+                rarelyMissed.push(card);
+            } else {
+                sometimesMissed.push(card);
+            }
+
+            if (card.starred) {
+                starred.push(card);
+            }
+        }
+
         return (
             <div className="deck-page">
                 <header className="deck-page-header">
@@ -559,7 +582,102 @@ class DeckPage extends React.Component {
                     </div>  
                 </div>
                 <div className="deck-page-bottom">
+                    <header className="deck-page-cards-header">
+                        <span>Terms in this set({this.props.cards.length})</span>
+                        <div>
+                            <div>
+                                <button>All</button>
+                                <button>Starred</button>
+                            </div>
+                            <select>
 
+                            </select>
+                        </div>
+                    </header>
+                    {usuallyMissed.length > 0 ?
+                        <div className="usually-missed">
+                            <header className="usually-missed-header">
+                                <div>
+                                    <span>Sometimes Missed</span>
+                                    <p>Your answers for these terms have usually been incorrect.</p>
+                                </div>
+                                <button><i class="far fa-star"></i>Star All</button>
+                            </header>
+                            {usuallyMissed.map(card => (
+                                <div className="deck-info-card">
+                                    <label>{card.correctnessCount}</label>
+                                    <p>{card.term}</p>
+                                    <p>{card.definition}</p>
+                                    <div>
+                                        {card.starred ? <i class="fas fa-star"></i> : <i class="far fa-star"></i>}
+                                        <SayButton
+                                            onClick={event => console.log(event)}
+                                            text={`${card.term}`}
+                                        >
+                                            <i className="fas fa-volume-up"></i>
+                                        </SayButton>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        : ""
+                    }
+                    {sometimesMissed.length > 0 ?
+                        <div className="sometimes-missed">
+                            <header className="sometimes-missed-header">
+                                <div>
+                                    <span>Sometimes Missed</span>
+                                    <p>Your answers for these terms have sometimes been correct.</p>
+                                </div>
+                                <button><i class="far fa-star"></i>Star All</button>
+                            </header>
+                            {sometimesMissed.map(card => (
+                                <div className="deck-info-card">
+                                    <label>{card.correctnessCount}</label>
+                                    <p>{card.term}</p>
+                                    <p>{card.definition}</p>
+                                    <div>
+                                        {card.starred ? <i class="fas fa-star"></i> : <i class="far fa-star"></i>}
+                                        <SayButton
+                                            onClick={event => console.log(event)}
+                                            text={`${card.term}`}
+                                        >
+                                            <i className="fas fa-volume-up"></i>
+                                        </SayButton>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        : ""
+                    }
+                    {rarelyMissed.length > 0 ?
+                        <div className="rarely-missed">
+                            <header className="rarely-missed-header">
+                                <div>
+                                    <span>Rarely Missed</span>
+                                    <p>Your answers for these terms have usually been correct!</p>
+                                </div>
+                                <button><i class="far fa-star"></i>Star All</button>
+                            </header>
+                            {rarelyMissed.map(card => (
+                                <div className="deck-info-card">
+                                    <label>{card.correctnessCount}</label>
+                                    <p>{card.term}</p>
+                                    <p>{card.definition}</p>
+                                    <div>
+                                        {card.starred ? <i class="fas fa-star"></i> : <i class="far fa-star"></i>}
+                                        <SayButton
+                                            onClick={event => console.log(event)}
+                                            text={`${card.term}`}
+                                        >
+                                            <i className="fas fa-volume-up"></i>
+                                        </SayButton>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        : ""
+                    }
                 </div>
             </div>
             

@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom';
 import Say from 'react-say';
 import { SayButton } from 'react-say';
-import ReactTestUtils from 'react-dom/test-utils'; // ES6
 
 class Spell extends React.Component {
 
