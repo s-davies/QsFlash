@@ -1,11 +1,22 @@
 .deck-page {
-    padding-left: 60px;
-    padding-right: 60px;
+    // padding-left: 60px;
+    // padding-right: 60px;
     display: flex;
     flex-direction: column;
     color: $dark-gray;
-    max-width: 940px;
+    // max-width: 940px;
     margin: auto;
+}
+
+.deck-page-top-wrapper {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+}
+
+.deck-page-top-wrapper-inner {
+  // max-width: 2000px;
+  flex: 0.6;
 }
 
 .deck-page h1 {
@@ -211,6 +222,7 @@
     display: flex;
     justify-content: space-between;
     padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .fa-info {
@@ -773,3 +785,8 @@
 
 ///////////////////Cards
 
+.deck-page-cards-header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}

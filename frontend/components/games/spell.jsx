@@ -150,8 +150,8 @@ class Spell extends React.Component {
   }
 
   checkSpelling() {
+    const card = Object.assign({}, this.state.wordToSpell);
     if (this.state.wordToSpell.term.toLowerCase() === this.state.spellVal.toLowerCase()) {
-      const card = Object.assign({}, this.state.wordToSpell);
       card.spellCount += 1;
       card.correctnessCount += 1;
       this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, spellCount: card.spellCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
@@ -195,6 +195,7 @@ class Spell extends React.Component {
       // }
 
     } else {
+      this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount - 1 }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
       const lastAns = this.state.spellVal;
       this.setState({ lastAnswer: lastAns, lastQuestion: this.state.wordToSpell, spellVal: ""})
     }
@@ -234,7 +235,6 @@ class Spell extends React.Component {
         },
       }
     };
-    debugger
     return (
       <div className="learn">
         <div className="game-sidebar">

@@ -19,6 +19,7 @@ const App = () => (
   <div className="app group">
     <NavbarContainer />
     <AuthRoute exact path="/" component={Splash} />
+    <ProtectedRoute exact path="/:deckId/flash-cards" component={DeckPageContainer} />
     <div className="app-div">
       <ProtectedRoute exact path="/create-deck" component={CreateDeckFormContainer} />
       <ProtectedRoute exact path="/:deckId/edit" component={EditDeckFormContainer} />
@@ -26,7 +27,7 @@ const App = () => (
       <ProtectedRoute exact path="/:userId/recent" component={UserDecks} />
       <ProtectedRoute exact path="/:userId/created" component={CreatedDecks} />
       <ProtectedRoute exact path="/:userId/studied" component={StudiedDecks} />
-      <ProtectedRoute exact path="/:deckId/flash-cards" component={DeckPageContainer} />
+      
       <ProtectedRoute exact path="/:deckId/learn" component={LearnContainer} />
       <ProtectedRoute exact path="/:deckId/spell" component={SpellContainer} />
     </div>

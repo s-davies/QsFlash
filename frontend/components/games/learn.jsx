@@ -179,8 +179,8 @@ class Learn extends React.Component {
         2000
         ); }
       } else {
+        this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount - 1}).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
         this.setState({lastAnswer: answer, lastQuestion: card});
-        
       }
       
     };

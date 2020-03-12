@@ -412,174 +412,178 @@ class DeckPage extends React.Component {
 
         return (
             <div className="deck-page">
-                <header className="deck-page-header">
-                    <h1>{this.props.deck.title}</h1>
-                    <div className="rating-div">
-                        {this.props.avgRating !== 0 ? <span>{showRating}</span> : this.props.creator.id === this.props.currentUser.id ? "" : <span>Leave the first rating</span> }
-                        {stars}
-                        <p>{this.props.numRatings === 0 ? this.props.currentUser.id === this.props.creator.id ? "No Reviews" : "" : this.props.numRatings === 1 ? "1 Review" : `${this.props.numRatings} Reviews`}</p>
-                    </div>
-                </header>
-                <div className="deck-page-top">
-                    <div className="deck-page-learn">
-                        <h3>STUDY</h3>
-                        <Link to={`/${this.props.deck.id}/study`} >
-                            <i className="fab fa-buffer"></i>
-                            <label>Flashcards</label>
-                        </Link>
-                        <Link to={`/${this.props.deck.id}/learn`} >
-                            <i className="fas fa-brain"></i>
-                            <label>Learn</label>
-                        </Link>
-                        <Link to="/" >
-                            <i className="fas fa-pencil-alt"></i>
-                            <label>Write</label>
-                        </Link>
-                        <Link to={`/${this.props.deck.id}/spell`} >
-                            <i className="fas fa-volume-up"></i>
-                            <label>Spell</label>
-                        </Link>
-                        <Link to="/" >
-                            <i className="far fa-file-alt"></i>
-                            <label>Test</label>
-                        </Link>
-                        <h3>PLAY</h3>
-                        <Link to="/" >
-                            <i className="far fa-clone"></i>
-                            <label>Match</label>
-                        </Link>
-                        <Link to="/" >
-                            <i className="fas fa-meteor"></i>
-                            <label>Gravity</label>
-                        </Link>
-                    </div>
-                    <div className="deck-page-flip">
-                        
-                        
-                        <div className="flip-card">
-                            <div onClick={this.handleFlip.bind(this)} className="flip-card-inner">
-                                <div className="flip-card-front">
-                                    <Textfit mode="multi" style={cardStyles}>
-                                    <p>{this.props.cards[this.state.progress - 1].term}</p>
-                                    </Textfit>
+                <div className="deck-page-top-wrapper">
+                    <div className="deck-page-top-wrapper-inner">
+                        <header className="deck-page-header">
+                            <h1>{this.props.deck.title}</h1>
+                            <div className="rating-div">
+                                {this.props.avgRating !== 0 ? <span>{showRating}</span> : this.props.creator.id === this.props.currentUser.id ? "" : <span>Leave the first rating</span> }
+                                {stars}
+                                <p>{this.props.numRatings === 0 ? this.props.currentUser.id === this.props.creator.id ? "No Reviews" : "" : this.props.numRatings === 1 ? "1 Review" : `${this.props.numRatings} Reviews`}</p>
+                            </div>
+                        </header>
+                        <div className="deck-page-top">
+                            <div className="deck-page-learn">
+                                <h3>STUDY</h3>
+                                <Link to={`/${this.props.deck.id}/study`} >
+                                    <i className="fab fa-buffer"></i>
+                                    <label>Flashcards</label>
+                                </Link>
+                                <Link to={`/${this.props.deck.id}/learn`} >
+                                    <i className="fas fa-brain"></i>
+                                    <label>Learn</label>
+                                </Link>
+                                <Link to="/" >
+                                    <i className="fas fa-pencil-alt"></i>
+                                    <label>Write</label>
+                                </Link>
+                                <Link to={`/${this.props.deck.id}/spell`} >
+                                    <i className="fas fa-volume-up"></i>
+                                    <label>Spell</label>
+                                </Link>
+                                <Link to="/" >
+                                    <i className="far fa-file-alt"></i>
+                                    <label>Test</label>
+                                </Link>
+                                <h3>PLAY</h3>
+                                <Link to="/" >
+                                    <i className="far fa-clone"></i>
+                                    <label>Match</label>
+                                </Link>
+                                <Link to="/" >
+                                    <i className="fas fa-meteor"></i>
+                                    <label>Gravity</label>
+                                </Link>
+                            </div>
+                            <div className="deck-page-flip">
+                                
+                                
+                                <div className="flip-card">
+                                    <div onClick={this.handleFlip.bind(this)} className="flip-card-inner">
+                                        <div className="flip-card-front">
+                                            <Textfit mode="multi" style={cardStyles}>
+                                            <p>{this.props.cards[this.state.progress - 1].term}</p>
+                                            </Textfit>
+                                        </div>
+                                        <div className="flip-card-back" >
+                                            <Textfit mode="multi" style={cardStyles}>
+                                            <p>{this.props.cards[this.state.progress - 1].definition}</p>
+                                            </Textfit>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flip-card-back" >
-                                    <Textfit mode="multi" style={cardStyles}>
-                                    <p>{this.props.cards[this.state.progress - 1].definition}</p>
-                                    </Textfit>
+                                    
+                                <div className="deck-page-card-next">
+                                    <div className="deck-page-card-empty"></div>
+                                    <div className="deck-page-card-switch">
+                                        <button onClick={this.handleProgress(-1).bind(this)} ><i className="fas fa-arrow-left"></i></button>
+                                        <label>{this.state.progress}/{this.props.cards.length}</label>
+                                        <button onClick={this.handleProgress(1).bind(this)}><i className="fas fa-arrow-right"></i></button>
+                                    </div>
+                                    <div className="tooltip-options">
+                                        <button className="fullscreen-button"><i className="fas fa-expand"></i></button>
+                                        <span className="tooltiptext-fullscreen">Fullscreen</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                            
-                        <div className="deck-page-card-next">
-                            <div className="deck-page-card-empty"></div>
-                            <div className="deck-page-card-switch">
-                                <button onClick={this.handleProgress(-1).bind(this)} ><i className="fas fa-arrow-left"></i></button>
-                                <label>{this.state.progress}/{this.props.cards.length}</label>
-                                <button onClick={this.handleProgress(1).bind(this)}><i className="fas fa-arrow-right"></i></button>
-                            </div>
-                            <div className="tooltip-options">
-                                <button className="fullscreen-button"><i className="fas fa-expand"></i></button>
-                                <span className="tooltiptext-fullscreen">Fullscreen</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="deck-page-deck-options">
-                    <div className="deck-options-left">
-                        <div className="created-by">
-                            <h4>Created by</h4>
-                            <h3>{this.props.creator.username}</h3>
-                        </div>
-                        <p>{this.props.deck.description}</p>
-                    </div>
-                    <div className="deck-options-right">
-                        <div className="tooltip-options">
-                            <i className="fas fa-plus"></i>
-                            <span className="tooltiptext-plus">Add set to class or folder</span>
-                        </div>
-                        {this.props.creator.id === this.props.currentUser.id ? 
-                
-                        <Link to={`/${this.props.deck.id}/edit`}>
-                            <div className="tooltip-options">
-                                <i className="fas fa-pen"></i>
-                                <span className="tooltiptext-pen">Edit</span>
-                            </div>
-                        </Link> : "" }
-                        <div onClick={this.showForm.bind(this)} className="tooltip-options">
-                            <i className="fas fa-info"></i>
-                            <span className="tooltiptext-info">Info</span>
-                        </div>
-                        <div className="info-dropdown">
-                            <i className="fas fa-ellipsis-h info-dropbtn"></i>
-                            <div className="info-dropdown-content">
-                                <span className="copy-link"><i className="far fa-copy"></i><p>Customize</p></span>
-                                <span className="trophy-link"><i className="fas fa-trophy"></i><p>Scores</p></span>
-                                <span className="object-link"><i className="far fa-object-group"></i><p>Combine</p></span>
-                                {this.props.creator.id === this.props.currentUser.id ? 
-                                <span className="trash-link" onClick={this.showDeleteModal.bind(this)}><i className="fas fa-trash-alt"></i><p>Delete</p></span> : "" }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div onClick={this.hideForm.bind(this)} className={this.state.cls}>
-                    <div className='info-div-box'>
-                        <div className="info-banner">
-                            <h1 className="form-title">Info</h1>
-                            <div onClick={this.hideForm.bind(this)} className="close-form">X</div>
-                        </div>
-                        <div className="info-modal-top">
-                            <div className="info-modal-main">
-                                <Link to="/">{this.props.creator.username}</Link>
-                                {createdText}
-                            </div>
-                            <div className="info-modal-description">
-                                <h2>DESCRIPTION</h2>
+                        <div className="deck-page-deck-options">
+                            <div className="deck-options-left">
+                                <div className="created-by">
+                                    <h4>Created by</h4>
+                                    <h3>{this.props.creator.username}</h3>
+                                </div>
                                 <p>{this.props.deck.description}</p>
                             </div>
-                            <div className="info-modal-boxes">
-                                <div className="info-modal-box">
-                                    <h1>{this.props.deckStudies.length}</h1>
-                                    <h3>{this.props.deckStudies.length === 1 ? "STUDIER" : "STUDIERS"}</h3>
+                            <div className="deck-options-right">
+                                <div className="tooltip-options">
+                                    <i className="fas fa-plus"></i>
+                                    <span className="tooltiptext-plus">Add set to class or folder</span>
                                 </div>
-                                <div className="info-modal-box">
-                                    <h1>1</h1>
-                                    <h3>CLASS</h3>
+                                {this.props.creator.id === this.props.currentUser.id ? 
+                        
+                                <Link to={`/${this.props.deck.id}/edit`}>
+                                    <div className="tooltip-options">
+                                        <i className="fas fa-pen"></i>
+                                        <span className="tooltiptext-pen">Edit</span>
+                                    </div>
+                                </Link> : "" }
+                                <div onClick={this.showForm.bind(this)} className="tooltip-options">
+                                    <i className="fas fa-info"></i>
+                                    <span className="tooltiptext-info">Info</span>
                                 </div>
-                                <div className="info-modal-box">
-                                    <h1>1</h1>
-                                    <h3>FOLDER</h3>
+                                <div className="info-dropdown">
+                                    <i className="fas fa-ellipsis-h info-dropbtn"></i>
+                                    <div className="info-dropdown-content">
+                                        <span className="copy-link"><i className="far fa-copy"></i><p>Customize</p></span>
+                                        <span className="trophy-link"><i className="fas fa-trophy"></i><p>Scores</p></span>
+                                        <span className="object-link"><i className="far fa-object-group"></i><p>Combine</p></span>
+                                        {this.props.creator.id === this.props.currentUser.id ? 
+                                        <span className="trash-link" onClick={this.showDeleteModal.bind(this)}><i className="fas fa-trash-alt"></i><p>Delete</p></span> : "" }
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="info-modal-bottom">
-                            <div className="info-modal-visibility">
-                                <p className="info-modal-vp">VIEWABLE BY</p>
-                                <p>{this.props.deck.visibility}</p>
-                            </div>
-                            <div className="info-modal-editability">
-                                <p className="info-modal-vp">EDITABLE BY</p>
-                                <p>{this.props.creator.username}</p>
+                        <div onClick={this.hideForm.bind(this)} className={this.state.cls}>
+                            <div className='info-div-box'>
+                                <div className="info-banner">
+                                    <h1 className="form-title">Info</h1>
+                                    <div onClick={this.hideForm.bind(this)} className="close-form">X</div>
+                                </div>
+                                <div className="info-modal-top">
+                                    <div className="info-modal-main">
+                                        <Link to="/">{this.props.creator.username}</Link>
+                                        {createdText}
+                                    </div>
+                                    <div className="info-modal-description">
+                                        <h2>DESCRIPTION</h2>
+                                        <p>{this.props.deck.description}</p>
+                                    </div>
+                                    <div className="info-modal-boxes">
+                                        <div className="info-modal-box">
+                                            <h1>{this.props.deckStudies.length}</h1>
+                                            <h3>{this.props.deckStudies.length === 1 ? "STUDIER" : "STUDIERS"}</h3>
+                                        </div>
+                                        <div className="info-modal-box">
+                                            <h1>1</h1>
+                                            <h3>CLASS</h3>
+                                        </div>
+                                        <div className="info-modal-box">
+                                            <h1>1</h1>
+                                            <h3>FOLDER</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="info-modal-bottom">
+                                    <div className="info-modal-visibility">
+                                        <p className="info-modal-vp">VIEWABLE BY</p>
+                                        <p>{this.props.deck.visibility}</p>
+                                    </div>
+                                    <div className="info-modal-editability">
+                                        <p className="info-modal-vp">EDITABLE BY</p>
+                                        <p>{this.props.creator.username}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div onClick={this.hideForm.bind(this)} className={this.state.deleteCls}>
+                            <div className='delete-div-box'>
+                                <div className="delete-banner">
+                                    <h1 className="form-title">Delete this deck?</h1>
+                                    <div onClick={this.hideForm.bind(this)} className="delete-close-form">X</div>
+                                </div>
+                                <div className="delete-content">
+                                    <h1>{this.props.deck.title}</h1>
+                                    <p>You are about to delete this deck and all of its data. No one will be able to access this deck ever again.</p>
+                                    <strong>Are you absolutely positive? There's no undo.</strong>
+                                    <div className="delete-buttons">
+                                        <button onClick={this.hideForm.bind(this)} className="cancel-button">Cancel</button>
+                                        <button onClick={this.handleDelete.bind(this)} className="delete-deck-button">Yes, delete deck</button>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div> 
                     </div>
-                </div>
-                <div onClick={this.hideForm.bind(this)} className={this.state.deleteCls}>
-                    <div className='delete-div-box'>
-                        <div className="delete-banner">
-                            <h1 className="form-title">Delete this deck?</h1>
-                            <div onClick={this.hideForm.bind(this)} className="delete-close-form">X</div>
-                        </div>
-                        <div className="delete-content">
-                            <h1>{this.props.deck.title}</h1>
-                            <p>You are about to delete this deck and all of its data. No one will be able to access this deck ever again.</p>
-                            <strong>Are you absolutely positive? There's no undo.</strong>
-                            <div className="delete-buttons">
-                                <button onClick={this.hideForm.bind(this)} className="cancel-button">Cancel</button>
-                                <button onClick={this.handleDelete.bind(this)} className="delete-deck-button">Yes, delete deck</button>
-                            </div>
-                        </div>
-                    </div>  
                 </div>
                 <div className="deck-page-bottom">
                     <header className="deck-page-cards-header">
@@ -598,18 +602,18 @@ class DeckPage extends React.Component {
                         <div className="usually-missed">
                             <header className="usually-missed-header">
                                 <div>
-                                    <span>Sometimes Missed</span>
+                                    <span>Usually Missed</span>
                                     <p>Your answers for these terms have usually been incorrect.</p>
                                 </div>
-                                <button><i class="far fa-star"></i>Star All</button>
+                                <button><i className="far fa-star"></i>Star All</button>
                             </header>
                             {usuallyMissed.map(card => (
-                                <div className="deck-info-card">
+                                <div key={card.id} className="deck-info-card">
                                     <label>{card.correctnessCount}</label>
                                     <p>{card.term}</p>
                                     <p>{card.definition}</p>
                                     <div>
-                                        {card.starred ? <i class="fas fa-star"></i> : <i class="far fa-star"></i>}
+                                        {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
                                         <SayButton
                                             onClick={event => console.log(event)}
                                             text={`${card.term}`}
@@ -629,15 +633,15 @@ class DeckPage extends React.Component {
                                     <span>Sometimes Missed</span>
                                     <p>Your answers for these terms have sometimes been correct.</p>
                                 </div>
-                                <button><i class="far fa-star"></i>Star All</button>
+                                <button><i className="far fa-star"></i>Star All</button>
                             </header>
                             {sometimesMissed.map(card => (
-                                <div className="deck-info-card">
+                                <div key={card.id} className="deck-info-card">
                                     <label>{card.correctnessCount}</label>
                                     <p>{card.term}</p>
                                     <p>{card.definition}</p>
                                     <div>
-                                        {card.starred ? <i class="fas fa-star"></i> : <i class="far fa-star"></i>}
+                                        {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
                                         <SayButton
                                             onClick={event => console.log(event)}
                                             text={`${card.term}`}
@@ -657,15 +661,15 @@ class DeckPage extends React.Component {
                                     <span>Rarely Missed</span>
                                     <p>Your answers for these terms have usually been correct!</p>
                                 </div>
-                                <button><i class="far fa-star"></i>Star All</button>
+                                <button><i className="far fa-star"></i>Star All</button>
                             </header>
                             {rarelyMissed.map(card => (
-                                <div className="deck-info-card">
+                                <div key={card.id} className="deck-info-card">
                                     <label>{card.correctnessCount}</label>
                                     <p>{card.term}</p>
                                     <p>{card.definition}</p>
                                     <div>
-                                        {card.starred ? <i class="fas fa-star"></i> : <i class="far fa-star"></i>}
+                                        {card.starred ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
                                         <SayButton
                                             onClick={event => console.log(event)}
                                             text={`${card.term}`}
