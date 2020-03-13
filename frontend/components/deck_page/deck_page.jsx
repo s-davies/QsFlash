@@ -10,6 +10,7 @@ class DeckPage extends React.Component {
         this.state = {
             flipped: false,
             progress: null,
+            rating: null,
             deckStudy: null,
             setProgress: false,
             curTar: null,
@@ -36,7 +37,7 @@ class DeckPage extends React.Component {
             this.props.fetchCardStudies(dId)
         });
         if (this.state.setProgress === false) {
-            this.props.fetchDeckStudy(dId).then(() => this.setState({ progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }, () => this.props.fetchDeckStudies(dId)))
+            this.props.fetchDeckStudy(dId).then(() => this.setState({ rating: this.props.deckStudies[0].rating,  progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }, () => this.props.fetchDeckStudies(dId)))
         } else {
             // this.props.fetchDeckStudies(dId)
         }
@@ -50,6 +51,7 @@ class DeckPage extends React.Component {
         let newDeckStudy = this.state.deckStudy
         if (newDeckStudy) {
             newDeckStudy.progress = this.state.progress;
+            newDeckStudy.rating = this.state.rating;
             this.props.updateDeckStudy(newDeckStudy)
         }
     }
@@ -123,12 +125,8 @@ class DeckPage extends React.Component {
 
     handleRating(num) {
         return e => {
-            if (this.props.currentUser.id !== this.state.deckStudy.studierId) {
-                let newDeckStudy = this.state.deckStudy
-                if (newDeckStudy) {
-                    newDeckStudy.rating = num;
-                    this.props.updateDeckStudy(newDeckStudy);
-                }
+            if (this.props.currentUser.id !== this.props.deck.ownerId) {
+                this.setState({rating: num});
             }
         }
     }
@@ -227,8 +225,8 @@ class DeckPage extends React.Component {
         };
         
         let stars;
-        const showRating = this.state.deckStudy.rating ? (Math.round(this.state.deckStudy.rating * 10) / 10).toFixed(1) : this.props.avgRating;
-        const classColorName = this.state.deckStudy.rating ? "rating-stars rating-purple" : "rating-stars rating-yellow";
+        const showRating = this.state.rating ? (Math.round(this.state.rating * 10) / 10).toFixed(1) : this.props.avgRating;
+        const classColorName = this.state.rating ? "rating-stars rating-purple" : "rating-stars rating-yellow";
         if (showRating < 1) {
             stars = <div className={classColorName}>
                 <i onClick={this.handleRating(1).bind(this)} onMouseOver={this.highlightStars(1).bind(this)} 

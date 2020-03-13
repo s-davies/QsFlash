@@ -965,6 +965,17 @@ nba_du_cs10 = CardStudy.create(
   studier_id: demo_user.id,
   deck_id: nba_deck.id
 )
+nba_du_cs11 = CardStudy.create(
+  starred: true,
+  correctness_count: -3,
+  learn_count: 1,
+  write_count: 0,
+  spell_count: 1,
+  test_count: 0,
+  card_id: nba_card11.id,
+  studier_id: demo_user.id,
+  deck_id: nba_deck.id
+)
 nba_du_cs12 = CardStudy.create(
   starred: true,
   correctness_count: -4,
@@ -1283,6 +1294,17 @@ nba_beau_cs10 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card10.id,
+  studier_id: mrBeau.id,
+  deck_id: nba_deck.id
+)
+nba_beau_cs11 = CardStudy.create(
+  starred: false,
+  correctness_count: -3,
+  learn_count: 1,
+  write_count: 0,
+  spell_count: 1,
+  test_count: 0,
+  card_id: nba_card11.id,
   studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
@@ -1608,6 +1630,17 @@ nba_sc_cs10 = CardStudy.create(
   studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
+nba_sc_cs11 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: nba_card11.id,
+  studier_id: steph_curry.id,
+  deck_id: nba_deck.id
+)
 nba_sc_cs12 = CardStudy.create(
   starred: false,
   correctness_count: 0,
@@ -1930,6 +1963,17 @@ war_du_cs10 = CardStudy.create(
   studier_id: demo_user.id,
   deck_id: war_deck.id
 )
+war_du_cs11 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: war_card11.id,
+  studier_id: demo_user.id,
+  deck_id: war_deck.id
+)
 war_du_cs12 = CardStudy.create(
   starred: false,
   correctness_count: 0,
@@ -1985,6 +2029,7 @@ war_du_cs16 = CardStudy.create(
   studier_id: demo_user.id,
   deck_id: war_deck.id
 )
+
 war_du_cs17 = CardStudy.create(
   starred: false,
   correctness_count: 0,
