@@ -18,16 +18,16 @@ demo_user = User.create(
   username: "DemoUser",
   email: "DemoUser@qsflash.com",
   password: "DemoUser",
-  account_type: "Student",
+  account_type: "student",
   night_mode: false
 )
 
 #demo_user------------------------------
-beau = User.create(
+mrBeau = User.create(
   username: "mrBeau",
   email: "mrBeau@qsflash.com",
   password: "mrBeau",
-  account_type: "Student",
+  account_type: "student",
   night_mode: false
 )
 
@@ -36,7 +36,7 @@ steph_curry = User.create(
   username: "StephCurry",
   email: "StephCurry@qsflash.com",
   password: "StephCurry",
-  account_type: "Student",
+  account_type: "student",
   night_mode: false
 )
 
@@ -265,7 +265,7 @@ war_deck = Deck.create(
   description: "Important events before and during the revolutionary war",
   visibility: "Everyone",
   editability: "Just me",
-  card_count: 18,
+  card_count: 17,
   owner_id: demo_user.id
 )
 
@@ -326,66 +326,66 @@ war_card8 = Card.create(
   deck_id: war_deck.id
 )
 
-war_card10 = Card.create(
+war_card9 = Card.create(
   term: "The Declaration of Independence is Adopted",
   definition: "(July 4, 1776) - The Continental Congress agrees to Thomas Jefferson's Declaration of Independence.",
+  order: 9,
+  deck_id: war_deck.id
+)
+
+war_card10 = Card.create(
+  term: "George Washington Crosses the Delaware",
+  definition: "(Dec. 25, 1776) - George Washington and his troops cross the Delaware River on Christmas night and surprise the enemy.",
   order: 10,
   deck_id: war_deck.id
 )
 
 war_card11 = Card.create(
-  term: "George Washington Crosses the Delaware",
-  definition: "(Dec. 25, 1776) - George Washington and his troops cross the Delaware River on Christmas night and surprise the enemy.",
+  term: "America Chooses a Flag",
+  definition: "(June 14, 1777) - The Continental Congress adopts the 'Stars and Stripes' Flag sewn by Betsy Ross.",
   order: 11,
   deck_id: war_deck.id
 )
 
 war_card12 = Card.create(
-  term: "America Chooses a Flag",
-  definition: "(June 14, 1777) - The Continental Congress adopts the 'Stars and Stripes' Flag sewn by Betsy Ross.",
+  term: "Battles of Saratoga",
+  definition: "(September 19 - October 17, 1777) - British General John Burgoyne surrenders his army to the Americans after suffering defeat at the Battles of Saratoga.",
   order: 12,
   deck_id: war_deck.id
 )
 
 war_card13 = Card.create(
-  term: "Battles of Saratoga",
-  definition: "(September 19 - October 17, 1777) - British General John Burgoyne surrenders his army to the Americans after suffering defeat at the Battles of Saratoga.",
+  term: "Valley Forge",
+  definition: "(Winter of 1777-1778) - The Continental army under George Washington spends the winter training at Valley Forge.",
   order: 13,
   deck_id: war_deck.id
 )
 
 war_card14 = Card.create(
-  term: "Valley Forge",
-  definition: "(Winter of 1777-1778) - The Continental army under George Washington spends the winter training at Valley Forge.",
+  term: "Alliance with France",
+  definition: "(Feb. 16, 1778) - France recognized the United States as an independent country with the Treaty of Alliance.",
   order: 14,
   deck_id: war_deck.id
 )
 
 war_card15 = Card.create(
-  term: "Alliance with France",
-  definition: "(Feb. 16, 1778) - France recognized the United States as an independent country with the Treaty of Alliance.",
+  term: "Articles of Confederation",
+  definition: "(March 2, 1781) - Defined the official government of the United States.",
   order: 15,
   deck_id: war_deck.id
 )
 
 war_card16 = Card.create(
-  term: "Articles of Confederation",
-  definition: "(March 2, 1781) - Defined the official government of the United States.",
+  term: "Battle of Yorktown",
+  definition: "(Oct. 19, 1781) - The last major battle of the American Revolutionary War. British General Cornwallis' surrender at Yorktown was the unofficial end to the war.",
   order: 16,
   deck_id: war_deck.id
 )
 
 war_card17 = Card.create(
-  term: "Battle of Yorktown",
-  definition: "(Oct. 19, 1781) - The last major battle of the American Revolutionary War. British General Cornwallis' surrender at Yorktown was the unofficial end to the war.",
-  order: 17,
-  deck_id: war_deck.id
-)
-
-war_card18 = Card.create(
   term: "Treaty of Paris",
   definition: "(Sept. 3, 1783) - Treaty that officially ended the war.",
-  order: 18,
+  order: 17,
   deck_id: war_deck.id
 )
 
@@ -395,12 +395,12 @@ superpowers_deck = Deck.create(
   description: "Most Popular Marvel Characters & Their Powers",
   visibility: "Everyone",
   editability: "Just me",
-  card_count: 17,
+  card_count: 16,
   owner_id: demo_user.id
 )
 
 #superpowers cards------------------------------
-superpowers_card = Card.create(
+superpowers_card1 = Card.create(
   term: "Captain America",
   definition: "Strength, agility, stamina, healing ability, expert tactician, martial artist, indestructible shield.",
   order: 1,
@@ -504,12 +504,6 @@ superpowers_card16 = Card.create(
   order: 16,
   deck_id: superpowers_deck.id
 )
-superpowers_card17 = Card.create(
-  term: "Star-Lord",
-  definition: "Strength, flight via jet boots, master problem-solver, cybernetic enhancements, space travel, Element Gun projects air, earth, fire, water.",
-  order: 17,
-  deck_id: superpowers_deck.id
-)
 
 #poker deck--------------------------------
 poker_deck = Deck.create(
@@ -589,8 +583,8 @@ tempo_deck = Deck.create(
   description: "The speed of a song or piece of music",
   visibility: "Everyone",
   editability: "Just me",
-  card_count: 10,
-  owner_id: demo_user.id
+  card_count: 21,
+  owner_id: mrBeau.id
 )
 
 #tempo cards-------------------------------
@@ -726,7 +720,7 @@ tempo_card21 = Card.create(
 spelling_deck = Deck.create(
   title: "Spelling Bee Words",
   description: "To help me winning the school spelling bee!",
-  visibility: "Just me",
+  visibility: "Everyone",
   editability: "Just me",
   card_count: 8,
   owner_id: mrBeau.id
@@ -785,28 +779,28 @@ spelling_card8 = Card.create(
 #deck studies--------------------------------------------------
 du_deck_study1 = DeckStudy.create(
   progress: 28,
-  rating: null,
+  rating: nil,
   deck_id: nba_deck.id,
   studier_id: demo_user.id
 )
 
 du_deck_study2 = DeckStudy.create(
   progress: 5,
-  rating: null,
+  rating: nil,
   deck_id: war_deck.id,
   studier_id: demo_user.id
 )
 
 du_deck_study3 = DeckStudy.create(
   progress: 1,
-  rating: null,
+  rating: nil,
   deck_id: superpowers_deck.id,
   studier_id: demo_user.id
 )
 
 du_deck_study4 = DeckStudy.create(
   progress: 1,
-  rating: null,
+  rating: nil,
   deck_id: poker_deck.id,
   studier_id: demo_user.id
 )
@@ -820,21 +814,21 @@ du_deck_study5 = DeckStudy.create(
 
 du_deck_study6 = DeckStudy.create(
   progress: 1,
-  rating: null,
+  rating: nil,
   deck_id: spelling_deck.id,
   studier_id: demo_user.id
 )
 
 mb_deck_study1 = DeckStudy.create(
   progress: 1,
-  rating: null,
+  rating: nil,
   deck_id: tempo_deck.id,
   studier_id: mrBeau.id
 )
 
 mb_deck_study2 = DeckStudy.create(
   progress: 1,
-  rating: null,
+  rating: nil,
   deck_id: spelling_deck.id,
   studier_id: mrBeau.id
 )
@@ -848,14 +842,14 @@ mb_deck_study3 = DeckStudy.create(
 
 sc_deck_study1 = DeckStudy.create(
   progress: 10,
-  rating: null,
+  rating: nil,
   deck_id: nba_deck.id,
   studier_id: steph_curry.id
 )
 
 sc_deck_study2 = DeckStudy.create(
   progress: 1,
-  rating: null,
+  rating: nil,
   deck_id: superpowers_deck.id,
   studier_id: steph_curry.id
 )
@@ -1081,17 +1075,7 @@ nba_du_cs21 = CardStudy.create(
   studier_id: demo_user.id,
   deck_id: nba_deck.id
 )
-nba_du_cs21 = CardStudy.create(
-  starred: true,
-  correctness_count: 0,
-  learn_count: 0,
-  write_count: 0,
-  spell_count: 0,
-  test_count: 0,
-  card_id: nba_card21.id,
-  studier_id: demo_user.id,
-  deck_id: nba_deck.id
-)
+
 nba_du_cs22 = CardStudy.create(
   starred: true,
   correctness_count: 1,
@@ -1200,7 +1184,7 @@ nba_beau_cs1 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card1.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs2 = CardStudy.create(
@@ -1211,7 +1195,7 @@ nba_beau_cs2 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card2.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs3 = CardStudy.create(
@@ -1222,7 +1206,7 @@ nba_beau_cs3 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card3.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs4 = CardStudy.create(
@@ -1233,7 +1217,7 @@ nba_beau_cs4 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card4.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs5 = CardStudy.create(
@@ -1244,7 +1228,7 @@ nba_beau_cs5 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card5.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs6 = CardStudy.create(
@@ -1255,7 +1239,7 @@ nba_beau_cs6 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card6.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs7 = CardStudy.create(
@@ -1266,7 +1250,7 @@ nba_beau_cs7 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card7.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs8 = CardStudy.create(
@@ -1277,7 +1261,7 @@ nba_beau_cs8 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card8.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs9 = CardStudy.create(
@@ -1288,7 +1272,7 @@ nba_beau_cs9 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card9.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs10 = CardStudy.create(
@@ -1299,7 +1283,7 @@ nba_beau_cs10 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card10.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs12 = CardStudy.create(
@@ -1310,7 +1294,7 @@ nba_beau_cs12 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card12.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs13 = CardStudy.create(
@@ -1321,7 +1305,7 @@ nba_beau_cs13 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card13.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs14 = CardStudy.create(
@@ -1332,7 +1316,7 @@ nba_beau_cs14 = CardStudy.create(
   spell_count: 2,
   test_count: 0,
   card_id: nba_card14.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs15 = CardStudy.create(
@@ -1343,7 +1327,7 @@ nba_beau_cs15 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card15.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs16 = CardStudy.create(
@@ -1354,7 +1338,7 @@ nba_beau_cs16 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card16.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs17 = CardStudy.create(
@@ -1365,7 +1349,7 @@ nba_beau_cs17 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card17.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs18 = CardStudy.create(
@@ -1376,7 +1360,7 @@ nba_beau_cs18 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card18.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs19 = CardStudy.create(
@@ -1387,7 +1371,7 @@ nba_beau_cs19 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card19.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs20 = CardStudy.create(
@@ -1398,7 +1382,7 @@ nba_beau_cs20 = CardStudy.create(
   spell_count: 2,
   test_count: 0,
   card_id: nba_card20.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs21 = CardStudy.create(
@@ -1409,20 +1393,10 @@ nba_beau_cs21 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card21.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
-nba_beau_cs21 = CardStudy.create(
-  starred: false,
-  correctness_count: 1,
-  learn_count: 0,
-  write_count: 0,
-  spell_count: 0,
-  test_count: 0,
-  card_id: nba_card21.id,
-  studier_id: demo_user.id,
-  deck_id: nba_deck.id
-)
+
 nba_beau_cs22 = CardStudy.create(
   starred: false,
   correctness_count: 1,
@@ -1431,7 +1405,7 @@ nba_beau_cs22 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card22.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs23 = CardStudy.create(
@@ -1442,7 +1416,7 @@ nba_beau_cs23 = CardStudy.create(
   spell_count: 2,
   test_count: 0,
   card_id: nba_card23.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs24 = CardStudy.create(
@@ -1453,7 +1427,7 @@ nba_beau_cs24 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card24.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs25 = CardStudy.create(
@@ -1464,7 +1438,7 @@ nba_beau_cs25 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card25.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs26 = CardStudy.create(
@@ -1475,7 +1449,7 @@ nba_beau_cs26 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card26.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs27 = CardStudy.create(
@@ -1486,7 +1460,7 @@ nba_beau_cs27 = CardStudy.create(
   spell_count: 2,
   test_count: 0,
   card_id: nba_card27.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs28 = CardStudy.create(
@@ -1497,7 +1471,7 @@ nba_beau_cs28 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card28.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs29 = CardStudy.create(
@@ -1508,7 +1482,7 @@ nba_beau_cs29 = CardStudy.create(
   spell_count: 1,
   test_count: 0,
   card_id: nba_card29.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 nba_beau_cs30 = CardStudy.create(
@@ -1519,7 +1493,7 @@ nba_beau_cs30 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card30.id,
-  studier_id: demo_user.id,
+  studier_id: mrBeau.id,
   deck_id: nba_deck.id
 )
 
@@ -1532,7 +1506,7 @@ nba_sc_cs1 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card1.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs2 = CardStudy.create(
@@ -1543,7 +1517,7 @@ nba_sc_cs2 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card2.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs3 = CardStudy.create(
@@ -1554,7 +1528,7 @@ nba_sc_cs3 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card3.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs4 = CardStudy.create(
@@ -1565,7 +1539,7 @@ nba_sc_cs4 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card4.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs5 = CardStudy.create(
@@ -1576,7 +1550,7 @@ nba_sc_cs5 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card5.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs6 = CardStudy.create(
@@ -1587,7 +1561,7 @@ nba_sc_cs6 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card6.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs7 = CardStudy.create(
@@ -1598,7 +1572,7 @@ nba_sc_cs7 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card7.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs8 = CardStudy.create(
@@ -1609,7 +1583,7 @@ nba_sc_cs8 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card8.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs9 = CardStudy.create(
@@ -1620,7 +1594,7 @@ nba_sc_cs9 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card9.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs10 = CardStudy.create(
@@ -1631,7 +1605,7 @@ nba_sc_cs10 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card10.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs12 = CardStudy.create(
@@ -1642,7 +1616,7 @@ nba_sc_cs12 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card12.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs13 = CardStudy.create(
@@ -1653,7 +1627,7 @@ nba_sc_cs13 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card13.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs14 = CardStudy.create(
@@ -1664,7 +1638,7 @@ nba_sc_cs14 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card14.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs15 = CardStudy.create(
@@ -1675,7 +1649,7 @@ nba_sc_cs15 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card15.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs16 = CardStudy.create(
@@ -1686,7 +1660,7 @@ nba_sc_cs16 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card16.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs17 = CardStudy.create(
@@ -1697,7 +1671,7 @@ nba_sc_cs17 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card17.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs18 = CardStudy.create(
@@ -1708,7 +1682,7 @@ nba_sc_cs18 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card18.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs19 = CardStudy.create(
@@ -1719,7 +1693,7 @@ nba_sc_cs19 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card19.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs20 = CardStudy.create(
@@ -1730,7 +1704,7 @@ nba_sc_cs20 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card20.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs21 = CardStudy.create(
@@ -1741,20 +1715,10 @@ nba_sc_cs21 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card21.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
-nba_sc_cs21 = CardStudy.create(
-  starred: false,
-  correctness_count: 0,
-  learn_count: 0,
-  write_count: 0,
-  spell_count: 0,
-  test_count: 0,
-  card_id: nba_card21.id,
-  studier_id: demo_user.id,
-  deck_id: nba_deck.id
-)
+
 nba_sc_cs22 = CardStudy.create(
   starred: false,
   correctness_count: 0,
@@ -1763,7 +1727,7 @@ nba_sc_cs22 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card22.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs23 = CardStudy.create(
@@ -1774,7 +1738,7 @@ nba_sc_cs23 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card23.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs24 = CardStudy.create(
@@ -1785,7 +1749,7 @@ nba_sc_cs24 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card24.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs25 = CardStudy.create(
@@ -1796,7 +1760,7 @@ nba_sc_cs25 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card25.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs26 = CardStudy.create(
@@ -1807,7 +1771,7 @@ nba_sc_cs26 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card26.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs27 = CardStudy.create(
@@ -1818,7 +1782,7 @@ nba_sc_cs27 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card27.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs28 = CardStudy.create(
@@ -1829,7 +1793,7 @@ nba_sc_cs28 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card28.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs29 = CardStudy.create(
@@ -1840,7 +1804,7 @@ nba_sc_cs29 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card29.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 nba_sc_cs30 = CardStudy.create(
@@ -1851,7 +1815,7 @@ nba_sc_cs30 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: nba_card30.id,
-  studier_id: demo_user.id,
+  studier_id: steph_curry.id,
   deck_id: nba_deck.id
 )
 
@@ -2032,17 +1996,6 @@ war_du_cs17 = CardStudy.create(
   studier_id: demo_user.id,
   deck_id: war_deck.id
 )
-war_du_cs18 = CardStudy.create(
-  starred: false,
-  correctness_count: 0,
-  learn_count: 0,
-  write_count: 0,
-  spell_count: 0,
-  test_count: 0,
-  card_id: war_card18.id,
-  studier_id: demo_user.id,
-  deck_id: war_deck.id
-)
 
 #superpowers card studies------------------------------
 superpowers_du_cs1 = CardStudy.create(
@@ -2155,6 +2108,17 @@ superpowers_du_cs10 = CardStudy.create(
   studier_id: demo_user.id,
   deck_id: superpowers_deck.id
 )
+superpowers_du_cs11 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: superpowers_card11.id,
+  studier_id: demo_user.id,
+  deck_id: superpowers_deck.id
+)
 superpowers_du_cs12 = CardStudy.create(
   starred: false,
   correctness_count: 0,
@@ -2207,17 +2171,6 @@ superpowers_du_cs16 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: superpowers_card16.id,
-  studier_id: demo_user.id,
-  deck_id: superpowers_deck.id
-)
-superpowers_du_cs17 = CardStudy.create(
-  starred: false,
-  correctness_count: 0,
-  learn_count: 0,
-  write_count: 0,
-  spell_count: 0,
-  test_count: 0,
-  card_id: superpowers_card17.id,
   studier_id: demo_user.id,
   deck_id: superpowers_deck.id
 )
@@ -2332,6 +2285,17 @@ superpowers_du_cs10 = CardStudy.create(
   studier_id: steph_curry.id,
   deck_id: superpowers_deck.id
 )
+superpowers_du_cs11 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: superpowers_card11.id,
+  studier_id: steph_curry.id,
+  deck_id: superpowers_deck.id
+)
 superpowers_du_cs12 = CardStudy.create(
   starred: false,
   correctness_count: 0,
@@ -2384,17 +2348,6 @@ superpowers_du_cs16 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: superpowers_card16.id,
-  studier_id: steph_curry.id,
-  deck_id: superpowers_deck.id
-)
-superpowers_du_cs17 = CardStudy.create(
-  starred: false,
-  correctness_count: 0,
-  learn_count: 0,
-  write_count: 0,
-  spell_count: 0,
-  test_count: 0,
-  card_id: superpowers_card17.id,
   studier_id: steph_curry.id,
   deck_id: superpowers_deck.id
 )
@@ -2622,6 +2575,127 @@ tempo_du_cs10 = CardStudy.create(
   studier_id: demo_user.id,
   deck_id: tempo_deck.id
 )
+tempo_du_cs11 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card11.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs12 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card12.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs13 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card13.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs14 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card14.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs15 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card15.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs16 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card16.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs17 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card17.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs18 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card18.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs19 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card19.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs20 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card20.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs21 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card21.id,
+  studier_id: demo_user.id,
+  deck_id: tempo_deck.id
+)
 
 tempo_du_cs1 = CardStudy.create(
   starred: false,
@@ -2730,6 +2804,127 @@ tempo_du_cs10 = CardStudy.create(
   spell_count: 0,
   test_count: 0,
   card_id: tempo_card10.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs11 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card11.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs12 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card12.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs13 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card13.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs14 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card14.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs15 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card15.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs16 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card16.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs17 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card17.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs18 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card18.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs19 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card19.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs20 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card20.id,
+  studier_id: mrBeau.id,
+  deck_id: tempo_deck.id
+)
+tempo_du_cs21 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: tempo_card21.id,
   studier_id: mrBeau.id,
   deck_id: tempo_deck.id
 )

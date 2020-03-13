@@ -219,11 +219,13 @@ class DeckPage extends React.Component {
         if (this.state.redirect) {
             return <Redirect push to={this.state.redirect} />
         }
+        
         if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false || this.props.cards[0].cardStudyId === undefined) return null;
         let cardStyles = {
             height: '250px',
             width: '410px',
         };
+        
         let stars;
         const showRating = this.state.deckStudy.rating ? (Math.round(this.state.deckStudy.rating * 10) / 10).toFixed(1) : this.props.avgRating;
         const classColorName = this.state.deckStudy.rating ? "rating-stars rating-purple" : "rating-stars rating-yellow";
@@ -512,6 +514,7 @@ class DeckPage extends React.Component {
                 if (card1.term < card2.term) return -1;
             })
         }
+        
         return (
             <div className="deck-page">
                 <div className="deck-page-top-wrapper">
