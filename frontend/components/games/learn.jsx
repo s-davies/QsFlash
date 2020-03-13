@@ -431,7 +431,7 @@ class Learn extends React.Component {
               <>
                 {this.state.mc1Correct ? 
                   <div className="learn-card-correct">
-                    <p>Correct! 😀</p>
+                    <p>Correct! <span>😀</span></p>
                   </div>
                   :
                   <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[0]], 1).bind(this)}>
@@ -440,7 +440,7 @@ class Learn extends React.Component {
                   </div>}
                 {this.state.mc2Correct ?
                   <div className="learn-card-correct">
-                    <p>Correct! 😀</p>
+                    <p>Correct! <span>😀</span></p>
                   </div>
                   :
                   <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[1]], 2).bind(this)}>
@@ -453,7 +453,7 @@ class Learn extends React.Component {
                 <>
                   {this.state.mc1Correct ?
                     <div className="learn-card-correct" >
-                      <p>Correct! 😀</p>
+                      <p>Correct! <span>😀</span></p>
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[0]], 1).bind(this)}>
@@ -462,7 +462,7 @@ class Learn extends React.Component {
                     </div>}
                   {this.state.mc2Correct ?
                     <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
+                      <p>Correct! <span>😀</span></p>
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[1]], 2).bind(this)}>
@@ -471,7 +471,7 @@ class Learn extends React.Component {
                     </div>}
                   {this.state.mc3Correct ?
                     <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
+                      <p>Correct! <span>😀</span></p>
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[2]], 3).bind(this)}>
@@ -484,7 +484,7 @@ class Learn extends React.Component {
                 <>
                   {this.state.mc1Correct ?
                     <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
+                      <p>Correct! <span>😀</span></p>
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[0]], 1).bind(this)}>
@@ -494,7 +494,7 @@ class Learn extends React.Component {
                 
                   {this.state.mc2Correct ?
                     <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
+                      <p>Correct! <span>😀</span></p>
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[1]], 2).bind(this)}>
@@ -503,7 +503,7 @@ class Learn extends React.Component {
                     </div>}
                   {this.state.mc3Correct ?
                     <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
+                      <p>Correct! <span>😀</span></p>
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[2]], 3).bind(this)}>
@@ -512,7 +512,7 @@ class Learn extends React.Component {
                     </div>}
                   {this.state.mc4Correct ?
                     <div className="learn-card-correct">
-                      <p>Correct! 😀</p>
+                      <p>Correct! <span>😀</span></p>
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[3]], 4).bind(this)}>
