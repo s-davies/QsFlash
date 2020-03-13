@@ -1,22 +1,17 @@
-<a name="qsflash">
 # QsFlash!
-</a>
 
 QsFlash! is a study application that enables users to create virtual flashcards. Through the use of interactive learning games, QsFlash provides an easy and convenient replacement for the old-fashioned paper flashcard.
 
-<a name="demo">
 ## Demo - https://qsflash.herokuapp.com/
-</a>
 
 ## Table of Contents
 
-[Introduction](#qsflash)
-[Demo](#demo)
-[App Screenshots](#screenshots)
+- [QsFlash!](#qsflash-)
+  * [Demo - https://qsflash.herokuapp.com/](#demo---https---qsflashherokuappcom-)
+  * [App Screenshots](#app-screenshots)
+  * [Clone Project](#clone-project)
 
-<a name="screenshots">
 ## App Screenshots
-</a>
 
 | Splash Page        | Signup           | Latest   | Recent   |
 | :-------------: |:-------------:| :-------------:| :-------------:|
@@ -30,7 +25,7 @@ QsFlash! is a study application that enables users to create virtual flashcards.
 | :-------------: |:-------------:| :-------------:|
 | <img src="app/assets/images/readme_screenshots/splash.png" title="Options" width="400px"> | <img src="app/assets/images/readme_screenshots/sign_up.png" title="Spelling" width="400px"> | <img src="app/assets/images/readme_screenshots/latest.png" title="Incorrect" width="400px"> |
 
-#### Clone Project
+## Clone Project
 
 ```shell
 git clone https://github.com/s-davies/QsFlash.git
