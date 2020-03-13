@@ -17,7 +17,7 @@ User.destroy_all
 demo_user = User.create(
   username: "DemoUser",
   email: "DemoUser@qsflash.com",
-  password: "DemoUser",
+  password: "DemoUser9999",
   account_type: "student",
   night_mode: false
 )
@@ -2977,7 +2977,7 @@ tempo_du_cs21 = CardStudy.create(
 #spelling card studies-----------------------------
 spelling_du_cs1 = CardStudy.create(
   starred: false,
-  correctness_count: 0,
+  correctness_count: -1,
   learn_count: 0,
   write_count: 0,
   spell_count: 0,
@@ -2988,7 +2988,7 @@ spelling_du_cs1 = CardStudy.create(
 )
 spelling_du_cs2 = CardStudy.create(
   starred: true,
-  correctness_count: 0,
+  correctness_count: -3,
   learn_count: 0,
   write_count: 0,
   spell_count: 0,
@@ -3010,7 +3010,7 @@ spelling_du_cs3 = CardStudy.create(
 )
 spelling_du_cs4 = CardStudy.create(
   starred: false,
-  correctness_count: 0,
+  correctness_count: 2,
   learn_count: 0,
   write_count: 0,
   spell_count: 0,
@@ -3021,7 +3021,7 @@ spelling_du_cs4 = CardStudy.create(
 )
 spelling_du_cs5 = CardStudy.create(
   starred: false,
-  correctness_count: 0,
+  correctness_count: 3,
   learn_count: 0,
   write_count: 0,
   spell_count: 0,
@@ -3032,7 +3032,7 @@ spelling_du_cs5 = CardStudy.create(
 )
 spelling_du_cs6 = CardStudy.create(
   starred: false,
-  correctness_count: 0,
+  correctness_count: 1,
   learn_count: 0,
   write_count: 0,
   spell_count: 0,
@@ -3043,7 +3043,7 @@ spelling_du_cs6 = CardStudy.create(
 )
 spelling_du_cs7 = CardStudy.create(
   starred: false,
-  correctness_count: 0,
+  correctness_count: 4,
   learn_count: 0,
   write_count: 0,
   spell_count: 0,
@@ -3054,7 +3054,7 @@ spelling_du_cs7 = CardStudy.create(
 )
 spelling_du_cs8 = CardStudy.create(
   starred: false,
-  correctness_count: 0,
+  correctness_count: -2,
   learn_count: 0,
   write_count: 0,
   spell_count: 0,

@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
 
     return {
         createdDecksCount: createdDecksCt,
+        currentUser: state.entities.users[state.session.id],
     };
 };
 

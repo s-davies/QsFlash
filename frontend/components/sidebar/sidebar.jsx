@@ -35,13 +35,13 @@ class Sidebar extends React.Component {
                     </div>
                 </NavLink>
                 <div className="sidebar-separator"></div>
-                <NavLink to="/sets" activeClassName="sidebar-selected" className="sidebar-link sidebar-sets">
+                <NavLink exact to={`/${this.props.currentUser.id}/created`} activeClassName="sidebar-selected" className="sidebar-link sidebar-sets">
                     <div className="sidebar-link-text">
                         <i className="fas fa-clone"></i>
                         <p>Decks ({this.props.createdDecksCount})</p>
                     </div>
                 </NavLink>
-                <NavLink to="/sets" activeClassName="sidebar-selected" className="sidebar-link sidebar-folders">
+                <NavLink to="/folders" activeClassName="sidebar-selected" className="sidebar-link sidebar-folders">
                     <div className="sidebar-link-text">
                         <i className="fas fa-folder"></i>
                         <p>Folders</p>
@@ -52,7 +52,7 @@ class Sidebar extends React.Component {
                     <p>Create a folder</p>
                 </button>
 
-                <NavLink to="/sets" activeClassName="sidebar-selected" className="sidebar-link sidebar-classes">
+                <NavLink to="/classes" activeClassName="sidebar-selected" className="sidebar-link sidebar-classes">
                     <div className="sidebar-link-text">
                         <i className="fas fa-user-friends"></i>
                         <p>Classes</p>
