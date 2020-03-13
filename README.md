@@ -1,31 +1,38 @@
+<a name="qsflash">
 # QsFlash!
+</a>
+
 QsFlash! is a study application that enables users to create virtual flashcards. Through the use of interactive learning games, QsFlash provides an easy and convenient replacement for the old-fashioned paper flashcard.
 
+<a name="demo">
 ## Demo - https://qsflash.herokuapp.com/
+</a>
 
+## Table of Contents
 
+[Introduction](#qsflash)
+[Demo](#demo)
+[App Screenshots](#screenshots)
+
+<a name="screenshots">
 ## App Screenshots
-![Alt text](/QsFlash/app/assets/images/readme_screenshots/splash.png?raw=true "Optional Title")
+</a>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+| Splash Page        | Signup           | Latest   | Recent   |
+| :-------------: |:-------------:| :-------------:| :-------------:|
+| <img src="app/assets/images/readme_screenshots/splash.png" title="Splash Page" width="400px"> | <img src="app/assets/images/readme_screenshots/sign_up.png" title="Signup" width="400px"> | <img src="app/assets/images/readme_screenshots/latest.png" title="Latest" width="400px"> | <img src="app/assets/images/readme_screenshots/recent.png" title="Recent" width="400px"> |
 
-Things you may want to cover:
+| New Deck        | Flash Cards           | Sorted Terms   | Multiple Choice   |
+| :-------------: |:-------------:| :-------------:| :-------------:|
+| <img src="app/assets/images/readme_screenshots/new_deck.png" title="New Deck" width="400px"> | <img src="app/assets/images/readme_screenshots/flash-cards.png" title="Flash Cards" width="400px"> | <img src="app/assets/images/readme_screenshots/flash-cards-bottom.png" title="Sorted Terms" width="400px"> | <img src="app/assets/images/readme_screenshots/multiple_choice.png" title="Multiple Choice" width="400px"> |
 
-* Ruby version
+| Options       | Spelling           | Incorrect   |
+| :-------------: |:-------------:| :-------------:|
+| <img src="app/assets/images/readme_screenshots/splash.png" title="Options" width="400px"> | <img src="app/assets/images/readme_screenshots/sign_up.png" title="Spelling" width="400px"> | <img src="app/assets/images/readme_screenshots/latest.png" title="Incorrect" width="400px"> |
 
-* System dependencies
+#### Clone Project
 
-* Configuration
+```shell
+git clone https://github.com/s-davies/QsFlash.git
+```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
