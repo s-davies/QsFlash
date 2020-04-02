@@ -14,6 +14,7 @@ import EditDeckFormContainer from './deck/edit_deck_form_container'
 import DeckPageContainer from './deck_page/deck_page_container'
 import LearnContainer from './games/learn_container';
 import SpellContainer from './games/spell_container';
+import SearchContainer from './search/search_container';
 
 const App = () => (
   <div className="app group">
@@ -30,6 +31,7 @@ const App = () => (
       
       <ProtectedRoute exact path="/:deckId/learn" component={LearnContainer} />
       <ProtectedRoute exact path="/:deckId/spell" component={SpellContainer} />
+      <ProtectedRoute exact path="/search/:searchTerm" component={SearchContainer} />
     </div>
   </div>
 );

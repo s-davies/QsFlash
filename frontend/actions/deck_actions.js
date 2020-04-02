@@ -32,6 +32,13 @@ export const fetchDecks = () => dispatch => (
         ))
 );
 
+export const searchDecks = (searchTerm) => dispatch => (
+    DeckApiUtil.searchDecks(searchTerm)
+        .then(decks => dispatch(receiveAllDecks(decks)), err => (
+            dispatch(receiveErrors(err.responseJSON))
+        ))
+);
+
 export const fetchDeck = deckId => dispatch => (
     DeckApiUtil.fetchDeck(deckId)
         .then(deck => dispatch(receiveDeck(deck)), err => (

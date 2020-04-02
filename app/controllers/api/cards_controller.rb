@@ -1,6 +1,6 @@
 class Api::CardsController < ApplicationController
     def index
-        @cards = Card.where(deck_id: params[:deck_id])
+        @cards = params[:deck_id] != "undefined" ? Card.where(deck_id: params[:deck_id]) : Card.where("cards.order < ?", 5)
         render :index
     end
 

@@ -170,7 +170,7 @@ class Recent extends React.Component {
                   <div className="small-deck-tile-inner">
                     <div className="small-deck-tile-top">
                       <p>{deck.cardCount} Terms </p>
-                      <Link>{this.props.users[deck.ownerId].username}</Link>
+                      <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                     </div>
                     <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -189,7 +189,7 @@ class Recent extends React.Component {
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -208,7 +208,7 @@ class Recent extends React.Component {
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -227,7 +227,7 @@ class Recent extends React.Component {
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -246,7 +246,7 @@ class Recent extends React.Component {
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                    <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>

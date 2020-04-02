@@ -1,0 +1,81 @@
+.search {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.search-inner {
+  flex: 0.6;
+}
+
+.search-deck {
+  background-color: $white;
+  border-radius: 10px;
+  margin: 15px 0px;
+}
+
+.search-deck:hover {
+  border-bottom: 4px solid $yellow;
+  cursor: pointer;
+}
+.search-deck:hover .search-cards div {
+  padding-bottom: 11px;
+}
+
+.search-deck-info {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid $lightest-gray;
+  padding: 15px;
+}
+
+.search-deck-info > p {
+  font-size: 24px;
+  font-weight: 700;
+  color: $dark-gray;
+}
+
+.search-deck-info div {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.search-deck-info div p {
+  padding-right: 10px;
+  border-right: 2px solid $lightest-gray;
+  color: $dark-gray;
+}
+
+.search-deck-info a {
+  padding-left: 10px;
+  color: $teal;
+}
+
+.search-deck-info a:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
+}
+
+.search-cards {
+  display: flex;
+}
+
+.search-cards div h4 {
+  margin: 0;
+  padding-bottom: 8px;
+}
+
+.search-cards div p {
+  color: $light-gray;
+}
+
+.search-cards div {
+  flex: 1;
+  padding: 15px;
+  border-right: 2px solid $lightest-gray;
+  font-size: 12px;
+}
+
+.search-cards div:last-of-type {
+  border-right: none;
+}

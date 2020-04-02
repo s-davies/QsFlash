@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import UserDropdown from './user_dropdown';
 import LoginFormContainer from '../session_form/login_form_container';
 import SignupFormContainer from '../session_form/signup_form_container';
@@ -9,16 +9,23 @@ class Navbar extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {searchOpen: false, searchVal: ""}
+        this.state = {
+            searchOpen: false, 
+            searchVal: "",
+            redirect: null
+        }
     }
+
     handleSearchSubmit(e) {
         e.preventDefault();
         if (this.state.searchVal !== "") {
+            //reset state to redirect on next render with search query
+            this.setState({ redirect: `/search/${this.state.searchVal}` })
             console.log("submitting search")
         }
     }
 
-    handleSeachChange(e) {
+    handleSearchChange(e) {
         this.setState({searchVal: e.currentTarget.value})
     }
 
@@ -31,6 +38,10 @@ class Navbar extends React.Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect push to={this.state.redirect} />
+        }
+
         let display;
         if (this.state.searchOpen) {
             
@@ -40,7 +51,7 @@ class Navbar extends React.Component {
                     <div>
                         <i className="fas fa-search"></i>
                         <form onSubmit={this.handleSearchSubmit.bind(this)} className='main-nav-search-form' spellCheck="false">
-                            <input onBlur={this.closeSearchBar.bind(this)} type="text" placeholder="Search" onChange={this.handleSeachChange.bind(this)} value={this.state.searchVal} autoFocus />
+                            <input onBlur={this.closeSearchBar.bind(this)} type="text" placeholder="Search" onChange={this.handleSearchChange.bind(this)} value={this.state.searchVal} autoFocus />
                         </form>
                     </div>
                     <p>X</p>

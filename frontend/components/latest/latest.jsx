@@ -116,7 +116,7 @@ class Latest extends React.Component {
                                 <div className="medium-deck-tile-right">
                                     <h3>{deck.title}</h3>
                                     <p>{deck.cardCount} terms {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</p>
-                                    <Link>{this.props.users[deck.ownerId].username}</Link>
+                                    <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                                 </div>
                                 <div className="medium-deck-tile-right" >
                                     

@@ -5,6 +5,13 @@ export const fetchDecks = () => (
     })
 );
 
+export const searchDecks = (searchTerm) => (
+    $.ajax({
+        method: 'GET',
+        url: `/api/search/${searchTerm}`
+    })
+);
+
 export const fetchDeck = (deckId) => (
     $.ajax({
         method: 'GET',

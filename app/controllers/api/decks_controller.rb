@@ -5,6 +5,13 @@ class Api::DecksController < ApplicationController
         render :index
     end
 
+    def search
+        searchTerm = params["searchTerm"].split("%20").join(" ")
+        @decks = Deck.where("upper(title) LIKE ?", "%#{params['searchTerm'].upcase}%")
+        
+        render :index
+    end
+
     def create
         @deck = Deck.new(deck_params)
         @deck.owner_id = current_user.id
