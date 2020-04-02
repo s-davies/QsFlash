@@ -24,15 +24,25 @@ class Search extends React.Component {
     this.props.fetchUsers().then(() => this.setState({usersLoaded: true}));
   }
 
+  handleRedirect(deckId) {
+    return e => {
+      this.setState({ redirect: `/${deckId}/flash-cards` })
+    }
+  }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to={this.state.redirect} />
+    }
+
     if (!this.state.usersLoaded) return null;
 
     return (
       <div className="search">
         <div className="search-inner">
+          <h1>{this.props.match.params.searchTerm}</h1>
           {this.props.decks.map(deck => (
-            <div key={deck.id} className="search-deck">
+            <div onClick={this.handleRedirect(deck.id).bind(this)} key={deck.id} className="search-deck">
               <div className="search-deck-info">
                 <div>
                   <p>{deck.cardCount} terms</p>

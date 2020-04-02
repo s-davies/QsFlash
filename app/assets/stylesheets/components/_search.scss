@@ -8,10 +8,17 @@
   flex: 0.6;
 }
 
+.search-inner > h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: $dark-gray;
+}
+
 .search-deck {
   background-color: $white;
   border-radius: 10px;
   margin: 15px 0px;
+  box-shadow: 0px 0px 5px 1px $lighter-gray;
 }
 
 .search-deck:hover {

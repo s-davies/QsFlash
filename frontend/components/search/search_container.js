@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { searchDecks } from '../../actions/deck_actions';
-import { fetchDeckStudy } from '../../actions/deck_study_actions'
 import { fetchCards } from '../../actions/card_actions';
 import { fetchUsers } from '../../actions/session_actions';
 import Search from './search';
@@ -8,11 +7,6 @@ import Search from './search';
 const mapStateToProps = (state) => {
   let decks = Object.assign({}, state.entities.decks);
 
-  // let createdDecksCt = 0;
-  // for (let i = 0; i < allDecks.length; i++) {
-    //   const deck = allDecks[i];
-    //   if (deck.ownerId === state.entities.users[state.session.id].id) createdDecksCt += 1;
-    // }
     let allCards = Object.values(state.entities.cards);
     for (let i = 0; i < allCards.length; i++) {
       const card = allCards[i];
