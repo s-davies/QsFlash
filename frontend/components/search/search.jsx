@@ -18,10 +18,15 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    // debugger
     this.props.searchDecks(this.props.match.params.searchTerm);
     this.props.fetchCards();
     this.props.fetchUsers().then(() => this.setState({usersLoaded: true}));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.searchTerm !== this.props.searchTerm) {
+      this.props.searchDecks(nextProps.match.params.searchTerm);
+    }
   }
 
   handleRedirect(deckId) {
@@ -41,6 +46,7 @@ class Search extends React.Component {
       <div className="search">
         <div className="search-inner">
           <h1>{this.props.match.params.searchTerm}</h1>
+          <h3 id="sets-h3">SETS</h3>
           {this.props.decks.map(deck => (
             <div onClick={this.handleRedirect(deck.id).bind(this)} key={deck.id} className="search-deck">
               <div className="search-deck-info">

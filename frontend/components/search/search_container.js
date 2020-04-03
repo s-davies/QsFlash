@@ -4,7 +4,7 @@ import { fetchCards } from '../../actions/card_actions';
 import { fetchUsers } from '../../actions/session_actions';
 import Search from './search';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   let decks = Object.assign({}, state.entities.decks);
 
     let allCards = Object.values(state.entities.cards);
@@ -15,8 +15,8 @@ const mapStateToProps = (state) => {
       }
     }
     let allDecks = Object.keys(decks).map(key => decks[key]);
-    
   return {
+    searchTerm: ownProps.match.params.searchTerm,
     decks: allDecks,
     users: state.entities.users,
     currentUser: state.entities.users[state.session.id],

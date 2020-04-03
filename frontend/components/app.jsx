@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 import NavbarContainer from './navbar/navbar_container'
@@ -36,4 +36,4 @@ const App = () => (
   </div>
 );
 
-export default App;
+export default withRouter(App);

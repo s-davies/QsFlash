@@ -5,11 +5,22 @@
 }
 
 .search-inner {
-  flex: 0.6;
+  flex: 1;
 }
 
 .search-inner > h1 {
-  font-size: 36px;
+  padding-top: 30px;
+  padding-bottom: 0px;
+  font-size: 48px;
+  font-weight: 700;
+  color: $dark-gray;
+}
+
+#sets-h3 {
+  margin: 0;
+  padding-top: 30px;
+  padding-bottom: 0;
+  font-size: 18px;
   font-weight: 700;
   color: $dark-gray;
 }

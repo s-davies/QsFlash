@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, withRouter } from 'react-router-dom';
 import UserDropdown from './user_dropdown';
 import LoginFormContainer from '../session_form/login_form_container';
 import SignupFormContainer from '../session_form/signup_form_container';
@@ -19,9 +19,10 @@ class Navbar extends React.Component {
     handleSearchSubmit(e) {
         e.preventDefault();
         if (this.state.searchVal !== "") {
-            //reset state to redirect on next render with search query
-            this.setState({ redirect: `/search/${this.state.searchVal}` })
-            console.log("submitting search")
+            //clear search bar
+            this.setState({ searchVal: "" });
+            //redirect
+            this.props.history.push(`/search/${this.state.searchVal}`);
         }
     }
 
@@ -91,4 +92,4 @@ class Navbar extends React.Component {
 }
 
 
-export default Navbar;
+export default withRouter(Navbar);
