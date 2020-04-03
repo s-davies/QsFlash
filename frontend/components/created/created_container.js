@@ -8,9 +8,10 @@ const mapStateToProps = (state, ownProps) => {
   let allDecks = Object.keys(state.entities.decks).map(key => state.entities.decks[key]);
   let createdDecksCt = 0;
   let createdDecks = [];
+
   for (let i = 0; i < allDecks.length; i++) {
     const deck = allDecks[i];
-    if (deck.ownerId === state.entities.users[state.session.id].id) {
+    if (deck.ownerId === parseInt(ownProps.ownProps.match.params.userId)) {
       createdDecksCt += 1;
       createdDecks.push(deck);
     }
