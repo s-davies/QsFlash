@@ -423,19 +423,19 @@ class DeckPage extends React.Component {
             if (currentYear - createdYear === 1) {
                 createdText = <p>Created a year ago</p>
             } else {
-                createdText = <p>Created {currentYear - createdYear} years ago</p>
+                createdText = <p>Created {createdYear - currentYear} years ago</p>
             }
         } else if (currentMonth > createdMonth) {
             if (currentMonth - createdMonth === 1) {
                 createdText = <p>Created a month ago</p>
             } else {
-                createdText = <p>Created {currentMonth - createdMonth} months ago</p>
+                createdText = <p>Created {createdMonth - currentMonth} months ago</p>
             }
         } else if (currentDay > createdDay) {
             if (currentDay - createdDay === 1) {
                 createdText = <p>Created a day ago</p>
             } else {
-                createdText = <p>Created {currentDay - createdDay} days ago</p>
+                createdText = <p>Created {createdDay - currentDay} days ago</p>
             }
         } else {
             createdText = <p>Created today</p>
@@ -594,7 +594,7 @@ class DeckPage extends React.Component {
                             <div className="deck-options-left">
                                 <div className="created-by">
                                     <h4>Created by</h4>
-                                    <h3>{this.props.creator.username}</h3>
+                                    <Link to={`/${this.props.creator.id}/created`}><h3>{this.props.creator.username}</h3></Link>
                                 </div>
                                 <p>{this.props.deck.description}</p>
                             </div>
@@ -635,7 +635,7 @@ class DeckPage extends React.Component {
                                 </div>
                                 <div className="info-modal-top">
                                     <div className="info-modal-main">
-                                        <Link to="/">{this.props.creator.username}</Link>
+                                        <Link to={`/${this.props.creator.id}/created`}>{this.props.creator.username}</Link>
                                         {createdText}
                                     </div>
                                     <div className="info-modal-description">

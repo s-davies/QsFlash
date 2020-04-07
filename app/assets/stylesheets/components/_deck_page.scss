@@ -256,6 +256,11 @@
     color: $dark-gray;
 }
 
+.deck-options-left h3:hover {
+    transition: color 0.15s ease;
+    color: $yellow;
+}
+
 .deck-options-right i {
     margin-left: 5px;
 }
