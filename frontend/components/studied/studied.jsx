@@ -18,8 +18,17 @@ class Studied extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchDecks().then(() => this.sortDecks(this.props.decks, 0));
-    this.props.fetchUsers();
+    this.props.fetchUsers()
+      .then(() => this.props.fetchDecks(this.props.user.id)
+        .then(() => this.sortDecks(this.props.decks, 0)));
+
+  }
+
+  //refetch with new user
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user) {
+      this.props.fetchDecks(nextProps.user.id).then(() => this.sortDecks(this.props.decks, 0));
+    }
   }
 
   sortDecks(decks, currentDeckIdx) {
@@ -196,7 +205,7 @@ class Studied extends React.Component {
                   <div className="small-deck-tile-left">
                     <div className="small-deck-tile-top">
                       <p>{deck.cardCount} Terms </p>
-                      <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
+                      <Link to={`/${deck.ownerId}/created`} className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                     </div>
                     <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -227,7 +236,7 @@ class Studied extends React.Component {
                 <div className="small-deck-tile-left">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
+                    <Link to={`/${deck.ownerId}/created`} className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -249,7 +258,7 @@ class Studied extends React.Component {
                 <div className="small-deck-tile-left">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
+                    <Link to={`/${deck.ownerId}/created`} className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -271,7 +280,7 @@ class Studied extends React.Component {
                 <div className="small-deck-tile-left">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
+                    <Link to={`/${deck.ownerId}/created`} className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
@@ -293,7 +302,7 @@ class Studied extends React.Component {
                 <div className="small-deck-tile-left">
                   <div className="small-deck-tile-top">
                     <p>{deck.cardCount} Terms </p>
-                    <Link className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
+                    <Link to={`/${deck.ownerId}/created`} className="user-page-link">{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>

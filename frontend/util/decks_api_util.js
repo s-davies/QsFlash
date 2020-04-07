@@ -1,9 +1,10 @@
-export const fetchDecks = () => (
-    $.ajax({
+export const fetchDecks = (optUserId) => {
+    return $.ajax({
         method: 'GET',
-        url: `/api/decks`
-    })
-);
+        url: `/api/decks`,
+        data: { optUserId: optUserId}
+    })}
+;
 
 export const searchDecks = (searchTerm) => (
     $.ajax({

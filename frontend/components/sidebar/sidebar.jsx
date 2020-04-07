@@ -38,7 +38,8 @@ class Sidebar extends React.Component {
                 <NavLink exact to={`/${this.props.currentUser.id}/created`} activeClassName="sidebar-selected" className="sidebar-link sidebar-sets">
                     <div className="sidebar-link-text">
                         <i className="fas fa-clone"></i>
-                        <p>Decks ({this.props.createdDecksCount})</p>
+                        <p>Decks</p>
+                        {/* <p>Decks ({this.props.createdDecksCount})</p> */}
                     </div>
                 </NavLink>
                 <NavLink to="/folders" activeClassName="sidebar-selected" className="sidebar-link sidebar-folders">

@@ -23,6 +23,7 @@ class Search extends React.Component {
     this.props.fetchUsers().then(() => this.setState({usersLoaded: true}));
   }
 
+  //refetch with new term
   componentWillReceiveProps(nextProps) {
     if (nextProps.searchTerm !== this.props.searchTerm) {
       this.props.searchDecks(nextProps.match.params.searchTerm);

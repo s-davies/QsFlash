@@ -1,6 +1,9 @@
 class Api::DecksController < ApplicationController
     def index
-        @decks = current_user.decks_studied
+        # if an optional user idea param is included, find that user's decks
+        @decks = params["opt_user_id"] ? 
+            User.find_by(id: params["opt_user_id"]).decks_studied 
+            : current_user.decks_studied
         
         render :index
     end

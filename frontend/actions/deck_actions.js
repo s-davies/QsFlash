@@ -25,8 +25,8 @@ const removeDeck = deckId => ({
     deckId
 });
 
-export const fetchDecks = () => dispatch => (
-    DeckApiUtil.fetchDecks()
+export const fetchDecks = (optUserId) => dispatch => (
+    DeckApiUtil.fetchDecks(optUserId)
         .then(decks => dispatch(receiveAllDecks(decks)), err => (
             dispatch(receiveErrors(err.responseJSON))
         ))

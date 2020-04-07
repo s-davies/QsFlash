@@ -17,8 +17,17 @@ class Recent extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchDecks().then(() => this.sortDecks(this.props.decks, 0));
-    this.props.fetchUsers();
+    this.props.fetchUsers()
+      .then(() => this.props.fetchDecks(this.props.user.id)
+        .then(() => this.sortDecks(this.props.decks, 0)));
+    
+  }
+
+  //refetch with new user
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== this.props.user) {
+      this.props.fetchDecks(nextProps.user.id).then(() => this.sortDecks(this.props.decks, 0));
+    }
   }
 
   sortDecks(decks, currentDeckIdx) {
