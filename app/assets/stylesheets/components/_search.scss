@@ -56,9 +56,23 @@
   padding: 15px;
 }
 
-.search-deck-info > p {
+.search-deck-info-top > p {
   font-size: 24px;
   font-weight: 700;
+  color: $dark-gray;
+}
+
+.fa-book-reader {
+  color: $dark-gray
+}
+
+.search-deck-info-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-deck-info-top span {
+  margin-right: 10px;
   color: $dark-gray;
 }
 
@@ -67,7 +81,7 @@
   padding-bottom: 10px;
 }
 
-.search-deck-info div p {
+.search-deck-info-top div p {
   padding-right: 10px;
   border-right: 2px solid $lightest-gray;
   color: $dark-gray;

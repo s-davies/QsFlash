@@ -6,8 +6,11 @@ import { fetchDeckStudies } from '../../actions/deck_study_actions';
 import Search from './search';
 
 const mapStateToProps = (state, ownProps) => {
-  let decks = Object.assign({}, state.entities.decks);
-
+  let decks = {};
+    for (let i = 0; i < Object.keys(state.entities.decks).length; i++) {
+      const key = Object.keys(state.entities.decks)[i];
+      decks[key] = Object.assign({}, state.entities.decks[key]);
+    }
     let allCards = Object.values(state.entities.cards);
     for (let i = 0; i < allCards.length; i++) {
       const card = allCards[i];

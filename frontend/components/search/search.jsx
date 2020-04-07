@@ -49,7 +49,7 @@ class Search extends React.Component {
 
     if (!this.state.usersLoaded) return null;
     let sortedDecks = this.props.decks;
-    
+
     if (this.state.sortType === "Recent") {
       //sort in reverse id order, corresponds with most recently created
       sortedDecks = sortedDecks.sort((deck1, deck2) => {
@@ -60,6 +60,10 @@ class Search extends React.Component {
       sortedDecks = sortedDecks.sort((deck1, deck2) => {
         if (deck1.studiesCount < deck2.studiesCount) return 1;
         if (deck1.studiesCount > deck2.studiesCount) return -1;
+        if (!deck1.ratSum) return 1;
+        if (!deck2.ratSum) return -1;
+        if (deck1.ratSum / deck1.ratCount < deck2.ratSum / deck2.ratCount) return 1;
+        if (deck1.ratSum / deck1.ratCount > deck2.ratSum / deck2.ratCount) return -1;
       });
     } else if (this.state.sortType === "Rating") {
       sortedDecks = sortedDecks.sort((deck1, deck2) => {
@@ -167,24 +171,32 @@ class Search extends React.Component {
           {sortedDecks.map(deck => (
             <div onClick={this.handleRedirect(deck.id).bind(this)} key={deck.id} className="search-deck">
               <div className="search-deck-info">
-                <div>
-                  <p>{deck.cardCount} terms</p>
-                  <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
+                <div className="search-deck-info-top">
+                  <div>
+                    <p>{deck.cardCount} terms</p>
+                    <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
+                  </div>
+                  <div>
+                    <span>{deck.ratSum ? (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) + ` (${deck.ratCount})` : "No ratings"}</span>
+                    {!deck.ratSum ?
+                      stars0
+                      : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 1 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 1.5 ? stars1
+                        : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 1.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 2 ? stars15
+                          : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 2 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 2.5 ? stars2
+                            : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 2.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 3 ? stars25
+                              : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 3 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 3.5 ? stars3
+                                : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 3.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 4 ? stars35
+                                  : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 4 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 4.5 ? stars4
+                                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 4.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 5 ? stars45
+                                      : stars5
+                    }
+                  </div>
                 </div>
-                <p>{deck.title}</p>
-                <span>{deck.ratSum ? (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) : "No ratings"}</span>
-                {!deck.ratSum ? 
-                  stars0
-                  : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 1 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 1.5 ? stars1
-                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 1.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 2 ? stars15
-                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 2 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 2.5 ? stars2
-                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 2.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 3 ? stars25
-                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 3 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 3.5 ? stars3
-                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 3.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 4 ? stars35
-                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 4 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 4.5 ? stars4
-                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 4.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 5 ? stars45
-                    : stars5
-                }
+                <div className="search-deck-info-top">
+                  <p>{deck.title}</p>
+                  <span>{deck.studiesCount} <i className="fas fa-book-reader"></i></span> 
+                </div>
+                
               </div>
               <div className="search-cards">
                 {deck["1"] ? 
