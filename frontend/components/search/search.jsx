@@ -61,7 +61,88 @@ class Search extends React.Component {
         if (deck1.studiesCount < deck2.studiesCount) return 1;
         if (deck1.studiesCount > deck2.studiesCount) return -1;
       });
+    } else if (this.state.sortType === "Rating") {
+      sortedDecks = sortedDecks.sort((deck1, deck2) => {
+        if (!deck1.ratSum) return 1;
+        if (!deck2.ratSum) return -1;
+        if (deck1.ratSum / deck1.ratCount < deck2.ratSum / deck2.ratCount) return 1;
+        if (deck1.ratSum / deck1.ratCount > deck2.ratSum / deck2.ratCount) return -1;
+        if (deck1.ratCount < deck2.ratCount) return 1;
+        if (deck1.ratCount > deck2.ratCount) return -1;
+      });
     }
+
+    let stars0 = <div className="rating-stars rating-yellow">
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+    </div>
+    let stars1 = <div className="rating-stars rating-yellow">
+      <i className="fas fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+    </div>
+    let stars15 = <div className="rating-stars rating-yellow">
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star-half-alt"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+    </div>
+    let stars2 = <div className="rating-stars rating-yellow">
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+    </div>
+    let stars25 = <div className="rating-stars rating-yellow">
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star-half-alt"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+    </div>
+    let stars3 = <div className={"rating-stars rating-yellow"}>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="far fa-star"></i>
+      <i className="far fa-star"></i>
+    </div>
+    let stars35 = <div className={"rating-stars rating-yellow"}>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star-half-alt"></i>
+      <i className="far fa-star"></i>
+    </div>
+    let stars4 = <div className={"rating-stars rating-yellow"}>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="far fa-star"></i>
+    </div>
+    let stars45 = <div className={"rating-stars rating-yellow"}>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star-half-alt"></i>
+    </div>
+    let stars5 = <div className={"rating-stars rating-yellow"}>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+      <i className="fas fa-star"></i>
+    </div>
+
 
     return (
       <div className="search">
@@ -91,6 +172,19 @@ class Search extends React.Component {
                   <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                 </div>
                 <p>{deck.title}</p>
+                <span>{deck.ratSum ? (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) : "No ratings"}</span>
+                {!deck.ratSum ? 
+                  stars0
+                  : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 1 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 1.5 ? stars1
+                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 1.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 2 ? stars15
+                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 2 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 2.5 ? stars2
+                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 2.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 3 ? stars25
+                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 3 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 3.5 ? stars3
+                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 3.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 4 ? stars35
+                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 4 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 4.5 ? stars4
+                    : (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) >= 4.5 && (Math.round((deck.ratSum / deck.ratCount) * 10) / 10).toFixed(1) < 5 ? stars45
+                    : stars5
+                }
               </div>
               <div className="search-cards">
                 {deck["1"] ? 

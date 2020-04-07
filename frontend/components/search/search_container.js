@@ -24,6 +24,15 @@ const mapStateToProps = (state, ownProps) => {
         } else {
           decks[deckStudy.deckId].studiesCount = 1;
         }
+        if (deckStudy.rating) {
+          if (decks[deckStudy.deckId].ratSum) {
+            decks[deckStudy.deckId].ratSum += deckStudy.rating;
+            decks[deckStudy.deckId].ratCount += 1;
+          } else {
+            decks[deckStudy.deckId].ratSum = deckStudy.rating;
+            decks[deckStudy.deckId].ratCount = 1;
+          }
+        }
       }
     }
     let allDecks = Object.keys(decks).map(key => decks[key]);
