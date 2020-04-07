@@ -8,7 +8,7 @@
   flex: 1;
 }
 
-.search-inner > h1 {
+.search-inner-top > h1 {
   padding-top: 30px;
   padding-bottom: 0px;
   font-size: 48px;
@@ -18,11 +18,20 @@
 
 #sets-h3 {
   margin: 0;
-  padding-top: 30px;
+  // padding-top: 30px;
   padding-bottom: 0;
   font-size: 18px;
   font-weight: 700;
   color: $dark-gray;
+}
+
+.search-inner-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-inner-top .options-audio-div {
+  align-self: flex-end;
 }
 
 .search-deck {

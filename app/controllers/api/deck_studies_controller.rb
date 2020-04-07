@@ -1,7 +1,8 @@
 class Api::DeckStudiesController < ApplicationController
     def index
-        # debugger
-        @deck_studies = DeckStudy.where(deck_id: params[:deck_id])
+        @deck_studies = params["deck_id"] === "undefined" ? 
+            DeckStudy.all
+            : DeckStudy.where(deck_id: params[:deck_id])
         render :index
     end
 

@@ -522,7 +522,7 @@ class DeckPage extends React.Component {
                             <div className="rating-div">
                                 {this.props.avgRating !== 0 ? <span>{showRating}</span> : this.props.creator.id === this.props.currentUser.id ? "" : <span>Leave the first rating</span> }
                                 {stars}
-                                <p>{this.props.numRatings === 0 ? this.props.currentUser.id === this.props.creator.id ? "No Reviews" : "" : this.props.numRatings === 1 ? "1 Review" : `${this.props.numRatings} Reviews`}</p>
+                                <p>{this.props.numRatings === 0 ? this.props.currentUser.id === this.props.creator.id ? "No Reviews" : "" : this.state.rating ? "Your Review" : this.props.numRatings === 1 ? "1 Review" : `${this.props.numRatings} Reviews`}</p>
                             </div>
                         </header>
                         <div className="deck-page-top">
