@@ -280,6 +280,10 @@ class DeckForm extends React.Component {
         if (this.state.redirect) {
             return <Redirect push to={this.state.redirect} />
         }
+        //prevent a non-creator from going to deck edit page
+        if (this.props.creator && this.props.creator !== this.props.currentUser.id && this.props.deck.editability === "Just me") {
+            return <Redirect push to="/latest" />
+        }
         
         
         return (

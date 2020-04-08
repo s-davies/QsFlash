@@ -11,7 +11,7 @@ class EditDeckForm extends React.Component {
     }
 
     render() {
-        const { deckAction, formType, deck, createCard, updateCard, deleteCard, cards, fetchCards, ownProps} = this.props;
+        const { deckAction, formType, deck, createCard, updateCard, deleteCard, cards, fetchCards, ownProps, creator, currentUser} = this.props;
 
         if (!deck) return null;
         return (
@@ -25,17 +25,25 @@ class EditDeckForm extends React.Component {
                 createCardStudy={createCardStudy}
                 cards={cards}
                 formType={formType}
+                creator={creator}
+                currentUser={currentUser}
                 deck={deck} />
         );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
+    let creator = null;
+    if (state.entities.decks[ownProps.match.params.deckId]) {
+        creator = state.entities.decks[ownProps.match.params.deckId].ownerId;
+    }
     return {
     ownProps: ownProps,
     deck: state.entities.decks[ownProps.match.params.deckId],
     cards: Object.keys(state.entities.cards).map(key => state.entities.cards[key]),
-    formType: 'Update Deck'
+    formType: 'Update Deck',
+    creator: creator,
+    currentUser: state.entities.users[state.session.id]
 }};
 
 const mapDispatchToProps = dispatch => ({
