@@ -41,7 +41,14 @@ class Latest extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchDecks().then(() => this.sortDecks(this.props.decks, 0));
+        this.props.fetchDecks().then(() => 
+            {
+                if (this.props.decks.length > 0) {
+                    this.sortDecks(this.props.decks, 0);
+                } else {
+                    this.setState({loading: false});
+                }
+            });
         this.props.fetchUsers();
     }
 
@@ -139,6 +146,13 @@ class Latest extends React.Component {
                         size={150}
                         loading={this.state.loading}
                     />
+                    {this.state.decks.length === 0 && !this.state.loading ?
+                        <div className="no-latest">
+                            <h2>Let's get started!</h2>
+                            <Link to="/create-deck" className="large-create-card teal" >Create Deck</Link>
+                        </div>
+                            : ""
+                    }
                     { this.state.decks.map((deck, index) => (
                         index > 5 ? "" :
                         <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="medium-deck-tile">

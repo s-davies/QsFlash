@@ -8,6 +8,19 @@
     color: $dark-gray;
 }
 
+.no-latest {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.no-latest h2 {
+    font-size: 24px;
+    color: $dark-gray;
+    margin-bottom: 30px;
+}
+
 .latest-header {
     display: flex;
     justify-content: space-between;
