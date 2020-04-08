@@ -4,6 +4,31 @@ import {
   NavLink,
   Redirect
 } from 'react-router-dom';
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-top-color: rgb(66, 87, 178);
+    border-top-style: solid;
+    border-top-width: 4px;
+    border-right-color: rgb(66, 87, 178);
+    border-right-style: solid;
+    border-right-width: 4px;
+    border-bottom-color: transparent;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-left-color: rgb(66, 87, 178);
+    border-left-style: solid;
+    border-left-width: 4px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+`;
+
 
 class Recent extends React.Component {
 
@@ -12,7 +37,8 @@ class Recent extends React.Component {
     this.state = {
       decks: [],
       decksSorted: false,
-      redirect: null
+      redirect: null,
+      loading: true
     }
   }
 
@@ -87,7 +113,7 @@ class Recent extends React.Component {
             if (createdSecond2 > createdSecond1) return 1;
           });
 
-          this.setState({ decks: sortedDecks, decksSorted: true });
+          this.setState({ decks: sortedDecks, decksSorted: true, loading: false });
         });
       } else {
         this.props.fetchDeckStudy(deck.id).then(() => {
@@ -168,6 +194,11 @@ class Recent extends React.Component {
         </div>
         <div className="recent-bottom">
           <div className="small-deck-tiles">
+            <ClipLoader
+              css={override}
+              size={150}
+              loading={this.state.loading}
+            />
             {today.length > 0 ?
               <div className="recent-divider">
                 <p>TODAY</p>
