@@ -5,6 +5,31 @@ import {
 } from 'react-router-dom';
 import Say from 'react-say';
 import { SayButton } from 'react-say';
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  margin-top: 15%;
+  border-top-color: rgb(66, 87, 178);
+    border-top-style: solid;
+    border-top-width: 4px;
+    border-right-color: rgb(66, 87, 178);
+    border-right-style: solid;
+    border-right-width: 4px;
+    border-bottom-color: transparent;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-left-color: rgb(66, 87, 178);
+    border-left-style: solid;
+    border-left-width: 4px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+`;
 
 class Spell extends React.Component {
 
@@ -32,7 +57,8 @@ class Spell extends React.Component {
       lastQuestion: null,
       correct: null,
       spellVal: "",
-      wordToSpell: null
+      wordToSpell: null,
+      loading: true
     };
 
   }
@@ -213,7 +239,15 @@ class Spell extends React.Component {
       return <Redirect push to={this.state.redirect} />
     }
     
-    if (this.state.allCards.length === 0) return null;
+    if (this.state.allCards.length === 0) {
+      return <div className="gray-spinner">
+        <ClipLoader
+          css={override}
+          size={150}
+          loading={this.state.loading}
+        />
+      </div>
+    };
 
 
     

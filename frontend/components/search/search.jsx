@@ -82,6 +82,7 @@ class Search extends React.Component {
         />
       </div>
     };
+
     let sortedDecks = this.props.decks;
 
     if (this.state.sortType === "Recent") {
@@ -201,6 +202,10 @@ class Search extends React.Component {
               </select>
             </div>
             <h3 id="sets-h3">SETS</h3>
+            {this.props.decks.length === 0 ? 
+              <h2>Sorry, we couldn't find any search results.<br/>Try searching for another term.</h2>
+                : ""
+            }
           </div>
           {sortedDecks.map(deck => (
             <div onClick={this.handleRedirect(deck.id).bind(this)} key={deck.id} className="search-deck">

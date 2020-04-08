@@ -4,6 +4,13 @@
   justify-content: center;
 }
 
+.search h2 {
+  font-size: 24px;
+  color: $dark-gray;
+  align-self: center;
+  text-align: center;
+}
+
 .search-inner {
   flex: 1;
 }

@@ -80,3 +80,8 @@
 .medium-deck-tile-right a {
     font-size: 16px;
 }
+
+.medium-deck-tile-right a:hover {
+    transition: color 0.15s ease;
+    color: $yellow;
+}
