@@ -264,9 +264,6 @@ class Studied extends React.Component {
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                     </div>
                   </div>
-                  {/* <div className="small-deck-tile-right">
-                    <i className="fas fa-ellipsis-h"></i>
-                  </div> */}
                 {this.props.user.id === this.props.currentUser.id ?
                   <div className="small-deck-tile-right dsdelete-dropdown">
                     <i className="fas fa-ellipsis-h dsdelete-dropbtn"></i>
@@ -295,9 +292,15 @@ class Studied extends React.Component {
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                   </div>
                 </div>
-                <div className="small-deck-tile-right">
-                  <i className="fas fa-ellipsis-h"></i>
-                </div>
+                {this.props.user.id === this.props.currentUser.id ?
+                  <div className="small-deck-tile-right dsdelete-dropdown">
+                    <i className="fas fa-ellipsis-h dsdelete-dropbtn"></i>
+                    <div className="dsdelete-dropdown-content">
+
+                      <span className="trash-link" onClick={this.handleDelete(deck.deckStudyId, deck.ownerId, deck.deckStudyStudierId, deck.id).bind(this)} ><i className="fas fa-trash-alt"></i><p>Remove</p></span>
+                    </div>
+                  </div>
+                  : ""}
               </div>
             ))}
             {lastMonth.length > 0 ?
@@ -317,9 +320,15 @@ class Studied extends React.Component {
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                   </div>
                 </div>
-                <div className="small-deck-tile-right">
-                  <i className="fas fa-ellipsis-h"></i>
-                </div>
+                {this.props.user.id === this.props.currentUser.id ?
+                  <div className="small-deck-tile-right dsdelete-dropdown">
+                    <i className="fas fa-ellipsis-h dsdelete-dropbtn"></i>
+                    <div className="dsdelete-dropdown-content">
+
+                      <span className="trash-link" onClick={this.handleDelete(deck.deckStudyId, deck.ownerId, deck.deckStudyStudierId, deck.id).bind(this)} ><i className="fas fa-trash-alt"></i><p>Remove</p></span>
+                    </div>
+                  </div>
+                  : ""}
               </div>
             ))}
             {thisYear.length > 0 ?
@@ -339,9 +348,15 @@ class Studied extends React.Component {
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                   </div>
                 </div>
-                <div className="small-deck-tile-right">
-                  <i className="fas fa-ellipsis-h"></i>
-                </div>
+                {this.props.user.id === this.props.currentUser.id ?
+                  <div className="small-deck-tile-right dsdelete-dropdown">
+                    <i className="fas fa-ellipsis-h dsdelete-dropbtn"></i>
+                    <div className="dsdelete-dropdown-content">
+
+                      <span className="trash-link" onClick={this.handleDelete(deck.deckStudyId, deck.ownerId, deck.deckStudyStudierId, deck.id).bind(this)} ><i className="fas fa-trash-alt"></i><p>Remove</p></span>
+                    </div>
+                  </div>
+                  : ""}
               </div>
             ))}
             {lastYear.length > 0 ?
@@ -361,9 +376,15 @@ class Studied extends React.Component {
                     <h3>{deck.title} {deck.visibility === "Everyone" ? "" : <i className="fas fa-lock"></i>}</h3>
                   </div>
                 </div>
-                <div className="small-deck-tile-right">
-                  <i className="fas fa-ellipsis-h"></i>
-                </div>
+                {this.props.user.id === this.props.currentUser.id ?
+                  <div className="small-deck-tile-right dsdelete-dropdown">
+                    <i className="fas fa-ellipsis-h dsdelete-dropbtn"></i>
+                    <div className="dsdelete-dropdown-content">
+
+                      <span className="trash-link" onClick={this.handleDelete(deck.deckStudyId, deck.ownerId, deck.deckStudyStudierId, deck.id).bind(this)} ><i className="fas fa-trash-alt"></i><p>Remove</p></span>
+                    </div>
+                  </div>
+                  : ""}
               </div>
             ))}
           </div>

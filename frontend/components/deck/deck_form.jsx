@@ -311,7 +311,7 @@ class DeckForm extends React.Component {
                                         <option value="Everyone">
                                             Everyone
                                             </option>
-                                        <option value="Certain classes">Certain classes</option>
+                                        <option value="Certain classes" disabled>Certain classes (coming soon)</option>
                                         <option value="Just me">Just me</option>
                                     </select>
                                     <span>{this.state.tempVis === "Everyone" ? "All QsFlash! users can see this deck" : this.state.tempVis === "Certain classes" ? "Only members of these classes can use this deck" : "Only you can view this deck"}</span>
@@ -319,7 +319,7 @@ class DeckForm extends React.Component {
                                 <div className="accessibility-field">
                                     <label>EDITABLE BY</label>
                                     <select value={this.state.tempEdit} onChange={this.handleEditabilityChange.bind(this)}>
-                                        <option value="Certain classes">Certain classes</option>
+                                        <option value="Certain classes" disabled>Certain classes (coming soon)</option>
                                         <option value="Just me">Just me</option>
                                     </select>
                                     <span>{this.state.tempEdit === "Certain classes" ? "Only members of these classes can edit this deck" : "Only you can edit this deck"}</span>
@@ -340,7 +340,7 @@ class DeckForm extends React.Component {
                 </form>
                 <div className="deck-form-options">
                     <div>
-                        <label>{this.state.deck.visibility === "Everyone" ? "Visibile to everyone" : this.state.deck.visibility === "Certain classes" ? "Visible to certain classes" : "Visible only to me"}</label>
+                        <label>{this.state.deck.visibility === "Everyone" ? "Visible to everyone" : this.state.deck.visibility === "Certain classes" ? "Visible to certain classes" : "Visible only to me"}</label>
                         <button onClick={this.showForm.bind(this)} className="deck-accessibility-button">Change</button>
                     </div>
                     {this.state.deck.visibility === "Everyone" || this.state.deck.visibility === "Certain classes" ?

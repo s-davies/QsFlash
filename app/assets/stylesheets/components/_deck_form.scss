@@ -259,6 +259,10 @@
   display: inline-block;
 }
 
+.tooltip-trash .fa-trash-alt {
+    color: $dark-gray;
+}
+
 .tooltip-trash .tooltiptext-trash {
   visibility: hidden;
   width: 100px;
@@ -270,7 +274,7 @@
   z-index: 1;
   top: 100%;
   left: 50%;
-  margin-left: -53px;
+  margin-left: -60px;
   font-size: 12px;
 }
 
