@@ -181,6 +181,17 @@ class Created extends React.Component {
               size={150}
               loading={this.state.loading}
             />
+            {this.state.decks.length === 0 && !this.state.loading && this.props.currentUser.id !== this.props.user.id ?
+              <div className="no-latest">
+                <h2>{this.props.user.username} has no recent decks</h2>
+              </div>
+              : this.state.decks.length === 0 && !this.state.loading ?
+                <div className="no-latest">
+                  <h2>Let's get started!</h2>
+                  <Link to="/create-deck" className="large-create-card teal" >Create Deck</Link>
+                </div>
+                : ""
+            }
             {today.length > 0 ?
               <div className="recent-divider">
                 <p>TODAY</p>

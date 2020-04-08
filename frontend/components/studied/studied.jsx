@@ -45,14 +45,26 @@ class Studied extends React.Component {
   componentDidMount() {
     this.props.fetchUsers()
       .then(() => this.props.fetchDecks(this.props.user.id)
-        .then(() => this.sortDecks(this.props.decks, 0)));
+        .then(() => {
+          if (this.props.decks.length > 0) {
+            this.sortDecks(this.props.decks, 0);
+          } else {
+            this.setState({ loading: false });
+          }
+        }));
 
   }
 
   //refetch with new user
   componentWillReceiveProps(nextProps) {
     if (nextProps.user !== this.props.user) {
-      this.props.fetchDecks(nextProps.user.id).then(() => this.sortDecks(this.props.decks, 0));
+      this.props.fetchDecks(nextProps.user.id).then(() => {
+        if (this.props.decks.length > 0) {
+          this.sortDecks(this.props.decks, 0);
+        } else {
+          this.setState({ loading: false });
+        }
+      });
     }
   }
 
@@ -224,6 +236,17 @@ class Studied extends React.Component {
               size={150}
               loading={this.state.loading}
             />
+            {this.state.decks.length === 0 && !this.state.loading && this.props.currentUser.id !== this.props.user.id ?
+              <div className="no-latest">
+                <h2>{this.props.user.username} has no recent decks</h2>
+              </div>
+              : this.state.decks.length === 0 && !this.state.loading ?
+                <div className="no-latest">
+                  <h2>Let's get started!</h2>
+                  <Link to="/create-deck" className="large-create-card teal" >Create Deck</Link>
+                </div>
+                : ""
+            }
             {today.length > 0 ?
               <div className="recent-divider">
                 <p>TODAY</p>
