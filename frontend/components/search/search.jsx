@@ -4,6 +4,31 @@ import {
   NavLink,
   Redirect
 } from 'react-router-dom';
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  margin-top: 15%;
+  border-top-color: rgb(66, 87, 178);
+    border-top-style: solid;
+    border-top-width: 4px;
+    border-right-color: rgb(66, 87, 178);
+    border-right-style: solid;
+    border-right-width: 4px;
+    border-bottom-color: transparent;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-left-color: rgb(66, 87, 178);
+    border-left-style: solid;
+    border-left-width: 4px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+`;
 
 class Search extends React.Component {
 
@@ -14,7 +39,8 @@ class Search extends React.Component {
       decksSorted: false,
       redirect: null,
       usersLoaded: false,
-      sortType: "Recent"
+      sortType: "Recent",
+      loading: true
     }
   }
 
@@ -47,7 +73,15 @@ class Search extends React.Component {
       return <Redirect push to={this.state.redirect} />
     }
 
-    if (!this.state.usersLoaded) return null;
+    if (!this.state.usersLoaded) {
+      return <div className="search">
+        <ClipLoader
+          css={override}
+          size={150}
+          loading={this.state.loading}
+        />
+      </div>
+    };
     let sortedDecks = this.props.decks;
 
     if (this.state.sortType === "Recent") {

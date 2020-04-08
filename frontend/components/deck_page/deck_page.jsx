@@ -2,6 +2,31 @@ import React from 'react'
 import { Link, Redirect } from 'react-router-dom';
 import { Textfit } from 'react-textfit';
 import { SayButton } from 'react-say';
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  margin-top: 15%;
+  border-top-color: rgb(66, 87, 178);
+    border-top-style: solid;
+    border-top-width: 4px;
+    border-right-color: rgb(66, 87, 178);
+    border-right-style: solid;
+    border-right-width: 4px;
+    border-bottom-color: transparent;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-left-color: rgb(66, 87, 178);
+    border-left-style: solid;
+    border-left-width: 4px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+`;
 
 class DeckPage extends React.Component {
 
@@ -25,7 +50,7 @@ class DeckPage extends React.Component {
             sortType: "Your stats",
             allCls: "options-selected",
             starredCls: "options-unselected",
-
+            loading: true
         };
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -37,7 +62,7 @@ class DeckPage extends React.Component {
             this.props.fetchCardStudies(dId)
         });
         if (this.state.setProgress === false) {
-            this.props.fetchDeckStudy(dId).then(() => this.setState({ rating: this.props.deckStudies[0].rating,  progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true }, () => this.props.fetchDeckStudies(dId)))
+            this.props.fetchDeckStudy(dId).then(() => this.setState({ rating: this.props.deckStudies[0].rating,  progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true}, () => this.props.fetchDeckStudies(dId)))
         } else {
             // this.props.fetchDeckStudies(dId)
         }
@@ -218,7 +243,14 @@ class DeckPage extends React.Component {
             return <Redirect push to={this.state.redirect} />
         }
         
-        if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false || this.props.cards[0].cardStudyId === undefined) return null;
+        if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false || this.props.cards[0].cardStudyId === undefined) {
+            return <div className="deck-page-top-wrapper">
+                <ClipLoader
+                    css={override}
+                    size={150}
+                    loading={this.state.loading}
+                />
+                </div>};
         let cardStyles = {
             height: '250px',
             width: '410px',
