@@ -11,7 +11,8 @@ const mapStateToProps = (state, ownProps) => {
 
   for (let i = 0; i < allDecks.length; i++) {
     const deck = allDecks[i];
-    if (deck.ownerId === parseInt(ownProps.ownProps.match.params.userId)) {
+    if (deck.ownerId === parseInt(ownProps.ownProps.match.params.userId)
+      && (deck.visibility === "Everyone" || (deck.visibility === "Just me" && parseInt(ownProps.ownProps.match.params.userId) === state.entities.users[state.session.id].id))) {
       createdDecksCt += 1;
       createdDecks.push(deck);
     }

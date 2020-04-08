@@ -6,8 +6,16 @@ import { fetchUsers } from '../../actions/session_actions';
 import Latest from './latest';
 
 const mapStateToProps = (state) => {
+    let allDecks = Object.keys(state.entities.decks).map(key => state.entities.decks[key]);
+    let visibleDecks = [];
+    for (let i = 0; i < allDecks.length; i++) {
+        const deck = allDecks[i];
+        if (deck.visibility === "Everyone" || (deck.visibility === "Just me" && deck.id === state.entities.users[state.session.id].id)) {
+            visibleDecks.push(deck);
+        }
+    }
     return {
-        decks: Object.keys(state.entities.decks).map(key => state.entities.decks[key]),
+        decks: visibleDecks,
         deckStudy: Object.values(state.entities.deckStudies)[0],
         currentUser: state.entities.users[state.session.id],
         users: state.entities.users
