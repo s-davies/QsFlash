@@ -50,7 +50,8 @@ class DeckPage extends React.Component {
             sortType: "Your stats",
             allCls: "options-selected",
             starredCls: "options-unselected",
-            loading: true
+            loading: true,
+            fetchedCards: false
         };
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -59,7 +60,7 @@ class DeckPage extends React.Component {
         const dId = this.props.match.params.deckId;
         this.props.fetchDeck(dId).then(() => this.props.fetchUsers())
         .then(() => this.props.fetchCards(dId)).then(() => {
-            this.props.fetchCardStudies(dId)
+            this.props.fetchCardStudies(dId).then(() => this.setState({fetchedCards: true}));
         });
         if (this.state.setProgress === false) {
             this.props.fetchDeckStudy(dId).then(() => this.setState({ rating: this.props.deckStudies[0].rating,  progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true}, () => this.props.fetchDeckStudies(dId)))
@@ -243,14 +244,20 @@ class DeckPage extends React.Component {
             return <Redirect push to={this.state.redirect} />
         }
         
-        if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false || this.props.cards[0].cardStudyId === undefined) {
+        if (this.props.cards.length === 0 || !this.props.deck || this.props.creator === undefined || this.state.setProgress === false || this.state.fetchedCards === false) {
             return <div className="deck-page-top-wrapper">
                 <ClipLoader
                     css={override}
                     size={150}
                     loading={this.state.loading}
                 />
-                </div>};
+                </div>
+        };
+
+        if (this.props.creator.id !== this.props.currentUser.id && this.props.deck.visibility === "Just me") {
+            return <Redirect push to="/latest" />
+        }
+
         let cardStyles = {
             height: '250px',
             width: '410px',

@@ -1,6 +1,23 @@
 class Api::CardStudiesController < ApplicationController
   def index
       @card_studies = CardStudy.where(deck_id: params[:deck_id], studier_id: current_user.id)
+      if !@card_studies[0]
+        @cards = Card.where(deck_id: params[:deck_id])
+        (0...@cards.length).each do |i|
+            CardStudy.create({
+                starred: false,
+                correctness_count: 0,
+                learn_count: 0,
+                write_count: 0,
+                spell_count: 0,
+                test_count: 0,
+                card_id: @cards[i].id,
+                deck_id: params["deck_id"],
+                studier_id: current_user.id
+            })
+        end
+        @card_studies = CardStudy.where(deck_id: params[:deck_id], studier_id: current_user.id)
+      end
       render :index
   end
 
