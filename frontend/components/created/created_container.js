@@ -28,7 +28,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchDecks: () => dispatch(fetchDecks()),
+  fetchDecks: (optUserId) => dispatch(fetchDecks(optUserId)),
   fetchCards: (deckId) => dispatch(fetchCards(deckId)),
   fetchUsers: () => dispatch(fetchUsers())
 });

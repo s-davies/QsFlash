@@ -42,13 +42,13 @@ class Created extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchDecks().then(() => this.sortDecks());
+    this.props.fetchDecks(this.props.ownProps.match.params.userId).then(() => this.sortDecks());
     this.props.fetchUsers();
   }
   //refetch with new user
   componentWillReceiveProps(nextProps) {
     if (nextProps.user !== this.props.user) {
-      this.props.fetchDecks().then(() => this.sortDecks());
+      this.props.fetchDecks(this.props.ownProps.match.params.userId).then(() => this.sortDecks());
     }
   }
 

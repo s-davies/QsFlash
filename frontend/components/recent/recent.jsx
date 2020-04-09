@@ -73,7 +73,7 @@ class Recent extends React.Component {
     // for (let i = 0; i < sortedDecks.length; i++) {
     const deck = sortedDecks[currentDeckIdx];
     if (currentDeckIdx === sortedDecks.length - 1) {
-        this.props.fetchDeckStudy(deck.id)
+        this.props.fetchDeckStudy(deck.id, this.props.ownProps.match.params.userId)
         .then(() => {
           deck.deckStudyUpdatedAt = this.props.deckStudy.updatedAt
           sortedDecks.sort((deck1, deck2) => {
@@ -128,7 +128,7 @@ class Recent extends React.Component {
           this.setState({ decks: sortedDecks, decksSorted: true, loading: false });
         });
       } else {
-        this.props.fetchDeckStudy(deck.id).then(() => {
+        this.props.fetchDeckStudy(deck.id, this.props.ownProps.match.params.userId).then(() => {
           deck.deckStudyUpdatedAt = this.props.deckStudy.updatedAt;
           this.sortDecks(sortedDecks, currentDeckIdx + 1);
         });
