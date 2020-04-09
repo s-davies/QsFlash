@@ -152,9 +152,18 @@ class DeckPage extends React.Component {
     handleRating(num) {
         return e => {
             if (this.props.currentUser.id !== this.props.deck.ownerId) {
-                this.setState({rating: num});
+                let newDeckStudy = this.state.deckStudy;
+                if (newDeckStudy) {
+                    newDeckStudy.rating = num;
+                    this.props.updateDeckStudy(newDeckStudy)
+                        .then(() => this.props.fetchDeckStudies(this.props.match.params.deckId)
+                            .then(() => {
+                                this.setState({ rating: this.props.deckStudies[0].rating, deckStudy: this.props.deckStudies[0] })
+                            }));
+                }
+                
             }
-        }
+        };
     }
 
     handleDelete() {
@@ -257,7 +266,6 @@ class DeckPage extends React.Component {
         if (this.props.creator.id !== this.props.currentUser.id && this.props.deck.visibility === "Just me") {
             return <Redirect push to="/latest" />
         }
-
         let cardStyles = {
             height: '250px',
             width: '410px',
