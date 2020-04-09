@@ -26,8 +26,8 @@ export const fetchDeckStudies = (deckId) => dispatch => (
         .then(deckStudies => dispatch(receiveAllDeckStudies(deckStudies)))
 );
 
-export const fetchDeckStudy = deckId => dispatch => {
-    return DeckStudyApiUtil.fetchDeckStudy(deckId)
+export const fetchDeckStudy = (deckId, optUserId) => dispatch => {
+    return DeckStudyApiUtil.fetchDeckStudy(deckId, optUserId)
         .then(deckStudy => {
             dispatch(receiveDeckStudy(deckStudy))}
             )

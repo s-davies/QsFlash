@@ -11,9 +11,8 @@ const mapStateToProps = (state, ownProps) => {
   let createdDecksCt = 0;
   for (let i = 0; i < allDecks.length; i++) {
     const deck = allDecks[i];
-    if (deck.ownerId === parseInt(ownProps.ownProps.match.params.userId)
-      && (deck.visibility === "Everyone" || (deck.visibility === "Just me" && parseInt(ownProps.ownProps.match.params.userId) === state.entities.users[state.session.id].id))) {
-      createdDecksCt += 1;
+    if (deck.ownerId === parseInt(ownProps.ownProps.match.params.userId)) createdDecksCt += 1;
+    if (deck.visibility === "Everyone" || (deck.visibility === "Just me" && deck.ownerId === state.entities.users[state.session.id].id)) {
       visibleDecks.push(deck);
     }
   }
@@ -32,7 +31,7 @@ const mapDispatchToProps = dispatch => ({
   fetchDecks: (optUserId) => dispatch(fetchDecks(optUserId)),
   fetchCards: (deckId) => dispatch(fetchCards(deckId)),
   fetchUsers: () => dispatch(fetchUsers()),
-  fetchDeckStudy: deckId => dispatch(fetchDeckStudy(deckId)),
+  fetchDeckStudy: (deckId, optUserId) => dispatch(fetchDeckStudy(deckId, optUserId)),
   deleteDeckStudy: deckStudyId => dispatch(deleteDeckStudy(deckStudyId)),
   createDeckStudy: deckStudy => dispatch(createDeckStudy(deckStudy))
 });

@@ -198,12 +198,6 @@ class Created extends React.Component {
                 <span></span>
               </div> : ""
             }
-            {today.length > 0 ? 
-              <div className="recent-divider">
-                <p>TODAY</p>
-                <span></span>
-              </div> : ""
-            }
             {today.map((deck, index) => (
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="small-deck-tile">
                 <div className="small-deck-tile-inner">

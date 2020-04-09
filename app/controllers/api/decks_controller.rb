@@ -32,10 +32,12 @@ class Api::DecksController < ApplicationController
 
     def update
         @deck = Deck.find_by(id: params[:id])
-        if @deck && @deck.update(deck_params)
-            render :show
-        else
-            render json: @deck.errors.full_messages, status: 422
+        if @deck.owner_id == current_user.id #make sure only owner can update
+            if @deck && @deck.update(deck_params)
+                render :show
+            else
+                render json: @deck.errors.full_messages, status: 422
+            end
         end
     end
 

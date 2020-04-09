@@ -70,10 +70,11 @@ class Studied extends React.Component {
 
   sortDecks(decks, currentDeckIdx) {
     let sortedDecks = Object.assign([], decks.map(deck => Object.assign({}, deck)));
+    let that = this;
     // for (let i = 0; i < sortedDecks.length; i++) {
     const deck = sortedDecks[currentDeckIdx];
     if (currentDeckIdx === sortedDecks.length - 1) {
-        this.props.fetchDeckStudy(deck.id)
+        this.props.fetchDeckStudy(deck.id, this.props.ownProps.match.params.userId)
         .then(() => {
           deck.deckStudyId = this.props.deckStudy.id;
           deck.deckStudyStudierId = this.props.deckStudy.studierId;
@@ -84,7 +85,10 @@ class Studied extends React.Component {
           let newSortedDecks = [];
           for (let i = 0; i < sortedDecks.length; i++) {
             const sdeck = sortedDecks[i];
-            if (sdeck.deckStudyCreatedAt !== sdeck.deckStudyUpdatedAt) newSortedDecks.push(sdeck);
+            if (sdeck.deckStudyCreatedAt !== sdeck.deckStudyUpdatedAt &&
+              sdeck.deckStudyStudierId === parseInt(that.props.ownProps.match.params.userId)) {
+              newSortedDecks.push(sdeck);
+            }
           }
           sortedDecks = newSortedDecks;
           sortedDecks.sort((deck1, deck2) => {
@@ -139,7 +143,7 @@ class Studied extends React.Component {
           this.setState({ decks: sortedDecks, decksSorted: true, loading: false });
         });
       } else {
-        this.props.fetchDeckStudy(deck.id).then(() => {
+        this.props.fetchDeckStudy(deck.id, this.props.ownProps.match.params.userId).then(() => {
           deck.deckStudyId = this.props.deckStudy.id;
           deck.deckStudyStudierId = this.props.deckStudy.studierId;
           deck.deckStudyUpdatedAt = this.props.deckStudy.updatedAt;
