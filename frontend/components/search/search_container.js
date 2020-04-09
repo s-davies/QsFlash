@@ -39,9 +39,17 @@ const mapStateToProps = (state, ownProps) => {
       }
     }
     let allDecks = Object.keys(decks).map(key => decks[key]);
+  let visibleDecks = [];
+
+  for (let i = 0; i < allDecks.length; i++) {
+    const deck = allDecks[i];
+    if (deck.visibility === "Everyone" || (deck.visibility === "Just me" && deck.ownerId === state.entities.users[state.session.id].id)) {
+      visibleDecks.push(deck);
+    }
+  }
   return {
     searchTerm: ownProps.match.params.searchTerm,
-    decks: allDecks,
+    decks: visibleDecks,
     users: state.entities.users,
     currentUser: state.entities.users[state.session.id],
   }
