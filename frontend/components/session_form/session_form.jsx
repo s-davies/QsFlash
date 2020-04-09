@@ -99,6 +99,11 @@ class SessionForm extends React.Component {
     this.props.processForm(user);
   }
 
+  handleDemoUserLogIn(e) {
+    e.preventDefault();
+    this.props.processForm({ username: "DemoUser", password: "DemoUser9999" });
+  }
+
   renderErrors() {
     return(
       <ul>
@@ -113,9 +118,9 @@ class SessionForm extends React.Component {
 
   componentDidMount() {
     this.props.fetchUsers();
-    if (this.props.formType === "Log in") {
-      this.setState({ username: "DemoUser", password: "DemoUser9999", submitDisabled: false});
-    }
+    // if (this.props.formType === "Log in") {
+    //   this.setState({ username: "DemoUser", password: "DemoUser9999", submitDisabled: false});
+    // }
   }
 
   render() {
@@ -166,6 +171,7 @@ class SessionForm extends React.Component {
                 <div className="session-errors">{this.props.formType === "Sign up" ? this.state.passwordError : this.renderErrors()}</div>
               </div>
               <input className="session-submit" type="submit" value={this.props.formType} disabled={this.state.submitDisabled}/>
+              <button className="session-submit" onClick={this.handleDemoUserLogIn.bind(this)}>Demo user log in</button>
             </div>
           </form>
         </div>
