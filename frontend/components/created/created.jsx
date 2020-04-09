@@ -183,7 +183,7 @@ class Created extends React.Component {
             />
             {this.state.decks.length === 0 && !this.state.loading && this.props.currentUser.id !== this.props.user.id ?
               <div className="no-latest">
-                <h2>{this.props.user.username} has no recent decks</h2>
+                <h2>{this.props.user.username} has no created decks</h2>
               </div>
               : this.state.decks.length === 0 && !this.state.loading ?
                 <div className="no-latest">
