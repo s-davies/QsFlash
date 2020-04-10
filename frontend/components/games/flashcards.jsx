@@ -47,7 +47,7 @@ class FlashCards extends React.Component {
       optStarred: false,
       allCls: "options-selected",
       starredCls: "options-unselected",
-      optAnsType: "Term",
+      optAnsType: "Definition",
       optQType: ["flash", "written", "choice"],
       optAudio: false,
       offCls: "options-selected",
@@ -293,16 +293,33 @@ class FlashCards extends React.Component {
           <div className="deck-page-flip">
             <div className="flip-card">
               <div onClick={this.handleFlip.bind(this)} className="flip-card-inner">
-                <div className="flip-card-front">
-                  <Textfit mode="multi" style={cardStyles}>
-                    <p>{this.state.allCards[this.state.progress - 1].term}</p>
-                  </Textfit>
-                </div>
-                <div className="flip-card-back" >
-                  <Textfit mode="multi" style={cardStyles}>
-                    <p>{this.state.allCards[this.state.progress - 1].definition}</p>
-                  </Textfit>
-                </div>
+                {this.state.optAnsType === "Definition" ? 
+                <>
+                  <div className="flip-card-front">
+                    <Textfit mode="multi" style={cardStyles}>
+                      <p>{this.state.allCards[this.state.progress - 1].term}</p>
+                    </Textfit>
+                  </div>
+                  <div className="flip-card-back" >
+                    <Textfit mode="multi" style={cardStyles}>
+                      <p>{this.state.allCards[this.state.progress - 1].definition}</p>
+                    </Textfit>
+                  </div>
+                </>
+                :
+                <>
+                  <div className="flip-card-front">
+                    <Textfit mode="multi" style={cardStyles}>
+                      <p>{this.state.allCards[this.state.progress - 1].definition}</p>
+                    </Textfit>
+                  </div>
+                  <div className="flip-card-back" >
+                    <Textfit mode="multi" style={cardStyles}>
+                      <p>{this.state.allCards[this.state.progress - 1].term}</p>
+                    </Textfit>
+                  </div>
+                </>
+              }
               </div>
             </div>
 
