@@ -83,3 +83,11 @@
 .game-sidebar .fullscreen-highlighted-button:hover {
   color: $dark-gray;
 }
+
+.study-starred-disabled {
+  cursor: initial;
+}
+
+.study-starred-disabled-left {
+  border-right: 2px solid $lighter-gray;
+}

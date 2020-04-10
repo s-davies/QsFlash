@@ -97,10 +97,18 @@ class FlashCards extends React.Component {
 
   handleStudyStarredChange(opt) {
     return e => {
+      if (this.state.shuffled) {
+        this.setState({ shuffled: false, shuffleCls: "learn-options-button"});
+      }
       if (opt === "All") {
-        this.setState({ allCls: "options-selected", starredCls: "options-unselected" });
+        this.setState({ allCards: this.props.cards, allCls: "options-selected", starredCls: "options-unselected" });
       } else {
-        this.setState({ starredCls: "options-selected", allCls: "options-unselected" });
+        const starredCards = []
+        for (let i = 0; i < this.props.cards.length; i++) {
+          const card = this.props.cards[i];
+          if (card.starred) starredCards.push(card);
+        }
+        this.setState({ allCards: starredCards, starredCls: "options-selected", allCls: "options-unselected", progress: 1 });
       }
     }
   }
@@ -123,7 +131,16 @@ class FlashCards extends React.Component {
 
   shuffle() {
     if (this.state.shuffled) {
-      this.setState({ allCards: this.props.cards, shuffled: false, shuffleCls: "learn-options-button" });
+      if (this.state.starredCls === "options-selected") {
+        const cards = [];
+        for (let i = 0; i < this.props.cards.length; i++) {
+          const card = this.props.cards[i];
+          if (card.starred) cards.push(card);
+        }
+        this.setState({ allCards: cards, shuffled: false, shuffleCls: "learn-options-button" });
+      } else {
+        this.setState({ allCards: this.props.cards, shuffled: false, shuffleCls: "learn-options-button" });
+      }
     } else {
       let shuffled = Object.assign([], this.state.allCards);
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -191,6 +208,21 @@ class FlashCards extends React.Component {
 
   unstarCard(card) {
     return e => {
+      if (this.state.starredCls === "options-selected") {
+        if (this.state.allCards.length === 1) {
+          this.setState({ allCards: this.props.cards, starredCls: "options-unselected", allCls: "options-selected", shuffled: false, shuffleCls: "learn-options-button" }, this.handleProgress(0).bind(this));
+        } else {
+          const left = this.state.allCards.slice(0, this.state.progress-1);
+          const right = this.state.allCards.slice(this.state.progress, this.state.allCards.length);
+          const newAllCards = left.concat(right);
+          let prg = this.state.progress;
+          if (prg === newAllCards.length + 1) {
+            prg = 1;
+          }
+          this.setState({ allCards: newAllCards, progress: prg }, this.handleProgress(0).bind(this));
+        }
+        
+      }
       this.props.updateCardStudy({ id: card.cardStudyId, starred: false }).then(() => this.props.fetchCardStudies(card.deckId))
     }
   }
@@ -216,6 +248,12 @@ class FlashCards extends React.Component {
     let progressBarStyles = {
       width: `${(this.state.progress / this.state.allCards.length) * 100}%`,
     };
+
+    let starredCount = 0;
+    for (let i = 0; i < this.props.cards.length; i++) {
+      const card = this.props.cards[i];
+      if (card.starred) starredCount += 1;
+    }
 
     return (
       <div className="learn">
@@ -258,8 +296,17 @@ class FlashCards extends React.Component {
                   <div className="options-radio-div">
                     <span>STUDY STARRED</span>
                     <div>
-                      <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
-                      <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred</button>
+                      {starredCount > 0 ?
+                      <>
+                        <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
+                        <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred</button>
+                      </>
+                      :
+                      <>
+                        <button className="study-starred-disabled study-starred-disabled-left">All</button>
+                        <button className="study-starred-disabled">Starred</button>
+                      </>
+                      }
                     </div>
                   </div>
                   <div className="options-audio-div options-field">
