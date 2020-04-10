@@ -147,9 +147,15 @@ class FlashCards extends React.Component {
     if (e.currentTarget.style.transform === "rotateX(180deg)") {
       e.currentTarget.style.transition = "transform 0.6s"
       e.currentTarget.style.transform = "rotateX(0deg)"
+      //set timeout on flip so audio button flip looks natural
+      setTimeout(() => {
+        this.setState({ flipped: false })
+      }, 300); 
     } else {
       e.currentTarget.style.transition = "transform 0.6s"
       e.currentTarget.style.transform = "rotateX(180deg)";
+      //set flipped to true because audio button is rendering based on this
+      this.setState({ flipped: true })
       if (this.state.curTar === null) {
         this.setState({ curTar: e.currentTarget })
       }
@@ -181,6 +187,18 @@ class FlashCards extends React.Component {
 
     }
 
+  }
+
+  starCard(card) {
+    return e => {
+      this.props.updateCardStudy({ id: card.cardStudyId, starred: true }).then(() => this.props.fetchCardStudies(card.deckId))
+    }
+  }
+
+  unstarCard(card) {
+    return e => {
+      this.props.updateCardStudy({ id: card.cardStudyId, starred: false }).then(() => this.props.fetchCardStudies(card.deckId))
+    }
   }
 
 
@@ -289,9 +307,27 @@ class FlashCards extends React.Component {
             </div>
 
             <div className="big-flashcard-next">
+              <div className="big-flashcard-next-options"></div>
               <div className="deck-page-card-switch">
-                <button onClick={this.handleProgress(-1).bind(this)} ><i className="fas fa-arrow-left"></i></button>
-                <button onClick={this.handleProgress(1).bind(this)}><i className="fas fa-arrow-right"></i></button>
+                <button className="progress-button" onClick={this.handleProgress(-1).bind(this)} ><i className="fas fa-arrow-left"></i></button>
+                <button className="progress-button" onClick={this.handleProgress(1).bind(this)}><i className="fas fa-arrow-right"></i></button>
+              </div>
+              <div className="big-flashcard-next-options">
+                {this.state.flipped ? 
+                  <SayButton
+                    text={`${this.state.allCards[this.state.progress - 1].definition}`}
+                  >
+                    <i className="fas fa-volume-up"></i>
+                  </SayButton>
+                    
+                : 
+                    <SayButton
+                      text={`${this.state.allCards[this.state.progress - 1].term}`}
+                    >
+                      <i className="fas fa-volume-up"></i>
+                    </SayButton>
+                }
+                {this.state.allCards[this.state.progress - 1].starred ? <i onClick={this.unstarCard(this.state.allCards[this.state.progress - 1]).bind(this)} className="fas fa-star solid-star"></i> : <i onClick={this.starCard(this.state.allCards[this.state.progress - 1]).bind(this)} className="far fa-star hollow-star"></i>}
               </div>
             </div>
           </div>
