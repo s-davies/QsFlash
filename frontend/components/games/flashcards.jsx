@@ -52,7 +52,9 @@ class FlashCards extends React.Component {
       optAudio: false,
       offCls: "options-selected",
       onCls: "options-unselected",
-      loading: true
+      loading: true,
+      shuffled: false,
+      shuffleCls: "learn-options-button"
     };
     // this.componentCleanup = this.componentCleanup.bind(this);
   }
@@ -65,23 +67,8 @@ class FlashCards extends React.Component {
       .then(() => {
         this.setState({ allCards: that.props.cards, progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true});
       })));
-    // window.addEventListener('beforeunload', this.componentCleanup);
+
   }
-
-  // componentCleanup() {
-  //   // whatever you want to do when the component is unmounted or page refreshes
-  //   let newDeckStudy = this.state.deckStudy;
-  //   if (newDeckStudy) {
-  //     newDeckStudy.progress = this.state.progress;
-  //     this.props.updateDeckStudy(newDeckStudy);
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   debugger
-  //   this.componentCleanup();
-  //   window.removeEventListener('beforeunload', this.componentCleanup);
-  // }
 
   goBackPage() {
     this.props.history.goBack();
@@ -134,13 +121,17 @@ class FlashCards extends React.Component {
     // });
   }
 
-  shuffle(array) {
-    let shuffled = Object.assign([], array);
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  shuffle() {
+    if (this.state.shuffled) {
+      this.setState({ allCards: this.props.cards, shuffled: false, shuffleCls: "learn-options-button" });
+    } else {
+      let shuffled = Object.assign([], this.state.allCards);
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      this.setState({ allCards: shuffled, shuffled: true, shuffleCls: "learn-options-button fullscreen-highlighted-button"});
     }
-    return shuffled;
   }
 
   handleFlip(e) {
@@ -180,9 +171,12 @@ class FlashCards extends React.Component {
         const ele = document.getElementsByClassName("flip-card-inner")[0]
         this.setState({ curTar: ele });
       }
-      let newDeckStudy = this.state.deckStudy;
-      newDeckStudy.progress = prg;
-      this.props.updateDeckStudy(newDeckStudy);
+      //only persist progress if cards are in original order
+      // if (!this.state.shuffled) {
+        let newDeckStudy = this.state.deckStudy;
+        newDeckStudy.progress = prg;
+        this.props.updateDeckStudy(newDeckStudy);
+      // }
       this.setState({ progress: prg, flipped: false });
 
     }
@@ -243,9 +237,15 @@ class FlashCards extends React.Component {
               <label>{this.state.progress}/{this.state.allCards.length}</label>
             </div>
           </div>
-          <div onClick={this.showModal.bind(this)} className="learn-options-button">
-            <i className="fas fa-sliders-h"></i>
-            <span>Options</span>
+          <div>
+            <div onClick={this.shuffle.bind(this)} className={this.state.shuffleCls}>
+              <i className="fas fa-random"></i>
+              <span>Shuffle</span>
+            </div>
+            <div onClick={this.showModal.bind(this)} className="learn-options-button">
+              <i className="fas fa-sliders-h"></i>
+              <span>Options</span>
+            </div>
           </div>
           <div onClick={this.hideModal.bind(this)} className={this.state.optionsCls}>
             <div className='options-div-box'>

@@ -74,3 +74,12 @@
 .big-flashcard-container .fa-star {
   font-size: 20px;
 }
+
+.game-sidebar .fullscreen-highlighted-button {
+  background-color: $yellow;
+  color: $dark-gray;
+}
+
+.game-sidebar .fullscreen-highlighted-button:hover {
+  color: $dark-gray;
+}

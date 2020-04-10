@@ -633,7 +633,7 @@ class DeckPage extends React.Component {
                                         <button onClick={this.handleProgress(1).bind(this)}><i className="fas fa-arrow-right"></i></button>
                                     </div>
                                     <div className="tooltip-options">
-                                        <button className="fullscreen-button"><i className="fas fa-expand"></i></button>
+                                        <Link to={`/${this.props.deck.id}/study`} className="fullscreen-button"><i className="fas fa-expand"></i></Link>
                                         <span className="tooltiptext-fullscreen">Fullscreen</span>
                                     </div>
                                 </div>
