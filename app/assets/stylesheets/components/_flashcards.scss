@@ -1,0 +1,44 @@
+.big-flashcard-container {
+  margin-top: 50px;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.big-flashcard-container .deck-page-flip {
+  height: 80%;
+}
+
+.big-flashcard-container .flip-card {
+  width: 100%;
+  height: 100%;
+}
+
+.big-flashcard-next {
+  align-self: center;
+  margin-top: 20px;
+}
+
+.progress-underneath {
+  // display: flex;
+  background-color: $light-purple;
+  height: 12px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.progress-above {
+  background-color: $dark-purple;
+  width: 50%;
+  height: 12px;
+}
+
+.progress-bar-text {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  color: $dark-gray;
+  font-size: 13px;
+}

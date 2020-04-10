@@ -583,24 +583,26 @@ class DeckPage extends React.Component {
                                     <i className="fas fa-brain"></i>
                                     <label>Learn</label>
                                 </Link>
-                                <Link to="/" >
-                                    <i className="fas fa-pencil-alt"></i>
-                                    <label>Write</label>
-                                </Link>
                                 <Link to={`/${this.props.deck.id}/spell`} >
                                     <i className="fas fa-volume-up"></i>
                                     <label>Spell</label>
                                 </Link>
-                                <Link to="/" >
+                                
+                                <h3>COMING SOON</h3>
+                                <Link to="#" >
+                                    <i className="fas fa-pencil-alt"></i>
+                                    <label>Write</label>
+                                </Link>
+                                
+                                <Link to="#" >
                                     <i className="far fa-file-alt"></i>
                                     <label>Test</label>
                                 </Link>
-                                <h3>PLAY</h3>
-                                <Link to="/" >
+                                <Link to="#" >
                                     <i className="far fa-clone"></i>
                                     <label>Match</label>
                                 </Link>
-                                <Link to="/" >
+                                <Link to="#" >
                                     <i className="fas fa-meteor"></i>
                                     <label>Gravity</label>
                                 </Link>

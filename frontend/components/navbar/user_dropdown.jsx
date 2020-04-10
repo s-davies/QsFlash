@@ -32,8 +32,8 @@ class UserDropdown extends React.Component {
                     <i className="fas fa-sort-down"></i>
                 </button>
                 <div className={this.state.cls}>
-                    <Link to="/">Your Study Sets</Link>
-                    <Link to="/">Settings</Link>
+                    <Link to={`/${this.props.currentUser.id}/created`}>Your Study Sets</Link>
+                    <Link to="/settings">Settings</Link>
                     <p onClick={this.handleLogout.bind(this)}>Log Out</p>
                 </div>
             </div>
