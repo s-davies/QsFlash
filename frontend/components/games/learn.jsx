@@ -290,6 +290,54 @@ class Learn extends React.Component {
     return shuffled;
   }
 
+  starCard(card) {
+    return e => {
+      card.starred = true; //need this so star appearance changes immediately
+      this.props.updateCardStudy({ id: card.cardStudyId, starred: true }).then(() => this.props.fetchCardStudies(card.deckId))
+    };
+  }
+
+  unstarCard(card) {
+    return e => {
+      if (this.state.starredCls === "options-selected") {
+        card.starred = false; //need this so star appearance changes immediately
+        const allCards = [];
+        const remainingAndFamiliar = [];
+        const remainingCards = [];
+        const familiarCards = [];
+        const masteredCards = [];
+        for (let i = 0; i < this.state.allCards.length; i++) {
+          const crd = this.state.allCards[i];
+          if (crd.id !== card.id) allCards.push(crd);
+        }
+        for (let i = 0; i < this.state.remainingAndFamiliar.length; i++) {
+          const crd = this.state.remainingAndFamiliar[i];
+          if (crd.id !== card.id) remainingAndFamiliar.push(crd);
+        }
+        for (let i = 0; i < this.state.remainingCards.length; i++) {
+          const crd = this.state.remainingCards[i];
+          if (crd.id !== card.id) remainingCards.push(crd);
+        }
+        for (let i = 0; i < this.state.familiarCards.length; i++) {
+          const crd = this.state.familiarCards[i];
+          if (crd.id !== card.id) familiarCards.push(crd);
+        }
+        for (let i = 0; i < this.state.masteredCards.length; i++) {
+          const crd = this.state.masteredCards[i];
+          if (crd.id !== card.id) masteredCards.push(crd);
+        }
+        this.setState({
+          allCards: allCards,
+          remainingAndFamiliar: remainingAndFamiliar,
+          remainingCards: remainingCards,
+          familiarCards: familiarCards,
+          masteredCards: masteredCards
+        });
+      }
+      this.props.updateCardStudy({ id: card.cardStudyId, starred: false }).then(() => this.props.fetchCardStudies(card.deckId))
+    };
+  }
+
   render() {
 
     if (this.state.redirect) {
@@ -326,25 +374,6 @@ class Learn extends React.Component {
         }
       }
     }
-
-    const textstyle = {
-      play: {
-        hover: {
-          backgroundColor: 'black',
-          color: 'white'
-        },
-        button: {
-          padding: '4',
-          fontFamily: 'Helvetica',
-          fontSize: '1.0em',
-          cursor: 'pointer',
-          pointerEvents: 'none',
-          outline: 'none',
-          backgroundColor: 'inherit',
-          border: 'none'
-        },
-      }
-    };
 
     let starredCount = 0;
     for (let i = 0; i < this.props.cards.length; i++) {
@@ -469,6 +498,9 @@ class Learn extends React.Component {
               <div className="learn-wrong-answer">
                 <div className="learn-wrong-answer-top">
                   <span>😕 Study this one!</span>
+                  {this.state.lastQuestion.starred ?
+                    <i onClick={this.unstarCard(this.state.lastQuestion).bind(this)} className="fas fa-star solid-star"></i> 
+                      : <i onClick={this.starCard(this.state.lastQuestion).bind(this)} className="far fa-star hollow-star"></i>}
                 </div>
                 <div className="learn-wrong-answer-mid">
                   <span>DEFINTION</span>

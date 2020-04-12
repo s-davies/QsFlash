@@ -419,6 +419,11 @@
 
 .learn-wrong-answer .fa-volume-up {
   padding-left: 10px;
+  padding-right: 0px;
+}
+
+.learn-wrong-answer .fa-star {
+  font-size: 22px;
 }
 
 // .learn-wrong-answer span {
@@ -428,6 +433,9 @@
 .learn-wrong-answer-top {
   border-bottom: 1px solid $lightest-gray;
   padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .learn-wrong-answer-top span {
