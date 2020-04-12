@@ -505,6 +505,8 @@ class Learn extends React.Component {
                 <div className="learn-wrong-answer-mid">
                   {this.state.optAnsType === "Term" ?
                   <>
+                  {this.state.onCls === "options-selected" ?
+                    <Say key={mcAns[0].id + 2000000} text={`${mcAns[0].definition}. ${mcAns[0].term}`} /> : ""}
                     <span>DEFINTION</span>
                     <div>
                       <p>{this.state.lastQuestion.definition}</p>
@@ -528,6 +530,8 @@ class Learn extends React.Component {
                   </>
                   :
                   <>
+                  {this.state.onCls === "options-selected" ?
+                    <Say key={mcAns[0].id + 3000000} text={`${mcAns[0].term}. ${mcAns[0].definition}`} /> : ""}
                     <span>TERM</span>
                     <div>
                       <p>{this.state.lastQuestion.term}</p>
@@ -580,6 +584,8 @@ class Learn extends React.Component {
             <div className="learn-card-question">
               {this.state.optAnsType === "Term" ?
               <>
+              {this.state.onCls === "options-selected" ?
+                <Say key={mcAns[0].id} text={`${mcAns[0].definition}`} /> : ""}
               <p>{mcAns[0].definition}</p>
               <SayButton
                 onClick={event => console.log(event)}
@@ -590,6 +596,8 @@ class Learn extends React.Component {
               </>
               :
               <>
+              {this.state.onCls === "options-selected" ?
+                <Say key={mcAns[0].id + 100000000} text={`${mcAns[0].term}`} /> : ""}
                 <p>{mcAns[0].term}</p>
                 <SayButton
                   onClick={event => console.log(event)}
