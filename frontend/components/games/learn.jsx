@@ -211,12 +211,20 @@ class Learn extends React.Component {
             break;
         }
         if (remCards.concat(famCards).length !== 0) {
+          let rCfC = remCards.concat(famCards);
+          let remAndFam = this.shuffle(rCfC);
+          //make sure the same question isn't given back to back
+          if (rCfC.length > 1) {
+            while (remAndFam[0].id === this.state.remainingAndFamiliar[0].id) {
+              remAndFam = this.shuffle(rCfC);
+            }
+          }
         setTimeout(() => {
           this.setState({ 
           twoArr: this.shuffle(this.state.twoArr),
           threeArr: this.shuffle(this.state.threeArr),
           fourArr: this.shuffle(this.state.fourArr),
-          remainingAndFamiliar: this.shuffle(remCards.concat(famCards)),
+          remainingAndFamiliar: remAndFam,
           allCards: this.shuffle(this.state.allCards)
         })
           switch (answerNum) {
@@ -247,13 +255,20 @@ class Learn extends React.Component {
   }
 
   resetDecks() {
+    let remAndFam = this.shuffle(this.state.remainingAndFamiliar);
+    //make sure the same question isn't given back to back
+    if (this.state.remainingAndFamiliar.length > 1) {
+      while (remAndFam[0].id === this.state.remainingAndFamiliar[0].id) {
+        remAndFam = this.shuffle(this.state.remainingAndFamiliar);
+      }
+    }
     this.setState({ 
       lastAnswer: null, 
       lastQuestion: null,
       twoArr: this.shuffle(this.state.twoArr),
       threeArr: this.shuffle(this.state.threeArr),
       fourArr: this.shuffle(this.state.fourArr),
-      remainingAndFamiliar: this.shuffle(this.state.remainingAndFamiliar),
+      remainingAndFamiliar: remAndFam,
       allCards: this.shuffle(this.state.allCards)
      });
   }
