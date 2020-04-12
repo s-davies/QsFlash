@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
       card.correctnessCount = cardKeys[card.id].correctnessCount;
       card.learnCount = cardKeys[card.id].learnCount;
     }
-    shuffleArray(cards);
+    // shuffleArray(cards);
   }
   // cards = cards.sort((a, b) => (a.order > b.order) ? 1 : -1);
   return {

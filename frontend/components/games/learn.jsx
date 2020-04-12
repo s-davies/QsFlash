@@ -72,14 +72,15 @@ class Learn extends React.Component {
         const rem = [];
         const fam = [];
         const mast = [];
-        for (let i = 0; i < this.props.cards.length; i++) {
-          const card = this.props.cards[i];
+        const allCards = that.shuffle(Object.assign([], that.props.cards));
+        for (let i = 0; i < allCards.length; i++) {
+          const card = allCards[i];
           if (card.learnCount === 0) rem.push(card);
           if (card.learnCount === 1) fam.push(card);
           if (card.learnCount === 2) mast.push(card);
         }
         const remAndFam = rem.concat(fam);
-        this.setState({ allCards: Object.assign([], that.props.cards), remainingAndFamiliar: remAndFam, remainingCards: rem, familiarCards: fam, masteredCards: mast})});
+        this.setState({ allCards: allCards, remainingAndFamiliar: remAndFam, remainingCards: rem, familiarCards: fam, masteredCards: mast})});
   }
 
   handleRedirect(deckId) {
@@ -116,9 +117,43 @@ class Learn extends React.Component {
   handleStudyStarredChange(opt) {
     return e => {
       if (opt === "All") {
+        this.componentDidMount();
         this.setState({ allCls: "options-selected", starredCls: "options-unselected"});
       } else {
-        this.setState({ starredCls: "options-selected", allCls: "options-unselected" });
+        const allCards = [];
+        const remainingAndFamiliar = [];
+        const remainingCards = [];
+        const familiarCards = [];
+        const masteredCards = [];
+        for (let i = 0; i < this.state.allCards.length; i++) {
+          const card = this.state.allCards[i];
+          if (card.starred) allCards.push(card);
+        }
+        for (let i = 0; i < this.state.remainingAndFamiliar.length; i++) {
+          const card = this.state.remainingAndFamiliar[i];
+          if (card.starred) remainingAndFamiliar.push(card);
+        }
+        for (let i = 0; i < this.state.remainingCards.length; i++) {
+          const card = this.state.remainingCards[i];
+          if (card.starred) remainingCards.push(card);
+        }
+        for (let i = 0; i < this.state.familiarCards.length; i++) {
+          const card = this.state.familiarCards[i];
+          if (card.starred) familiarCards.push(card);
+        }
+        for (let i = 0; i < this.state.masteredCards.length; i++) {
+          const card = this.state.masteredCards[i];
+          if (card.starred) masteredCards.push(card);
+        }
+        this.setState({ 
+          starredCls: "options-selected", 
+          allCls: "options-unselected",
+          allCards: allCards,
+          remainingAndFamiliar: remainingAndFamiliar,
+          remainingCards: remainingCards,
+          familiarCards: familiarCards,
+          masteredCards: masteredCards 
+        });
       }
     }
   }
@@ -137,7 +172,6 @@ class Learn extends React.Component {
     return e => {
       const card = Object.assign({}, this.state.remainingAndFamiliar[0]);
       if (answer.term === card.term && answer.definition === card.definition) {
-        console.log("hi there");
         card.learnCount += 1;
         card.correctnessCount += 1;
         this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, learnCount: card.learnCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
@@ -202,7 +236,7 @@ class Learn extends React.Component {
               break;
           }
       },
-        2000
+        1000
         ); }
       } else {
         this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount - 1}).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
@@ -261,7 +295,7 @@ class Learn extends React.Component {
     if (this.state.redirect) {
       return <Redirect push to={this.state.redirect} />
     }
-    // debugger
+
     if (this.state.allCards.length === 0) {
       return <div className="gray-spinner">
         <ClipLoader
@@ -273,17 +307,26 @@ class Learn extends React.Component {
     };
     const mcAns = [this.state.remainingAndFamiliar[0]];
     let i = 0;
+    if (this.state.starredCls === "options-selected") {
+        //may want to fix the randomization on this.props.cards
+        //because it is currently picking from the same answers every time
+        let starAnswers = Object.assign([], this.state.allCards.concat(this.props.cards));
+        while (i < starAnswers.length) {
+          if (starAnswers[i].term !== mcAns[0].term && starAnswers[i].definition !== mcAns[0].definition) mcAns.push(starAnswers[i]);
+          i += 1;
+          if (mcAns.length === 4) break;
+        }
 
-    if (this.state.remainingAndFamiliar.length > 0) {
-      while (i < this.state.allCards.length) {
-        if (this.state.allCards[i].term !== mcAns[0].term && this.state.allCards[i].definition !== mcAns[0].definition) mcAns.push(this.state.allCards[i]);
-        i += 1;
-        if (mcAns.length === 4) break;
+    } else {
+      if (this.state.remainingAndFamiliar.length > 0) {
+        while (i < this.state.allCards.length) {
+          if (this.state.allCards[i].term !== mcAns[0].term && this.state.allCards[i].definition !== mcAns[0].definition) mcAns.push(this.state.allCards[i]);
+          i += 1;
+          if (mcAns.length === 4) break;
+        }
       }
     }
-    // if (mcAns[0] === undefined) {
-    //   debugger
-    // }
+
     const textstyle = {
       play: {
         hover: {
@@ -302,7 +345,13 @@ class Learn extends React.Component {
         },
       }
     };
-    
+
+    let starredCount = 0;
+    for (let i = 0; i < this.props.cards.length; i++) {
+      const card = this.props.cards[i];
+      if (card.starred) starredCount += 1;
+    }
+
     return (
       <div className="learn">
         <div className="game-sidebar">
@@ -347,8 +396,17 @@ class Learn extends React.Component {
                 <div className="options-radio-div">
                   <span>STUDY STARRED</span>
                   <div>
-                      <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
-                      <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred</button>
+                      {starredCount > 0 ?
+                        <>
+                          <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
+                          <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred</button>
+                        </>
+                        :
+                        <>
+                          <button className="study-starred-disabled study-starred-disabled-left">All</button>
+                          <button className="study-starred-disabled">Starred</button>
+                        </>
+                      }
                   </div>
                 </div>
                   {/* <span>ANSWER WITH</span>
@@ -386,7 +444,7 @@ class Learn extends React.Component {
                     <div className="options-reset-div">
                       <span>RESET PROGRESS</span>
                       <div>
-                        <p>START OVER</p>
+                        <p onClick={this.resetProgress.bind(this)} >START OVER</p>
                       </div>
                     </div>
                 </div>
