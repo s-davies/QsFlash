@@ -503,29 +503,56 @@ class Learn extends React.Component {
                       : <i onClick={this.starCard(this.state.lastQuestion).bind(this)} className="far fa-star hollow-star"></i>}
                 </div>
                 <div className="learn-wrong-answer-mid">
-                  <span>DEFINTION</span>
-                  <div>
-                    <p>{this.state.lastQuestion.definition}</p>
-                    <SayButton
-                      onClick={event => console.log(event)}
-                      text={`${this.state.lastQuestion.definition}`}
-                    >
-                      <i className="fas fa-volume-up"></i>
-                    </SayButton>
-                  </div>
-                  <span>CORRECT ANSWER</span>
-                  <div>
-                    <p>{this.state.lastQuestion.term}</p>
-                    <SayButton
-                      onClick={event => console.log(event)}
-                      text={`${this.state.lastQuestion.term}`}
-                    >
-                      <i className="fas fa-volume-up"></i>
-                    </SayButton>
-                  </div>
+                  {this.state.optAnsType === "Term" ?
+                  <>
+                    <span>DEFINTION</span>
+                    <div>
+                      <p>{this.state.lastQuestion.definition}</p>
+                      <SayButton
+                        onClick={event => console.log(event)}
+                        text={`${this.state.lastQuestion.definition}`}
+                      >
+                        <i className="fas fa-volume-up"></i>
+                      </SayButton>
+                    </div>
+                    <span>CORRECT ANSWER</span>
+                    <div>
+                      <p>{this.state.lastQuestion.term}</p>
+                      <SayButton
+                        onClick={event => console.log(event)}
+                        text={`${this.state.lastQuestion.term}`}
+                      >
+                        <i className="fas fa-volume-up"></i>
+                      </SayButton>
+                    </div>
+                  </>
+                  :
+                  <>
+                    <span>TERM</span>
+                    <div>
+                      <p>{this.state.lastQuestion.term}</p>
+                      <SayButton
+                        onClick={event => console.log(event)}
+                        text={`${this.state.lastQuestion.term}`}
+                      >
+                        <i className="fas fa-volume-up"></i>
+                      </SayButton>
+                    </div>
+                    <span>CORRECT ANSWER</span>
+                    <div>
+                      <p>{this.state.lastQuestion.definition}</p>
+                      <SayButton
+                        onClick={event => console.log(event)}
+                        text={`${this.state.lastQuestion.definition}`}
+                      >
+                        <i className="fas fa-volume-up"></i>
+                      </SayButton>
+                    </div>
+                  </>}
                 </div>
                 <div className="learn-wrong-answer-bottom">
                   <span>YOU SAID</span>
+                  {this.state.optAnsType === "Term" ?
                   <div>
                     <p>{this.state.lastAnswer.term}</p>
                     <SayButton
@@ -535,19 +562,42 @@ class Learn extends React.Component {
                       <i className="fas fa-volume-up"></i>
                     </SayButton>
                   </div>
+                  :
+                  <div>
+                    <p>{this.state.lastAnswer.definition}</p>
+                    <SayButton
+                      onClick={event => console.log(event)}
+                      text={`${this.state.lastAnswer.definition}`}
+                    >
+                      <i className="fas fa-volume-up"></i>
+                    </SayButton>
+                  </div>}
                   <button onClick={this.resetDecks.bind(this)} >Continue</button>
                 </div>
               </div>
               :
               <>
             <div className="learn-card-question">
+              {this.state.optAnsType === "Term" ?
+              <>
               <p>{mcAns[0].definition}</p>
               <SayButton
                 onClick={event => console.log(event)}
-                text={`${mcAns[0].term}`}
+                text={`${mcAns[0].definition}`}
               >
                 <i className="fas fa-volume-up"></i>
               </SayButton>
+              </>
+              :
+              <>
+                <p>{mcAns[0].term}</p>
+                <SayButton
+                  onClick={event => console.log(event)}
+                  text={`${mcAns[0].term}`}
+                >
+                  <i className="fas fa-volume-up"></i>
+                </SayButton>
+              </>}
             </div>
             <div className="learn-card-answers">
             
@@ -559,7 +609,7 @@ class Learn extends React.Component {
                   </div>
                   :
                   <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[0]], 1).bind(this)}>
-                    <p>{mcAns[this.state.twoArr[0]].term}</p>
+                    <p>{this.state.optAnsType === "Term" ? mcAns[this.state.twoArr[0]].term : mcAns[this.state.twoArr[0]].definition}</p>
                     <span className="learn-answer-circle">1</span>
                   </div>}
                 {this.state.mc2Correct ?
@@ -568,7 +618,7 @@ class Learn extends React.Component {
                   </div>
                   :
                   <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.twoArr[1]], 2).bind(this)}>
-                    <p>{mcAns[this.state.twoArr[1]].term}</p>
+                    <p>{this.state.optAnsType === "Term" ? mcAns[this.state.twoArr[1]].term : mcAns[this.state.twoArr[1]].definition}</p>
                     <span className="learn-answer-circle">2</span>
                   </div>}
                 </>
@@ -581,7 +631,7 @@ class Learn extends React.Component {
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[0]], 1).bind(this)}>
-                      <p>{mcAns[this.state.threeArr[0]].term}</p>
+                      <p>{this.state.optAnsType === "Term" ? mcAns[this.state.threeArr[0]].term : mcAns[this.state.threeArr[0]].definition}</p>
                       <span className="learn-answer-circle">1</span>
                     </div>}
                   {this.state.mc2Correct ?
@@ -590,7 +640,7 @@ class Learn extends React.Component {
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[1]], 2).bind(this)}>
-                      <p>{mcAns[this.state.threeArr[1]].term}</p>
+                      <p>{this.state.optAnsType === "Term" ? mcAns[this.state.threeArr[1]].term : mcAns[this.state.threeArr[1]].definition}</p>
                       <span className="learn-answer-circle">2</span>
                     </div>}
                   {this.state.mc3Correct ?
@@ -599,7 +649,7 @@ class Learn extends React.Component {
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.threeArr[2]], 3).bind(this)}>
-                      <p>{mcAns[this.state.threeArr[2]].term}</p>
+                      <p>{this.state.optAnsType === "Term" ? mcAns[this.state.threeArr[2]].term : mcAns[this.state.threeArr[2]].definition}</p>
                       <span className="learn-answer-circle">3</span>
                     </div>}
                 </> 
@@ -612,7 +662,7 @@ class Learn extends React.Component {
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[0]], 1).bind(this)}>
-                      <p>{mcAns[this.state.fourArr[0]].term}</p>
+                      <p>{this.state.optAnsType === "Term" ? mcAns[this.state.fourArr[0]].term : mcAns[this.state.fourArr[0]].definition}</p>
                       <span className="learn-answer-circle">1</span>
                     </div>}
                 
@@ -622,7 +672,7 @@ class Learn extends React.Component {
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[1]], 2).bind(this)}>
-                      <p>{mcAns[this.state.fourArr[1]].term}</p>
+                      <p>{this.state.optAnsType === "Term" ? mcAns[this.state.fourArr[1]].term : mcAns[this.state.fourArr[1]].definition}</p>
                       <span className="learn-answer-circle">2</span>
                     </div>}
                   {this.state.mc3Correct ?
@@ -631,7 +681,7 @@ class Learn extends React.Component {
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[2]], 3).bind(this)}>
-                      <p>{mcAns[this.state.fourArr[2]].term}</p>
+                      <p>{this.state.optAnsType === "Term" ? mcAns[this.state.fourArr[2]].term : mcAns[this.state.fourArr[2]].definition}</p>
                       <span className="learn-answer-circle">3</span>
                     </div>}
                   {this.state.mc4Correct ?
@@ -640,7 +690,7 @@ class Learn extends React.Component {
                     </div>
                     :
                     <div className="learn-card-answer" onClick={this.answerMultipleChoice(mcAns[this.state.fourArr[3]], 4).bind(this)}>
-                      <p>{mcAns[this.state.fourArr[3]].term}</p>
+                      <p>{this.state.optAnsType === "Term" ? mcAns[this.state.fourArr[3]].term : mcAns[this.state.fourArr[3]].definition}</p>
                       <span className="learn-answer-circle">4</span>
                     </div>}
                 </> 
