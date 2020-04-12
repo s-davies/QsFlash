@@ -160,8 +160,9 @@ class FlashCards extends React.Component {
         this.setState({ flipped: false })
       }, 300); 
     } else {
-      e.currentTarget.style.transition = "transform 0.6s"
+      e.currentTarget.style.transition = "transform 0.6s";
       e.currentTarget.style.transform = "rotateX(180deg)";
+      
       //set flipped to true because audio button is rendering based on this
       this.setState({ flipped: true })
       if (this.state.curTar === null) {
@@ -255,6 +256,7 @@ class FlashCards extends React.Component {
       if (card.starred) starredCount += 1;
     }
 
+    let flippedCounter = this.state.flipped ? 1000 : -1000;
     return (
       <div className="learn">
         <div className="game-sidebar">
@@ -339,9 +341,16 @@ class FlashCards extends React.Component {
         <div className="big-flashcard-container">
           <div className="deck-page-flip">
             <div className="flip-card">
+              
               <div onClick={this.handleFlip.bind(this)} className="flip-card-inner">
                 {this.state.optAnsType === "Definition" ? 
                 <>
+                {/* give say component key so that when progress is updated, say rerenders */}
+                  {this.state.onCls === "options-selected" ?
+                    this.state.flipped ?
+                      <Say key={this.state.progress + flippedCounter} text={`${this.state.allCards[this.state.progress - 1].definition}`} />
+                      : <Say key={this.state.progress + flippedCounter} text={`${this.state.allCards[this.state.progress - 1].term}`} /> 
+                        : ""}
                   <div className="flip-card-front">
                     <Textfit mode="multi" style={cardStyles}>
                       <p>{this.state.allCards[this.state.progress - 1].term}</p>
@@ -355,6 +364,11 @@ class FlashCards extends React.Component {
                 </>
                 :
                 <>
+                  {this.state.onCls === "options-selected" ?
+                    this.state.flipped ?
+                      <Say key={this.state.progress + flippedCounter} text={`${this.state.allCards[this.state.progress - 1].definition}`} />
+                      : <Say key={this.state.progress + flippedCounter} text={`${this.state.allCards[this.state.progress - 1].term}`} />
+                    : ""}
                   <div className="flip-card-front">
                     <Textfit mode="multi" style={cardStyles}>
                       <p>{this.state.allCards[this.state.progress - 1].definition}</p>
@@ -377,16 +391,29 @@ class FlashCards extends React.Component {
                 <button className="progress-button" onClick={this.handleProgress(1).bind(this)}><i className="fas fa-arrow-right"></i></button>
               </div>
               <div className="big-flashcard-next-options">
-                {this.state.flipped ? 
-                  <SayButton
-                    text={`${this.state.allCards[this.state.progress - 1].definition}`}
-                  >
-                    <i className="fas fa-volume-up"></i>
-                  </SayButton>
-                    
+                {this.state.optAnsType === "Definition" ? 
+                  this.state.flipped ? 
+                    <SayButton
+                      text={`${this.state.allCards[this.state.progress - 1].definition}`}
+                    >
+                      <i className="fas fa-volume-up"></i>
+                    </SayButton>
                 : 
                     <SayButton
                       text={`${this.state.allCards[this.state.progress - 1].term}`}
+                    >
+                      <i className="fas fa-volume-up"></i>
+                    </SayButton>
+                : 
+                  this.state.flipped ?
+                    <SayButton
+                      text={`${this.state.allCards[this.state.progress - 1].term}`}
+                    >
+                      <i className="fas fa-volume-up"></i>
+                    </SayButton>
+                    :
+                    <SayButton
+                      text={`${this.state.allCards[this.state.progress - 1].definition}`}
                     >
                       <i className="fas fa-volume-up"></i>
                     </SayButton>
