@@ -1,0 +1,69 @@
+#write-field {
+  border-top: 2px solid #F0F0F0;
+  border-bottom: none;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#write-answer-field {
+  font-size: 22px;
+}
+
+#write-card-answers {
+  display: flex;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#write-card-answers p {
+  font-size: 28px;
+  color: $dark-gray;
+  padding: 0px;
+}
+#write-card-answers .fa-volume-up {
+  margin-right: 10px;
+  font-size: 28px;
+  color: $dark-gray;
+}
+
+#write-submit {
+  display: block;
+  padding-top: 8px;
+  border: none;
+  color: $white;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-left: 20px;
+  min-width: 120px;
+  max-width: 120px;
+  min-height: 22px;
+  max-height: 22px;
+  text-align: center;
+}
+
+.write-submit-normal {
+  background-color: $teal;
+}
+
+.write-submit-correct {
+  background-color: $green;
+} 
+
+#write-field-form {
+  display: flex;
+  flex-direction: row;
+}
+#write-field-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.write-field-input-correct {
+  color: $green;
+}
+
+.write-field-input-normal {
+  color: $dark-gray;
+}

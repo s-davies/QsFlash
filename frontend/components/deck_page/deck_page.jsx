@@ -587,12 +587,12 @@ class DeckPage extends React.Component {
                                     <i className="fas fa-volume-up"></i>
                                     <label>Spell</label>
                                 </Link>
-                                
-                                <h3>COMING SOON</h3>
-                                <Link to="#" >
+                                <Link to={`/${this.props.deck.id}/write`} >
                                     <i className="fas fa-pencil-alt"></i>
                                     <label>Write</label>
                                 </Link>
+                                
+                                <h3>COMING SOON</h3>
                                 
                                 <Link to="#" >
                                     <i className="far fa-file-alt"></i>

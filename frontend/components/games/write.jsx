@@ -31,7 +31,7 @@ const override = css`
     border-image-repeat: initial;
 `;
 
-class Spell extends React.Component {
+class Write extends React.Component {
 
   constructor(props) {
     super(props)
@@ -56,8 +56,8 @@ class Spell extends React.Component {
       lastAnswer: null,
       lastQuestion: null,
       correct: null,
-      spellVal: "",
-      wordToSpell: null,
+      writeVal: "",
+      wordToWrite: null,
       loading: true
     };
 
@@ -73,13 +73,13 @@ class Spell extends React.Component {
         const mast = [];
         for (let i = 0; i < this.props.cards.length; i++) {
           const card = this.props.cards[i];
-          if (card.spellCount === 0) rem.push(card);
-          if (card.spellCount === 1) fam.push(card);
-          if (card.spellCount === 2) mast.push(card);
+          if (card.writeCount === 0) rem.push(card);
+          if (card.writeCount === 1) fam.push(card);
+          if (card.writeCount === 2) mast.push(card);
         }
         const remAndFam = rem.concat(fam);
         const rFShuffled = that.shuffle(remAndFam)
-        this.setState({ allCards: Object.assign([], that.props.cards), remainingAndFamiliar: rFShuffled, wordToSpell: rFShuffled[0], remainingCards: rem, familiarCards: fam, masteredCards: mast })
+        this.setState({ allCards: Object.assign([], that.props.cards), remainingAndFamiliar: rFShuffled, wordToWrite: rFShuffled[0], remainingCards: rem, familiarCards: fam, masteredCards: mast })
         
       });
     
@@ -155,7 +155,7 @@ class Spell extends React.Component {
           remainingCards: remainingCards,
           familiarCards: familiarCards,
           masteredCards: masteredCards,
-          wordToSpell: remainingAndFamiliar[0]
+          wordToWrite: remainingAndFamiliar[0]
         });
       }
     }
@@ -175,7 +175,7 @@ class Spell extends React.Component {
     let remAndFam = this.shuffle(this.state.remainingAndFamiliar);
     //make sure the same question isn't given back to back
     if (this.state.remainingAndFamiliar.length > 1) {
-      while (remAndFam[0].id === this.state.wordToSpell.id) {
+      while (remAndFam[0].id === this.state.wordToWrite.id) {
         remAndFam = this.shuffle(this.state.remainingAndFamiliar);
       }
     }
@@ -184,7 +184,7 @@ class Spell extends React.Component {
       lastQuestion: null,
       correct: null,
       remainingAndFamiliar: remAndFam,
-      wordToSpell: remAndFam[0],
+      wordToWrite: remAndFam[0],
       allCards: this.shuffle(this.state.allCards)
     });
   }
@@ -192,7 +192,7 @@ class Spell extends React.Component {
   resetProgress() {
     for (let i = 0; i < this.state.allCards.length; i++) {
       const card = this.state.allCards[i];
-      this.props.updateCardStudy({ id: card.cardStudyId, spellCount: 0 }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
+      this.props.updateCardStudy({ id: card.cardStudyId, writeCount: 0 }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
     }
     const acShuffled = this.shuffle(this.state.allCards);
     this.setState({
@@ -204,8 +204,8 @@ class Spell extends React.Component {
       masteredCards: [],
       remainingAndFamiliar: acShuffled,
       allCards: acShuffled,
-      wordToSpell: acShuffled[0],
-      spellVal: ""
+      wordToWrite: acShuffled[0],
+      writeVal: ""
     });
   }
 
@@ -218,17 +218,17 @@ class Spell extends React.Component {
     return shuffled;
   }
 
-  checkSpelling(e) {
+  checkWriteing(e) {
     e.preventDefault();
-    const card = Object.assign({}, this.state.wordToSpell);
-    if (this.state.wordToSpell.term.toLowerCase() === this.state.spellVal.toLowerCase()) {
-      card.spellCount += 1;
+    const card = Object.assign({}, this.state.wordToWrite);
+    if (this.state.wordToWrite.term.toLowerCase() === this.state.writeVal.toLowerCase()) {
+      card.writeCount += 1;
       card.correctnessCount += 1;
-      this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, spellCount: card.spellCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
+      this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, writeCount: card.writeCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
       let remCards = Object.assign([], this.state.remainingCards);
       let famCards = Object.assign([], this.state.familiarCards);
       let mastCards = Object.assign([], this.state.masteredCards);
-      if (card.spellCount === 1) {
+      if (card.writeCount === 1) {
         remCards = this.state.remainingCards.filter(cd => cd.cardStudyId !== card.cardStudyId);
         famCards.push(card);
         this.setState({
@@ -236,7 +236,7 @@ class Spell extends React.Component {
           familiarCards: famCards
         });
       }
-      if (card.spellCount === 2) {
+      if (card.writeCount === 2) {
         famCards = this.state.familiarCards.filter(cd => cd.cardStudyId !== card.cardStudyId);
         mastCards.push(card)
         this.setState({
@@ -259,8 +259,8 @@ class Spell extends React.Component {
       }
         setTimeout(() => {
           this.setState({
-            spellVal: "",
-            wordToSpell: remAndFam[0],
+            writeVal: "",
+            wordToWrite: remAndFam[0],
             remainingAndFamiliar: remAndFam,
             correct: null
           })
@@ -273,14 +273,14 @@ class Spell extends React.Component {
 
     } else {
       this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount - 1 }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
-      const lastAns = this.state.spellVal;
-      this.setState({ lastAnswer: lastAns, lastQuestion: this.state.wordToSpell, spellVal: ""})
+      const lastAns = this.state.writeVal;
+      this.setState({ lastAnswer: lastAns, lastQuestion: this.state.wordToWrite, writeVal: ""})
     }
   }
 
-  handleSpellChange(e) {
+  handleWriteChange(e) {
     e.preventDefault();
-    this.setState({spellVal: e.target.value});
+    this.setState({writeVal: e.target.value});
   }
 
   starCard(card) {
@@ -363,8 +363,8 @@ class Spell extends React.Component {
               <p>Back</p>
             </div>
             <span className="game-sidebar-header">
-              <i className="fas fa-volume-up"></i>
-              <p>SPELL</p>
+              <i className="fas fa-pencil-alt"></i>
+              <p>WRITE</p>
             </span>
             <div className="learn-mastery-counts">
               <div className="learn-mastery-remaining">
@@ -425,7 +425,15 @@ class Spell extends React.Component {
 
                 </div>
                 <div className="options-bottom">
-                  <div id="spell-options-reset-div" className="options-reset-div">
+                  <div className="options-radio-div">
+                    <span>AUDIO</span>
+                    <div>
+                      <button onClick={this.handleAudioChange("Off").bind(this)} className={this.state.offCls}>Off</button>
+                      <button onClick={this.handleAudioChange("On").bind(this)} className={this.state.onCls}>On</button>
+
+                    </div>
+                  </div>
+                  <div className="options-reset-div">
                     <span>RESET PROGRESS</span>
                     <div>
                       <p onClick={this.resetProgress.bind(this)} >START OVER</p>
@@ -451,9 +459,6 @@ class Spell extends React.Component {
                 {/* for wrong answer */}
                 {this.state.lastAnswer ?
                   <div className="learn-wrong-answer">
-                    <Say text={this.state.optAnsType === "Term" ? 
-                      `${this.state.wordToSpell.term}. ${this.state.wordToSpell.term.split("").join(", ")}`
-                      : `${this.state.wordToSpell.definition}. ${this.state.wordToSpell.definition.split("").join(", ")}`} />
                     <div className="learn-wrong-answer-top">
                       <span>😕 Study this one!</span>
                       {this.state.lastQuestion.starred ?
@@ -461,80 +466,130 @@ class Spell extends React.Component {
                         : <i onClick={this.starCard(this.state.lastQuestion).bind(this)} className="far fa-star hollow-star"></i>}
                     </div>
                     <div className="learn-wrong-answer-mid">
-                      {/* <span>DEFINTION</span>
-                      <div>
-                        <p>{this.state.lastQuestion.definition}</p>
-                        <SayButton
-                          
-                          onClick={event => console.log(event)}
-                          text={`${this.state.lastQuestion.definition}`}
-                        >
-                          <i className="fas fa-volume-up"></i>
-                        </SayButton>
-                      </div> */}
-                      <span>CORRECT ANSWER</span>
-                      <div>
-                        <p>{this.state.optAnsType === "Term" ? this.state.lastQuestion.term : this.state.lastQuestion.definition}</p>
-                        <SayButton
-                          onClick={event => console.log(event)}
-                          text={this.state.optAnsType === "Term" ? `${this.state.lastQuestion.term}` : `${this.state.lastQuestion.definition}`}
-                        >
-                          <i className="fas fa-volume-up"></i>
-                        </SayButton>
-                      </div>
+                      {this.state.optAnsType === "Term" ?
+                        <>
+                          {this.state.onCls === "options-selected" ?
+                            <Say key={this.state.lastQuestion.id + 2000000} text={`${this.state.lastQuestion.definition}. ${this.state.lastQuestion.term}`} /> : ""}
+                          <span>DEFINTION</span>
+                          <div>
+                            <p>{this.state.lastQuestion.definition}</p>
+                            <SayButton
+                              onClick={event => console.log(event)}
+                              text={`${this.state.lastQuestion.definition}`}
+                            >
+                              <i className="fas fa-volume-up"></i>
+                            </SayButton>
+                          </div>
+                          <span>CORRECT ANSWER</span>
+                          <div>
+                            <p>{this.state.lastQuestion.term}</p>
+                            <SayButton
+                              onClick={event => console.log(event)}
+                              text={`${this.state.lastQuestion.term}`}
+                            >
+                              <i className="fas fa-volume-up"></i>
+                            </SayButton>
+                          </div>
+                        </>
+                        :
+                        <>
+                          {this.state.onCls === "options-selected" ?
+                            <Say key={this.state.lastQuestion.id + 3000000} text={`${this.state.lastQuestion.term}. ${this.state.lastQuestion.definition}`} /> : ""}
+                          <span>TERM</span>
+                          <div>
+                            <p>{this.state.lastQuestion.term}</p>
+                            <SayButton
+                              onClick={event => console.log(event)}
+                              text={`${this.state.lastQuestion.term}`}
+                            >
+                              <i className="fas fa-volume-up"></i>
+                            </SayButton>
+                          </div>
+                          <span>CORRECT ANSWER</span>
+                          <div>
+                            <p>{this.state.lastQuestion.definition}</p>
+                            <SayButton
+                              onClick={event => console.log(event)}
+                              text={`${this.state.lastQuestion.definition}`}
+                            >
+                              <i className="fas fa-volume-up"></i>
+                            </SayButton>
+                          </div>
+                        </>}
                     </div>
                     <div className="learn-wrong-answer-bottom">
                       <span>YOU SAID</span>
-                      <div>
-                        <p>{this.state.lastAnswer}</p>
-                        <SayButton
-                          onClick={event => console.log(event)}
-                          text={`${this.state.lastAnswer}`}
-                        >
-                          <i className="fas fa-volume-up"></i>
-                        </SayButton>
-                      </div>
+                      {this.state.optAnsType === "Term" ?
+                        <div>
+                          <p>{this.state.lastAnswer}</p>
+                          <SayButton
+                            onClick={event => console.log(event)}
+                            text={`${this.state.lastAnswer}`}
+                          >
+                            <i className="fas fa-volume-up"></i>
+                          </SayButton>
+                        </div>
+                        :
+                        <div>
+                          <p>{this.state.lastAnswer}</p>
+                          <SayButton
+                            onClick={event => console.log(event)}
+                            text={`${this.state.lastAnswer}`}
+                          >
+                            <i className="fas fa-volume-up"></i>
+                          </SayButton>
+                        </div>}
                       <button onClick={this.resetDecks.bind(this)} >Continue</button>
                     </div>
                   </div>
-                  : this.state.correct ? 
-                  <div>
-                    <Say text="Correct" /> 
-                      <div className="spell-field">
+                  // : this.state.correct ? 
+                  // <div>
+                  //     {this.state.onCls === "options-selected" ? <Say text="Correct" /> : ""}
+                  //     <div className="spell-field">
+                  //       <SayButton
+                  //         onClick={event => console.log(event)}
+                  //         text={this.state.optAnsType === "Term" ? `${this.state.wordToWrite.term}` : `${this.state.wordToWrite.definition}`}
+                  //       >
+                  //         <i className="fas fa-volume-up"></i>
+                  //       </SayButton>
+                  //       <form onSubmit={this.checkWriteing.bind(this)}>
+                  //         <input className="spell-field-green" onChange={this.handleWriteChange.bind(this)} type="text" placeholder="Type what you hear" spellCheck="false" value={this.state.writeVal} />
+                  //         <label>ANSWER</label>
+                  //         <input type="submit" value="" />
+                  //       </form>
+                  //     </div>
+                  //     <div className="spell-card-answers">
+                  //       <p>{this.state.optAnsType === "Term" ? this.state.wordToWrite.definition : this.state.wordToWrite.term}</p>
+                  //     </div>
+                  // </div>
+                  // :
+                  :
+                  <>
+                    {this.state.onCls === "options-selected" && this.state.correct ? <Say text="Correct" /> : ""}
+                    <div id="write-card-answers" className="spell-card-answers">
+                        {this.state.onCls === "options-selected" ? 
+                        <Say key={this.state.remainingAndFamiliar[0].id} text={this.state.optAnsType === "Term" ? `${this.state.wordToWrite.definition}` : `${this.state.wordToWrite.term}`} />
+                          : ""}
                         <SayButton
                           onClick={event => console.log(event)}
-                          text={this.state.optAnsType === "Term" ? `${this.state.wordToSpell.term}` : `${this.state.wordToSpell.definition}`}
+                          text={this.state.optAnsType === "Term" ? `${this.state.wordToWrite.definition}` : `${this.state.wordToWrite.term}`}
                         >
                           <i className="fas fa-volume-up"></i>
                         </SayButton>
-                        <form onSubmit={this.checkSpelling.bind(this)}>
-                          <input className="spell-field-green" onChange={this.handleSpellChange.bind(this)} type="text" placeholder="Type what you hear" spellCheck="false" value={this.state.spellVal} />
-                          <label>ANSWER</label>
-                          <input type="submit" value="" />
-                        </form>
-                      </div>
-                      <div className="spell-card-answers">
-                        <p>{this.state.optAnsType === "Term" ? this.state.wordToSpell.definition : this.state.wordToSpell.term}</p>
-                      </div>
-                  </div>
-                  :
-                  <>
-                    <div className="spell-field">
-                        <Say text={this.state.optAnsType === "Term" ? `${this.state.wordToSpell.term}` : `${this.state.wordToSpell.definition}`} />
-                        <SayButton
-                          onClick={event => console.log(event)}
-                          text={this.state.optAnsType === "Term" ? `${this.state.wordToSpell.term}` : `${this.state.wordToSpell.definition}`}
-                          >
-                          <i className="fas fa-volume-up"></i>
-                        </SayButton>
-                      <form onSubmit={this.checkSpelling.bind(this)}>
-                        <input onChange={this.handleSpellChange.bind(this)} type="text" placeholder="Type what you hear" spellCheck="false" value={this.state.spellVal} autoFocus/>
-                        <label>ANSWER</label>
-                        <input type="submit" value=""/>
-                      </form>
+                        <p>{this.state.optAnsType === "Term" ? this.state.wordToWrite.definition : this.state.wordToWrite.term}</p>
                     </div>
-                    <div className="spell-card-answers">
-                        <p>{this.state.optAnsType === "Term" ? this.state.wordToSpell.definition : this.state.wordToSpell.term}</p>
+                    <div id="write-field" className="spell-field">
+                        
+                      <form id="write-field-form" onSubmit={this.checkWriteing.bind(this)}>
+                        <div id="write-field-div">
+                          <input className={this.state.correct ? "write-field-input-correct" : "write-field-input-normal"} id="write-answer-field" onChange={this.handleWriteChange.bind(this)} type="text" spellCheck="false" value={this.state.writeVal} autoFocus/>
+                          <label>TYPE THE ANSWER</label>
+                        </div>
+                        {this.state.correct ? 
+                        <input className="write-submit-correct" id="write-submit" type="submit" value="Correct!" disabled/>
+                        :
+                        <input className="write-submit-normal" id="write-submit" type="submit" value="Answer"/>}
+                      </form>
                     </div>
                   </>
                 }
@@ -547,4 +602,4 @@ class Spell extends React.Component {
   }
 }
 
-export default Spell;
+export default Write;
