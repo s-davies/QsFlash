@@ -410,16 +410,6 @@ class Spell extends React.Component {
                       }
                     </div>
                   </div>
-                  {/* <span>ANSWER WITH</span>
-                  <label>Term
-                    <input type="checkbox" checked="checked"/>
-                    <span className="checkmark"></span>
-                  </label>
-                  <label>Definition
-                    <input type="checkbox" checked="checked"/>
-                    <span className="checkmark"></span>
-                  </label>
-                    */}
                   <div className="options-audio-div options-field">
                     <span>ANSWER WITH</span>
                     <select value={this.state.optAnsType} onChange={this.handleAnswerTypeChange.bind(this)}>
@@ -434,14 +424,6 @@ class Spell extends React.Component {
 
                 </div>
                 <div className="options-bottom">
-                  {/* <div className="options-radio-div">
-                    <span>AUDIO</span>
-                    <div>
-                      <button onClick={this.handleAudioChange("Off").bind(this)} className={this.state.offCls}>Off</button>
-                      <button onClick={this.handleAudioChange("On").bind(this)} className={this.state.onCls}>On</button>
-
-                    </div>
-                  </div> */}
                   <div id="spell-options-reset-div" className="options-reset-div">
                     <span>RESET PROGRESS</span>
                     <div>
@@ -468,7 +450,9 @@ class Spell extends React.Component {
                 {/* for wrong answer */}
                 {this.state.lastAnswer ?
                   <div className="learn-wrong-answer">
-                    <Say text={`${this.state.wordToSpell.term}. ${this.state.wordToSpell.term.split("").join(", ")}`} />
+                    <Say text={this.state.optAnsType === "Term" ? 
+                      `${this.state.wordToSpell.term}. ${this.state.wordToSpell.term.split("").join(", ")}`
+                      : `${this.state.wordToSpell.definition}. ${this.state.wordToSpell.definition.split("").join(", ")}`} />
                     <div className="learn-wrong-answer-top">
                       <span>😕 Study this one!</span>
                       {this.state.lastQuestion.starred ?
@@ -489,10 +473,10 @@ class Spell extends React.Component {
                       </div> */}
                       <span>CORRECT ANSWER</span>
                       <div>
-                        <p>{this.state.lastQuestion.term}</p>
+                        <p>{this.state.optAnsType === "Term" ? this.state.lastQuestion.term : this.state.lastQuestion.definition}</p>
                         <SayButton
                           onClick={event => console.log(event)}
-                          text={`${this.state.lastQuestion.term}`}
+                          text={this.state.optAnsType === "Term" ? `${this.state.lastQuestion.term}` : `${this.state.lastQuestion.definition}`}
                         >
                           <i className="fas fa-volume-up"></i>
                         </SayButton>
@@ -518,7 +502,7 @@ class Spell extends React.Component {
                       <div className="spell-field">
                         <SayButton
                           onClick={event => console.log(event)}
-                          text={`${this.state.wordToSpell.term}`}
+                          text={this.state.optAnsType === "Term" ? `${this.state.wordToSpell.term}` : `${this.state.wordToSpell.definition}`}
                         >
                           <i className="fas fa-volume-up"></i>
                         </SayButton>
@@ -529,16 +513,16 @@ class Spell extends React.Component {
                         </form>
                       </div>
                       <div className="spell-card-answers">
-                        <p>{this.state.wordToSpell.definition}</p>
+                        <p>{this.state.optAnsType === "Term" ? this.state.wordToSpell.definition : this.state.wordToSpell.term}</p>
                       </div>
                   </div>
                   :
                   <>
                     <div className="spell-field">
-                      <Say text={`${this.state.wordToSpell.term}`} />
+                        <Say text={this.state.optAnsType === "Term" ? `${this.state.wordToSpell.term}` : `${this.state.wordToSpell.definition}`} />
                         <SayButton
                           onClick={event => console.log(event)}
-                          text={`${this.state.wordToSpell.term}`}
+                          text={this.state.optAnsType === "Term" ? `${this.state.wordToSpell.term}` : `${this.state.wordToSpell.definition}`}
                           >
                           <i className="fas fa-volume-up"></i>
                         </SayButton>
@@ -549,7 +533,7 @@ class Spell extends React.Component {
                       </form>
                     </div>
                     <div className="spell-card-answers">
-                      <p>{this.state.wordToSpell.definition}</p>
+                        <p>{this.state.optAnsType === "Term" ? this.state.wordToSpell.definition : this.state.wordToSpell.term}</p>
                     </div>
                   </>
                 }

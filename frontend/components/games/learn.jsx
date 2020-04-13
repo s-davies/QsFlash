@@ -453,16 +453,6 @@ class Learn extends React.Component {
                       }
                   </div>
                 </div>
-                  {/* <span>ANSWER WITH</span>
-                  <label>Term
-                    <input type="checkbox" checked="checked"/>
-                    <span className="checkmark"></span>
-                  </label>
-                  <label>Definition
-                    <input type="checkbox" checked="checked"/>
-                    <span className="checkmark"></span>
-                  </label>
-                    */}
                   <div className="options-audio-div options-field">
                       <span>ANSWER WITH</span>
                       <select value={this.state.optAnsType} onChange={this.handleAnswerTypeChange.bind(this)}>
