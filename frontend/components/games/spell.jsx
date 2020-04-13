@@ -119,9 +119,44 @@ class Spell extends React.Component {
   handleStudyStarredChange(opt) {
     return e => {
       if (opt === "All") {
+        this.componentDidMount();
         this.setState({ allCls: "options-selected", starredCls: "options-unselected" });
       } else {
-        this.setState({ starredCls: "options-selected", allCls: "options-unselected" });
+        const allCards = [];
+        const remainingAndFamiliar = [];
+        const remainingCards = [];
+        const familiarCards = [];
+        const masteredCards = [];
+        for (let i = 0; i < this.state.allCards.length; i++) {
+          const card = this.state.allCards[i];
+          if (card.starred) allCards.push(card);
+        }
+        for (let i = 0; i < this.state.remainingAndFamiliar.length; i++) {
+          const card = this.state.remainingAndFamiliar[i];
+          if (card.starred) remainingAndFamiliar.push(card);
+        }
+        for (let i = 0; i < this.state.remainingCards.length; i++) {
+          const card = this.state.remainingCards[i];
+          if (card.starred) remainingCards.push(card);
+        }
+        for (let i = 0; i < this.state.familiarCards.length; i++) {
+          const card = this.state.familiarCards[i];
+          if (card.starred) familiarCards.push(card);
+        }
+        for (let i = 0; i < this.state.masteredCards.length; i++) {
+          const card = this.state.masteredCards[i];
+          if (card.starred) masteredCards.push(card);
+        }
+        this.setState({
+          starredCls: "options-selected",
+          allCls: "options-unselected",
+          allCards: allCards,
+          remainingAndFamiliar: remainingAndFamiliar,
+          remainingCards: remainingCards,
+          familiarCards: familiarCards,
+          masteredCards: masteredCards,
+          wordToSpell: remainingAndFamiliar[0]
+        });
       }
     }
   }
@@ -137,11 +172,19 @@ class Spell extends React.Component {
   }
 
   resetDecks() {
+    let remAndFam = this.shuffle(this.state.remainingAndFamiliar);
+    //make sure the same question isn't given back to back
+    if (this.state.remainingAndFamiliar.length > 1) {
+      while (remAndFam[0].id === this.state.wordToSpell.id) {
+        remAndFam = this.shuffle(this.state.remainingAndFamiliar);
+      }
+    }
     this.setState({
       lastAnswer: null,
       lastQuestion: null,
       correct: null,
-      remainingAndFamiliar: this.shuffle(this.state.remainingAndFamiliar),
+      remainingAndFamiliar: remAndFam,
+      wordToSpell: remAndFam[0],
       allCards: this.shuffle(this.state.allCards)
     });
   }
@@ -200,17 +243,24 @@ class Spell extends React.Component {
           masteredCards: mastCards
         });
       }
-      const rFShuffled = this.shuffle(remCards.concat(famCards))
       this.setState({
         correct: true,
-        remainingAndFamiliar: rFShuffled,
         allCards: this.shuffle(this.state.allCards)
       });
       // if (remCards.concat(famCards).length !== 0) {
+      let rCfC = remCards.concat(famCards);
+      let remAndFam = this.shuffle(rCfC);
+      //make sure the same question isn't given back to back
+      if (rCfC.length > 1) {
+        while (remAndFam[0].id === this.state.remainingAndFamiliar[0].id) {
+          remAndFam = this.shuffle(rCfC);
+        }
+      }
         setTimeout(() => {
           this.setState({
             spellVal: "",
-            wordToSpell: this.state.remainingAndFamiliar[0],
+            wordToSpell: remAndFam[0],
+            remainingAndFamiliar: remAndFam,
             correct: null
           })
         }, 1000);
@@ -232,6 +282,54 @@ class Spell extends React.Component {
     this.setState({spellVal: e.target.value});
   }
 
+  starCard(card) {
+    return e => {
+      card.starred = true; //need this so star appearance changes immediately
+      this.props.updateCardStudy({ id: card.cardStudyId, starred: true }).then(() => this.props.fetchCardStudies(card.deckId))
+    };
+  }
+
+  unstarCard(card) {
+    return e => {
+      if (this.state.starredCls === "options-selected") {
+        card.starred = false; //need this so star appearance changes immediately
+        const allCards = [];
+        const remainingAndFamiliar = [];
+        const remainingCards = [];
+        const familiarCards = [];
+        const masteredCards = [];
+        for (let i = 0; i < this.state.allCards.length; i++) {
+          const crd = this.state.allCards[i];
+          if (crd.id !== card.id) allCards.push(crd);
+        }
+        for (let i = 0; i < this.state.remainingAndFamiliar.length; i++) {
+          const crd = this.state.remainingAndFamiliar[i];
+          if (crd.id !== card.id) remainingAndFamiliar.push(crd);
+        }
+        for (let i = 0; i < this.state.remainingCards.length; i++) {
+          const crd = this.state.remainingCards[i];
+          if (crd.id !== card.id) remainingCards.push(crd);
+        }
+        for (let i = 0; i < this.state.familiarCards.length; i++) {
+          const crd = this.state.familiarCards[i];
+          if (crd.id !== card.id) familiarCards.push(crd);
+        }
+        for (let i = 0; i < this.state.masteredCards.length; i++) {
+          const crd = this.state.masteredCards[i];
+          if (crd.id !== card.id) masteredCards.push(crd);
+        }
+        this.setState({
+          allCards: allCards,
+          remainingAndFamiliar: remainingAndFamiliar,
+          remainingCards: remainingCards,
+          familiarCards: familiarCards,
+          masteredCards: masteredCards
+        });
+      }
+      this.props.updateCardStudy({ id: card.cardStudyId, starred: false }).then(() => this.props.fetchCardStudies(card.deckId))
+    };
+  }
+
 
   render() {
 
@@ -249,26 +347,12 @@ class Spell extends React.Component {
       </div>
     };
 
+    let starredCount = 0;
+    for (let i = 0; i < this.props.cards.length; i++) {
+      const card = this.props.cards[i];
+      if (card.starred) starredCount += 1;
+    }
 
-    
-    const textstyle = {
-      play: {
-        hover: {
-          backgroundColor: 'black',
-          color: 'white'
-        },
-        button: {
-          padding: '4',
-          fontFamily: 'Helvetica',
-          fontSize: '1.0em',
-          cursor: 'pointer',
-          pointerEvents: 'none',
-          outline: 'none',
-          backgroundColor: 'inherit',
-          border: 'none'
-        },
-      }
-    };
     return (
       <div className="learn">
         <div className="game-sidebar">
@@ -313,8 +397,17 @@ class Spell extends React.Component {
                   <div className="options-radio-div">
                     <span>STUDY STARRED</span>
                     <div>
-                      <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
-                      <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred</button>
+                      {starredCount > 0 ?
+                        <>
+                          <button onClick={this.handleStudyStarredChange("All").bind(this)} className={this.state.allCls} >All</button>
+                          <button onClick={this.handleStudyStarredChange("Starred").bind(this)} className={this.state.starredCls}>Starred</button>
+                        </>
+                        :
+                        <>
+                          <button className="study-starred-disabled study-starred-disabled-left">All</button>
+                          <button className="study-starred-disabled">Starred</button>
+                        </>
+                      }
                     </div>
                   </div>
                   {/* <span>ANSWER WITH</span>
@@ -341,18 +434,18 @@ class Spell extends React.Component {
 
                 </div>
                 <div className="options-bottom">
-                  <div className="options-radio-div">
+                  {/* <div className="options-radio-div">
                     <span>AUDIO</span>
                     <div>
                       <button onClick={this.handleAudioChange("Off").bind(this)} className={this.state.offCls}>Off</button>
                       <button onClick={this.handleAudioChange("On").bind(this)} className={this.state.onCls}>On</button>
 
                     </div>
-                  </div>
-                  <div className="options-reset-div">
+                  </div> */}
+                  <div id="spell-options-reset-div" className="options-reset-div">
                     <span>RESET PROGRESS</span>
                     <div>
-                      <p>START OVER</p>
+                      <p onClick={this.resetProgress.bind(this)} >START OVER</p>
                     </div>
                   </div>
                 </div>
@@ -378,6 +471,9 @@ class Spell extends React.Component {
                     <Say text={`${this.state.wordToSpell.term}. ${this.state.wordToSpell.term.split("").join(", ")}`} />
                     <div className="learn-wrong-answer-top">
                       <span>😕 Study this one!</span>
+                      {this.state.lastQuestion.starred ?
+                        <i onClick={this.unstarCard(this.state.lastQuestion).bind(this)} className="fas fa-star solid-star"></i>
+                        : <i onClick={this.starCard(this.state.lastQuestion).bind(this)} className="far fa-star hollow-star"></i>}
                     </div>
                     <div className="learn-wrong-answer-mid">
                       {/* <span>DEFINTION</span>
