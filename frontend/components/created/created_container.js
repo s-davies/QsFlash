@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { fetchDecks } from '../../actions/deck_actions';
 import { fetchCards } from '../../actions/card_actions';
+import { fetchFolders } from '../../actions/folder_actions';
 import { fetchUsers } from '../../actions/session_actions';
 import Created from './created';
 
@@ -18,9 +19,20 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
+  let allFolders = Object.keys(state.entities.folders).map(key => state.entities.folders[key]);
+  let createdFoldersCt = 0;
+
+  for (let i = 0; i < allFolders.length; i++) {
+    const folder = allFolders[i];
+    if (folder.ownerId === parseInt(ownProps.ownProps.match.params.userId)) {
+      createdFoldersCt += 1;
+    }
+  }
+
   return {
     decks: createdDecks,
     createdDecksCount: createdDecksCt,
+    createdFoldersCount: createdFoldersCt,
     users: state.entities.users,
     currentUser: state.entities.users[state.session.id],
     user: state.entities.users[ownProps.ownProps.match.params.userId]
@@ -29,6 +41,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchDecks: (optUserId) => dispatch(fetchDecks(optUserId)),
+  fetchFolders: (optUserId) => dispatch(fetchFolders(optUserId)),
   fetchCards: (deckId) => dispatch(fetchCards(deckId)),
   fetchUsers: () => dispatch(fetchUsers())
 });

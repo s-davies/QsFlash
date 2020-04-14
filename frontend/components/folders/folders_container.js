@@ -6,7 +6,7 @@ import { fetchUsers } from '../../actions/session_actions';
 import Folders from './folders';
 
 const mapStateToProps = (state, ownProps) => {
-  let allFolders = Object.keys(state.entities.folders).map(key => state.entities.folders[key]);
+  let allFolders = Object.keys(state.entities.folders).map(key => state.entities.folders[key]).reverse();
   let createdFoldersCt = 0;
 
   for (let i = 0; i < allFolders.length; i++) {

@@ -52,7 +52,7 @@ class Studied extends React.Component {
             this.setState({ loading: false });
           }
         }));
-
+    this.props.fetchFolders(this.props.ownProps.match.params.userId)
   }
 
   //refetch with new user
@@ -224,7 +224,7 @@ class Studied extends React.Component {
                 <p>Studied</p>
               </NavLink>
               <NavLink to={`/${this.props.user.id}/folders`} activeClassName="user-header-selected" className="user-header-link">
-                <p>Folders</p>
+                <p>Folders ({this.props.createdFoldersCount})</p>
               </NavLink>
               {/* <NavLink to={`/${this.props.user.id}/classes`} activeClassName="user-header-selected" className="user-header-link">
                 <p>Classes</p>

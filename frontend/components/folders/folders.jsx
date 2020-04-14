@@ -48,8 +48,10 @@ class Folders extends React.Component {
 
   componentDidMount() {
     this.props.fetchFolders(this.props.ownProps.match.params.userId)
-      .then(() => this.props.fetchUsers()
-        .then(() => this.setState({loading: false})));
+      .then(() => {
+        this.setState({ loading: false })
+        this.props.fetchUsers()
+      });
     
   }
   //refetch with new user

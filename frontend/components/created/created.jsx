@@ -44,6 +44,7 @@ class Created extends React.Component {
   componentDidMount() {
     this.props.fetchDecks(this.props.ownProps.match.params.userId).then(() => this.sortDecks());
     this.props.fetchUsers();
+    this.props.fetchFolders(this.props.ownProps.match.params.userId)
   }
   //refetch with new user
   componentWillReceiveProps(nextProps) {
@@ -165,7 +166,7 @@ class Created extends React.Component {
                 <p>Studied</p>
               </NavLink>
               <NavLink to={`/${this.props.user.id}/folders`} activeClassName="user-header-selected" className="user-header-link">
-                <p>Folders</p>
+                <p>Folders ({this.props.createdFoldersCount})</p>
               </NavLink>
               {/* <NavLink to={`/${this.props.user.id}/classes`} activeClassName="user-header-selected" className="user-header-link">
                 <p>Classes</p>
