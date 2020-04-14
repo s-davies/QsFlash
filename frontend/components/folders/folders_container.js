@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchDecks } from '../../actions/deck_actions';
-import { fetchFolders } from '../../actions/folder_actions';
+import { fetchFolders, createFolder } from '../../actions/folder_actions';
 import { fetchCards } from '../../actions/card_actions';
 import { fetchUsers } from '../../actions/session_actions';
 import Folders from './folders';
@@ -40,6 +40,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
   fetchDecks: (optUserId) => dispatch(fetchDecks(optUserId)),
   fetchFolders: (optUserId) => dispatch(fetchFolders(optUserId)),
+  createFolder: (folder) => dispatch(createFolder(folder)),
   fetchCards: (deckId) => dispatch(fetchCards(deckId)),
   fetchUsers: () => dispatch(fetchUsers())
 });

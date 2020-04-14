@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchDecks } from '../../actions/deck_actions';
+import { createFolder } from '../../actions/folder_actions';
 import Sidebar from './sidebar';
 
 const mapStateToProps = (state) => {
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     fetchDecks: () => dispatch(fetchDecks()),
+    createFolder: (folder) => dispatch(createFolder(folder))
 });
 
 

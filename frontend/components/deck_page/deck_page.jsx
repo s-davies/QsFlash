@@ -105,7 +105,8 @@ class DeckPage extends React.Component {
             e.target.className === "close-form") {
             this.setState({ cls: "info-modal" })
         } else if (e.target.className === "delete-modal show-modal" ||
-            e.target.className === "delete-close-form") {
+            e.target.className === "delete-close-form" ||
+            e.target.className === "cancel-button") {
             this.setState({ deleteCls: "delete-modal" })
         }
     }

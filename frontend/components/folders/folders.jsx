@@ -34,11 +34,17 @@ class Folders extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      folders: [],
+      cls: 'session-modal',
       redirect: null,
-      loading: true
+      loading: true,
+      title: "",
+      description: "",
+      submitDisabled: true,
+      titleError: ""
     }
   }
+
+  
 
   componentDidMount() {
     this.props.fetchFolders(this.props.ownProps.match.params.userId)
@@ -51,6 +57,47 @@ class Folders extends React.Component {
     if (nextProps.user !== this.props.user) {
       this.props.fetchFolders(this.props.ownProps.match.params.userId);
     }
+  }
+
+  showForm() {
+    if (this.state.cls === "session-modal") {
+      this.setState({ cls: "session-modal show-modal" })
+    } else {
+      this.setState({ cls: "session-modal" })
+    }
+  }
+
+  hideForm(e) {
+    if (e.target.className === "session-modal show-modal" ||
+      e.target.className === "close-form") {
+      this.setState({ cls: "session-modal", title: "", description: "" })
+    }
+  }
+
+  handleTitleChange(e) {
+    let titleWord = e.currentTarget.value;
+    this.setState({ title: titleWord }, () => {
+      if (titleWord.length > 0) {
+        this.setState({ submitDisabled: false, titleError: "" })
+      } else {
+        this.setState({ submitDisabled: true, titleError: "A folder must have a title" });
+      }
+    });
+  }
+
+  handleDescriptionChange(e) {
+    this.setState({ description: e.currentTarget.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.createFolder({
+      title: this.state.title,
+      description: this.state.description,
+      deckCount: 0
+    });
+    //hide the form
+    this.setState({ cls: "session-modal", title: "", description: "" });
   }
 
   handleRedirect(deckId) {
@@ -107,7 +154,7 @@ class Folders extends React.Component {
                 <div className="no-latest">
                   <h2>Let's get started!</h2>
                   {/* <Link to="/create-deck" className="large-create-card teal" >Create Deck</Link> */}
-                  <button id="large-create-folder-button" className="large-create-card teal" >Create Folder</button>
+                  <button onClick={this.showForm.bind(this)} id="large-create-folder-button" className="large-create-card teal" >Create Folder</button>
                 </div>
                 : ""
             }
@@ -115,7 +162,7 @@ class Folders extends React.Component {
               <div key={folder.id} onClick={this.handleRedirect(folder.id).bind(this)} className="small-deck-tile">
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
-                    <p>{folder.deckCount} Terms </p>
+                    <p>{folder.deckCount} Decks</p>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3><i className="fas fa-folder"></i> {folder.title}</h3>
@@ -123,6 +170,39 @@ class Folders extends React.Component {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+        <div className="session-form-container create-folders">
+          <div onClick={this.hideForm.bind(this)} className={this.state.cls}>
+            <form onSubmit={this.handleSubmit.bind(this)} className='session-form-box' spellCheck="false">
+              <div className="info-banner">
+                <h1 className="form-title">Create a new folder</h1>
+                <div onClick={this.hideForm.bind(this)} className="close-form">X</div>
+              </div>
+              <div className="session-form">
+                <div className="session-field">
+                  <input type="text"
+                    value={this.state.title}
+                    onChange={this.handleTitleChange.bind(this)}
+                    className="session-input"
+                    placeholder="Enter a title"
+                  />
+                  <label>TITLE</label>
+                  <div className="session-errors">{this.state.titleError}</div>
+                </div>
+                <div className="session-field">
+                  <input type="text"
+                    value={this.state.description}
+                    onChange={this.handleDescriptionChange.bind(this)}
+                    className="session-input"
+                    placeholder="Enter a description (optional)"
+                  />
+                  <label>DESCRIPTION</label>
+                </div>
+                {/* <input className="session-submit" type="submit" value="Create Folder" disabled={this.state.submitDisabled} /> */}
+                <input className="create-folder-submit" type="submit" value="Create Folder" disabled={this.state.submitDisabled} />
+              </div>
+            </form>
           </div>
         </div>
       </div>
