@@ -197,9 +197,9 @@ class Recent extends React.Component {
               <NavLink to={`/${this.props.user.id}/folders`} activeClassName="user-header-selected" className="user-header-link">
                 <p>Folders</p>
               </NavLink>
-              <NavLink to={`/${this.props.user.id}/classes`} activeClassName="user-header-selected" className="user-header-link">
+              {/* <NavLink to={`/${this.props.user.id}/classes`} activeClassName="user-header-selected" className="user-header-link">
                 <p>Classes</p>
-              </NavLink>
+              </NavLink> */}
             </div>
           </div>
           

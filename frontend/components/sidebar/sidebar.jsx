@@ -22,18 +22,18 @@ class Sidebar extends React.Component {
                         <p>Home</p> 
                     </div>
                 </NavLink>
-                <NavLink to="/settings" activeClassName="sidebar-selected" className="sidebar-link sidebar-settings">
+                <Link to="#" className="sidebar-link sidebar-settings">
                     <div className="sidebar-link-text">
                         <i className="fas fa-cog"></i>
                         <p>Settings</p>
                     </div>
-                </NavLink>
-                <NavLink to="/help" activeClassName="sidebar-selected" className="sidebar-link sidebar-help">
+                </Link>
+                <Link to="#" className="sidebar-link sidebar-help">
                     <div className="sidebar-link-text">
                         <i className="fas fa-question-circle"></i>
                         <p>Help Center</p>
                     </div>
-                </NavLink>
+                </Link>
                 <div className="sidebar-separator"></div>
                 <NavLink exact to={`/${this.props.currentUser.id}/created`} activeClassName="sidebar-selected" className="sidebar-link sidebar-sets">
                     <div className="sidebar-link-text">
@@ -53,12 +53,12 @@ class Sidebar extends React.Component {
                     <p>Create a folder</p>
                 </button>
 
-                <NavLink to="/classes" activeClassName="sidebar-selected" className="sidebar-link sidebar-classes">
+                <Link to="#" className="sidebar-link sidebar-classes">
                     <div className="sidebar-link-text">
                         <i className="fas fa-user-friends"></i>
-                        <p>Classes</p>
+                        <p>Classes (Coming soon)</p>
                     </div>
-                </NavLink>
+                </Link>
                 <button className="sidebar-new">
                     <i className="fas fa-user-plus"></i>
                     <p>Join or create a class</p>

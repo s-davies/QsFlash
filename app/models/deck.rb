@@ -20,5 +20,11 @@ class Deck < ApplicationRecord
         class_name: :CardStudy,
         dependent: :destroy
 
+    has_many :folder_decks,
+        foreign_key: :deck_id,
+        class_name: :FolderDeck
+
+    has_many :folders, through: :folder_decks, source: :folder
+
     has_many :studiers, through: :deck_studies, source: :studier
 end

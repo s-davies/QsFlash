@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :cards, only: [:create, :destroy, :update, :show]
     resources :deck_studies, only: [:create, :update, :destroy]
     resources :card_studies, only: [:create, :update, :destroy]
+    resources :folders, only: [:create, :destroy, :update, :show, :index]
     resource :session, only: [:create, :destroy]
   end
 

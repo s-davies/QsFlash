@@ -22,6 +22,10 @@ class User < ApplicationRecord
         foreign_key: :studier_id,
         class_name: :CardStudy,
         dependent: :destroy
+    
+    has_many :folders,
+        foreign_key: :owner_id,
+        class_name: :Folder
 
     has_many :decks_studied, through: :deck_studies, source: :deck
 
