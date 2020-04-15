@@ -51,17 +51,19 @@ class Folder extends React.Component {
 
   componentDidMount() {
     let that = this;
+    this.props.fetchUsers().then(() => 
     this.props.fetchFolders(this.props.ownProps.match.params.userId)
       .then(() => this.props.fetchDecks([this.props.ownProps.match.params.folderId])
-        .then(() => {
-          this.setState({ 
-            loading: false, 
-            title: that.props.folder.title, 
-            description: that.props.folder.description,
-            decks: that.props.decks
-           });
-          this.props.fetchUsers();
-        }));
+        .then(() => this.props.fetchFolderDecks(this.props.folder.id)
+          .then(() => {
+            this.setState({ 
+              loading: false, 
+              title: that.props.folder.title, 
+              description: that.props.folder.description,
+              decks: that.props.decks
+            });
+            
+          }))));
   }
   //refetch with new user
   // componentWillReceiveProps(nextProps) {
@@ -134,7 +136,22 @@ class Folder extends React.Component {
 
   handleRedirect(deckId) {
     return e => {
-      this.setState({ redirect: `/${deckId}/flash-cards` })
+      if (e.target.className !== "fas fa-folder-minus") {
+        this.setState({ redirect: `/${deckId}/flash-cards` })
+      }
+    }
+  }
+
+  addRemoveDeck(deck) {
+    return e => {
+      //add folderdeck
+      if (!deck.folderDeckId) {
+        this.props.createFolderDeck({deckId: deck.id, folderId: this.props.folder.id})
+          .then(() => this.props.fetchFolderDecks(this.props.folder.id));
+      } else {
+        this.props.deleteFolderDeck(deck.folderDeckId)
+          .then(() => this.props.fetchFolderDecks(this.props.folder.id));
+      }
     }
   }
 
@@ -181,7 +198,7 @@ class Folder extends React.Component {
                           <div className="small-deck-tile-inner">
                             <div className="small-deck-tile-bottom" >
                               <h3>{deck.title}</h3>
-                              <i className={deck.inFolder ? "fas fa-plus deck-in-folder" : "fas fa-plus deck-not-in-folder"}></i>
+                              <i onClick={this.addRemoveDeck(deck).bind(this)} className={deck.folderDeckId ? "fas fa-minus deck-in-folder" : "fas fa-plus deck-not-in-folder"}></i>
                             </div>
                           </div>
                         </div>
@@ -215,24 +232,24 @@ class Folder extends React.Component {
           <p>{this.props.folder.description}</p>
         </div>
         <div className="recent-bottom folders-bottom">
-          <div className="small-deck-tiles">
+          <div className="medium-deck-tiles">
             <ClipLoader
               css={override}
               size={150}
               loading={this.state.loading}
             />
-            {this.state.decks.length === 0 && !this.state.loading && this.props.currentUser.id !== this.props.user.id ?
+            {this.props.decks.length === 0 && !this.state.loading && this.props.currentUser.id !== this.props.user.id ?
               <div className="no-latest">
                 <h2>{this.props.folder.title} has no decks</h2>
               </div>
-              : this.state.decks.length === 0 && !this.state.loading ?
+              : this.props.decks.length === 0 && !this.state.loading ?
                 <div className="no-latest">
                   <h2>Let's get started!</h2>
-                  <button onClick={this.showForm.bind(this)} id="large-create-folder-button" className="large-create-card teal" >Add a deck</button>
+                  <button onClick={this.showAddDecksModal.bind(this)} id="large-create-folder-button" className="large-create-card teal" >Add a deck</button>
                 </div>
                 : ""
             }
-            {this.state.decks.map((deck) => (
+            {this.props.decks.map((deck) => (
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="medium-deck-tile">
                 <div className="medium-deck-tile-inner">
                   <div className="medium-deck-tile-right">
@@ -241,7 +258,7 @@ class Folder extends React.Component {
                     <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="medium-deck-tile-right" >
-
+                    <i onClick={this.addRemoveDeck(deck).bind(this)} className="fas fa-folder-minus"></i>
                   </div>
                 </div>
               </div>

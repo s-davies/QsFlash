@@ -22,7 +22,8 @@ class Deck < ApplicationRecord
 
     has_many :folder_decks,
         foreign_key: :deck_id,
-        class_name: :FolderDeck
+        class_name: :FolderDeck,
+        dependent: :destroy
 
     has_many :folders, through: :folder_decks, source: :folder
 

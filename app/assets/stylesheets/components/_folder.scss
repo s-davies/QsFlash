@@ -165,3 +165,29 @@
   border-radius: 2px;
   cursor: pointer;
 }
+
+.folder .medium-deck-tile-inner {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.folder .medium-deck-tile-right:last-of-type {
+  display: flex;
+}
+
+.folder .fa-folder-minus {
+  align-self: flex-end;
+}
+
+.folder .fa-folder-minus:hover {
+  color: $red;
+}
+
+.folder .medium-deck-tiles {
+  padding: 40px 0px 0px 40px;
+}
+
+.folder .folders-bottom {
+  padding: 0px;
+}

@@ -5,6 +5,7 @@ import decksReducer from './decks_reducer';
 import foldersReducer from './folders_reducer';
 import cardsReducer from './cards_reducer';
 import deckStudiesReducer from './deck_studies_reducer';
+import folderDecksReducer from './folder_decks_reducer';
 import cardStudiesReducer from './card_studies_reducer';
 
 export default combineReducers({
@@ -13,5 +14,6 @@ export default combineReducers({
   folders: foldersReducer,
   cards: cardsReducer,
   deckStudies: deckStudiesReducer,
+  folderDecks: folderDecksReducer,
   cardStudies: cardStudiesReducer,
 });

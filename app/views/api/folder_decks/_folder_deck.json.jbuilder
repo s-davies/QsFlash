@@ -1,0 +1,1 @@
+json.extract! folder_deck, :id, :deck_id, :folder_id, :created_at, :updated_at

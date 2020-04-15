@@ -7,7 +7,8 @@ class Folder < ApplicationRecord
 
   has_many :folder_decks,
     foreign_key: :folder_id,
-    class_name: :FolderDeck
+    class_name: :FolderDeck,
+    dependent: :destroy
 
   has_many :decks, through: :folder_decks, source: :deck
 end

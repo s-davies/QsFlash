@@ -1,0 +1,1 @@
+json.partial! 'api/folder_decks/folder_deck', folder_deck: @folder_deck
