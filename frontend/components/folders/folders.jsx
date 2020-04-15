@@ -102,9 +102,9 @@ class Folders extends React.Component {
     this.setState({ cls: "session-modal", title: "", description: "" });
   }
 
-  handleRedirect(deckId) {
+  handleRedirect(folderId) {
     return e => {
-      this.setState({ redirect: `/${deckId}/flash-cards` })
+      this.setState({ redirect: `/${this.props.ownProps.match.params.userId}/folders/${folderId}` })
     }
   }
 
@@ -141,7 +141,7 @@ class Folders extends React.Component {
           </div>
 
         </div>
-        <div className="recent-bottom">
+        <div className="recent-bottom folders-bottom">
           <div className="small-deck-tiles">
             <ClipLoader
               css={override}

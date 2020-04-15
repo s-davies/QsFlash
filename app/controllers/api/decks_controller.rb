@@ -1,9 +1,14 @@
 class Api::DecksController < ApplicationController
     def index
         # if an optional user idea param is included, find that user's decks
-        @decks = params["opt_user_id"] ? 
-            User.find_by(id: params["opt_user_id"]).decks_studied 
-            : current_user.decks_studied
+        @decks = nil
+        if params["opt_user_id"]
+            @decks = User.find_by(id: params["opt_user_id"]).decks_studied
+        elsif params["opt_folder_id"]
+            @decks = Folder.find_by(id: params["opt_folder_id"]).decks
+        else
+            @decks = current_user.decks_studied
+        end
         
         render :index
     end

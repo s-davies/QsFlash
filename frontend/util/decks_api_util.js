@@ -1,10 +1,19 @@
 export const fetchDecks = (optUserId) => {
-    return $.ajax({
-        method: 'GET',
-        url: `/api/decks`,
-        data: { optUserId: optUserId}
-    })}
-;
+    // if the optUserId is an array, set optFolderId param
+    if (Array.isArray(optUserId)) {
+        return $.ajax({
+            method: 'GET',
+            url: `/api/decks`,
+            data: { optFolderId: optUserId[0] }
+        });
+    } else {
+        return $.ajax({
+            method: 'GET',
+            url: `/api/decks`,
+            data: { optUserId: optUserId }
+        });
+    }
+};
 
 export const searchDecks = (searchTerm) => (
     $.ajax({

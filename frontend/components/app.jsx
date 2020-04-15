@@ -9,6 +9,7 @@ import UserDecks from './user_decks/user_decks';
 import StudiedDecks from './user_decks/studied_wrapper';
 import CreatedDecks from './user_decks/created_wrapper';
 import FoldersWrapper from './user_decks/folders_wrapper';
+import FolderWrapper from './user_decks/folder_wrapper';
 import Splash from './splash/splash'
 import CreateDeckFormContainer from './deck/create_deck_form_container'
 import EditDeckFormContainer from './deck/edit_deck_form_container'
@@ -32,6 +33,7 @@ const App = () => (
       <ProtectedRoute exact path="/:userId/created" component={CreatedDecks} />
       <ProtectedRoute exact path="/:userId/studied" component={StudiedDecks} />
       <ProtectedRoute exact path="/:userId/folders" component={FoldersWrapper} />
+      <ProtectedRoute exact path="/:userId/folders/:folderId" component={FolderWrapper} />
       
       <ProtectedRoute exact path="/:deckId/learn" component={LearnContainer} />
       <ProtectedRoute exact path="/:deckId/spell" component={SpellContainer} />

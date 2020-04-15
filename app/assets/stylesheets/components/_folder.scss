@@ -1,0 +1,119 @@
+.folder-header-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.folder-header-top span {
+  color: $dark-gray;
+  font-size: 16px;
+  padding-right: 20px;
+  border-right: 2px solid $lightest-gray;
+  height: 50%; //for border
+}
+
+.folder-header-top p {
+  color: $light-gray;
+  font-size: 16px;
+  padding-left: 20px;
+  padding-right: 3px;
+}
+
+.folder-header-top a {
+  color: $teal;
+  font-size: 16px;
+}
+
+.folder-header-top a:hover {
+  transition: color 0.15s ease;
+  color: $yellow;
+}
+
+.folder-add-edit {
+  margin-right: 40px;
+}
+
+.folder-add-edit .fa-plus {
+  padding: 12px 13px;
+  background-color: $teal;
+  color: $white;
+  border-radius: 50%;
+}
+.folder-add-edit .fa-pen {
+  padding: 12px 12px;
+  background-color: $teal;
+  color: $white;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+.folder-add-edit .fa-trash-alt {
+  padding: 12px 13px;
+  background-color: $teal;
+  color: $white;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+.folder-add-edit > div > i:hover {
+  transition: color 0.15s ease;
+  transition: background-color 0.15s ease;
+  color: $dark-gray;
+  background-color: $yellow;
+  cursor: pointer;
+}
+
+.folder-deck-count {
+  display: flex;
+}
+
+.folder-title {
+  display: flex;
+  align-items: center;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.folder-title i {
+  margin-right: 20px;
+  color: $gray;
+}
+
+.folder .user-header > p {
+  font-size: 18px;
+  padding-top: 5px;
+}
+
+.folder .tooltip-options .tooltiptext-info {
+  visibility: hidden;
+  width: 70px;
+  background-color: $purple;
+  color: #fff;
+  text-align: center;
+  padding: 6px 0px 2px;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: 50%;
+  margin-left: -34px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+.folder .tooltip-options .tooltiptext-info::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent $purple transparent;
+}
+
+.folder .tooltip-options:hover .tooltiptext-info {
+  visibility: visible;
+}
+
+.folder .delete-content p {
+  color: $dark-gray;
+}

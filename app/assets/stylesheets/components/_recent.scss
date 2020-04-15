@@ -81,6 +81,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0px 0px 5px 1px $lighter-gray;
+  border-radius: 2px;
+}
+
+.small-deck-tile:hover {
+  border-bottom: 4px solid $yellow;
+  padding-bottom: 11px;
 }
 
 .small-deck-tile-top {
