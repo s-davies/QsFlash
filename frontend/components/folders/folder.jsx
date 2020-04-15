@@ -34,6 +34,7 @@ class Folder extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      decks: [],
       cls: 'session-modal',
       deleteCls: "delete-modal",
       addDecksCls: "delete-modal",
@@ -53,7 +54,12 @@ class Folder extends React.Component {
     this.props.fetchFolders(this.props.ownProps.match.params.userId)
       .then(() => this.props.fetchDecks([this.props.ownProps.match.params.folderId])
         .then(() => {
-          this.setState({ loading: false, title: that.props.folder.title, description: that.props.folder.description });
+          this.setState({ 
+            loading: false, 
+            title: that.props.folder.title, 
+            description: that.props.folder.description,
+            decks: that.props.decks
+           });
           this.props.fetchUsers();
         }));
   }
@@ -76,7 +82,8 @@ class Folder extends React.Component {
 
   showAddDecksModal() {
     if (this.state.addDecksCls === "delete-modal") {
-      this.setState({ addDecksCls: "delete-modal show-modal" })
+      this.props.fetchDecks(this.props.ownProps.match.params.userId);
+      this.setState({ addDecksCls: "delete-modal show-modal" });
     }
   }
 
@@ -169,11 +176,12 @@ class Folder extends React.Component {
                     <div onClick={this.hideForm.bind(this)} className="delete-close-form">X</div>
                   </div>
                   <div className="delete-content">
-                      {this.props.decks.map((deck) => (
+                      {this.props.usersDecks.map((deck) => (
                         <div key={deck.id} className="small-deck-tile">
                           <div className="small-deck-tile-inner">
                             <div className="small-deck-tile-bottom" >
                               <h3>{deck.title}</h3>
+                              <i className={deck.inFolder ? "fas fa-plus deck-in-folder" : "fas fa-plus deck-not-in-folder"}></i>
                             </div>
                           </div>
                         </div>
@@ -213,18 +221,18 @@ class Folder extends React.Component {
               size={150}
               loading={this.state.loading}
             />
-            {this.props.decks.length === 0 && !this.state.loading && this.props.currentUser.id !== this.props.user.id ?
+            {this.state.decks.length === 0 && !this.state.loading && this.props.currentUser.id !== this.props.user.id ?
               <div className="no-latest">
                 <h2>{this.props.folder.title} has no decks</h2>
               </div>
-              : this.props.decks.length === 0 && !this.state.loading ?
+              : this.state.decks.length === 0 && !this.state.loading ?
                 <div className="no-latest">
                   <h2>Let's get started!</h2>
                   <button onClick={this.showForm.bind(this)} id="large-create-folder-button" className="large-create-card teal" >Add a deck</button>
                 </div>
                 : ""
             }
-            {this.props.decks.map((deck) => (
+            {this.state.decks.map((deck) => (
               <div key={deck.id} onClick={this.handleRedirect(deck.id).bind(this)} className="medium-deck-tile">
                 <div className="medium-deck-tile-inner">
                   <div className="medium-deck-tile-right">

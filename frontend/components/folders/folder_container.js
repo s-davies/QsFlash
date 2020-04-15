@@ -5,20 +5,25 @@ import { fetchUsers } from '../../actions/session_actions';
 import Folder from './folder';
 
 const mapStateToProps = (state, ownProps) => {
-  let allDecks = Object.keys(state.entities.decks).map(key => state.entities.decks[key]);
+  let allDecks = Object.keys(state.entities.decks).map(key => Object.assign({}, state.entities.decks[key]));
   let visibleDecks = [];
+  let usersDecks = [];
   let folder = state.entities.folders[ownProps.ownProps.match.params.folderId];
   for (let i = 0; i < allDecks.length; i++) {
     const deck = allDecks[i];
     if (deck.visibility === "Everyone" || (deck.visibility === "Just me" && deck.ownerId === state.entities.users[state.session.id].id)) {
-      if (folder && folder.id == deck)
-      visibleDecks.push(deck);
+      if (folder && folder.deckId == deck.id) {
+        deck.inFolder = true;
+        visibleDecks.push(deck);
+      }
+      usersDecks.push(deck);
     }
   }
 
   return {
     folder: folder,
     decks: visibleDecks,
+    usersDecks: usersDecks,
     users: state.entities.users,
     currentUser: state.entities.users[state.session.id],
     user: state.entities.users[ownProps.ownProps.match.params.userId]
