@@ -1,7 +1,7 @@
 class Api::FolderDecksController < ApplicationController
 
   def index
-      @folder_decks = FolderDeck.where(folder_id: params[:folder_id])
+      @folder_decks = params[:folder_id] ? FolderDeck.where(folder_id: params[:folder_id]) : FolderDeck.all
       render :index
   end
 

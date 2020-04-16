@@ -168,7 +168,7 @@ class Folder extends React.Component {
         <div className="user-header">
           <div className="folder-header-top">
             <div className="folder-deck-count">
-              <span>{this.props.folder.deckCount} decks</span>
+              <span>{this.props.deckCount === 1 ? `${this.props.deckCount} deck` : `${this.props.deckCount} decks`}</span>
               <p>created by</p>
               <Link to={`/${this.props.users[this.props.folder.ownerId].id}/created`}>{this.props.users[this.props.folder.ownerId].username}</Link>
             </div>
@@ -223,7 +223,20 @@ class Folder extends React.Component {
                   </div>
                 </div>
               </div>
-            </div> : ""}
+            </div> 
+            : 
+            // these are here so the spacing is consistent
+            <div className="folder-add-edit">
+              <div className="tooltip-options">
+                <i className="fas fa-plus folder-hidden"></i>
+              </div>
+              <div className="tooltip-options">
+                <i className="fas fa-plus folder-hidden"></i>
+              </div>
+              <div className="tooltip-options">
+                <i className="fas fa-plus folder-hidden"></i>
+              </div>
+            </div> }
           </div>
           <div className="folder-title">
             <i className="fas fa-folder"></i>
@@ -258,7 +271,8 @@ class Folder extends React.Component {
                     <Link to={`/${deck.ownerId}/created`}>{this.props.users[deck.ownerId].username}</Link>
                   </div>
                   <div className="medium-deck-tile-right" >
-                    <i onClick={this.addRemoveDeck(deck).bind(this)} className="fas fa-folder-minus"></i>
+                    {this.props.folder.ownerId === this.props.currentUser.id ? 
+                      <i onClick={this.addRemoveDeck(deck).bind(this)} className="fas fa-folder-minus"></i> : ""}
                   </div>
                 </div>
               </div>

@@ -47,12 +47,15 @@ class Folders extends React.Component {
   
 
   componentDidMount() {
-    this.props.fetchFolders(this.props.ownProps.match.params.userId)
-      .then(() => {
-        this.setState({ loading: false })
-        this.props.fetchUsers()
-      });
-    
+    this.props.fetchUsers().then(() =>
+      this.props.fetchFolders(this.props.ownProps.match.params.userId)
+        .then(() => this.props.fetchDecks(this.props.ownProps.match.params.userId)
+          .then(() => this.props.fetchFolderDecks()
+            .then(() => {
+              this.setState({
+                loading: false,
+              });
+            }))));
   }
   //refetch with new user
   componentWillReceiveProps(nextProps) {
@@ -164,7 +167,7 @@ class Folders extends React.Component {
               <div key={folder.id} onClick={this.handleRedirect(folder.id).bind(this)} className="small-deck-tile">
                 <div className="small-deck-tile-inner">
                   <div className="small-deck-tile-top">
-                    <p>{folder.deckCount} Decks</p>
+                    <p>{folder.deckCt === 1 ? `${folder.deckCt} Deck` : `${folder.deckCt} Decks`}</p>
                   </div>
                   <div className="small-deck-tile-bottom" >
                     <h3><i className="fas fa-folder"></i> {folder.title}</h3>

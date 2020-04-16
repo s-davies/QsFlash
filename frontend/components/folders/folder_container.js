@@ -30,6 +30,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     folder: folder,
     decks: visibleDecks,
+    deckCount: visibleDecks.length,
     usersDecks: usersDecks,
     users: state.entities.users,
     currentUser: state.entities.users[state.session.id],
