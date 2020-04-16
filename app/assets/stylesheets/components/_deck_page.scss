@@ -968,3 +968,14 @@
   background-color: $yellow;
   color: $dark-gray;
 }
+
+#folder-modal-new {
+  justify-content: center;
+  cursor: pointer;
+}
+#folder-modal-new p {
+  font-weight: 700;
+  border-bottom: 5px solid $teal;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

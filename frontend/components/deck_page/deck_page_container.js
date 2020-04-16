@@ -4,7 +4,7 @@ import { fetchCards } from '../../actions/card_actions';
 import { fetchDeckStudy, fetchDeckStudies, updateDeckStudy } from '../../actions/deck_study_actions';
 import { fetchUsers } from '../../actions/session_actions';
 import { fetchCardStudies, updateCardStudy } from '../../actions/card_study_actions';
-import { fetchFolders } from '../../actions/folder_actions';
+import { fetchFolders, createFolder } from '../../actions/folder_actions';
 import { fetchFolderDecks, createFolderDeck, deleteFolderDeck } from '../../actions/folder_deck_actions';
 import DeckPage from './deck_page'
 
@@ -86,7 +86,8 @@ const mapDispatchToProps = dispatch => ({
     fetchFolderDecks: (deckId) => dispatch(fetchFolderDecks(deckId)),
     createFolderDeck: (folderDeck) => dispatch(createFolderDeck(folderDeck)),
     deleteFolderDeck: (folderDeckId) => dispatch(deleteFolderDeck(folderDeckId)),
-    fetchFolders: (optUserId) => dispatch(fetchFolders(optUserId))
+    fetchFolders: (optUserId) => dispatch(fetchFolders(optUserId)),
+    createFolder: (folder) => dispatch(createFolder(folder))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckPage);

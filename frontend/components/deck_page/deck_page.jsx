@@ -52,7 +52,12 @@ class DeckPage extends React.Component {
             allCls: "options-selected",
             starredCls: "options-unselected",
             loading: true,
-            fetchedCards: false
+            fetchedCards: false,
+            title: "",
+            description: "",
+            submitDisabled: true,
+            titleError: "",
+            folderCls: 'session-modal'
         };
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -107,6 +112,48 @@ class DeckPage extends React.Component {
                     .then(() => this.props.fetchFolderDecks([this.props.deck.id]));
             }
         }
+    }
+
+    showFolderForm() {
+        if (this.state.folderCls === "session-modal") {
+            this.setState({ folderCls: "session-modal show-modal", addDecksCls: "delete-modal" })
+        } else {
+            this.setState({ folderCls: "session-modal" })
+        }
+    }
+
+    hideFolderForm(e) {
+        if (e.target.className === "session-modal show-modal" ||
+            e.target.className === "close-form") {
+            this.setState({ folderCls: "session-modal", title: "", description: "", addDecksCls: "delete-modal show-modal" })
+        }
+    }
+
+    handleTitleChange(e) {
+        let titleWord = e.currentTarget.value;
+        this.setState({ title: titleWord }, () => {
+            if (titleWord.length > 0) {
+                this.setState({ submitDisabled: false, titleError: "" })
+            } else {
+                this.setState({ submitDisabled: true, titleError: "A folder must have a title" });
+            }
+        });
+    }
+
+    handleDescriptionChange(e) {
+        this.setState({ description: e.currentTarget.value });
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.createFolder({
+            title: this.state.title,
+            description: this.state.description,
+            deckCount: 0
+        }).then(folder => this.props.createFolderDeck({deckId: this.props.deck.id, folderId: folder.folder.id})
+            .then(() => this.props.fetchFolderDecks([this.props.deck.id])));
+        //hide the form
+        this.setState({ folderCls: "session-modal", title: "", description: "", addDecksCls: "delete-modal show-modal" });
     }
 
 
@@ -682,6 +729,9 @@ class DeckPage extends React.Component {
                                             <div onClick={this.hideForm.bind(this)} className="delete-close-form">X</div>
                                         </div>
                                         <div className="delete-content">
+                                            <div id="folder-modal-new" onClick={this.showFolderForm.bind(this)} className="small-deck-tile folder-modal-new">
+                                                <p>+ CREATE A NEW FOLDER</p> 
+                                            </div>
                                             {this.props.folders.map((folder) => (
                                                 <div key={folder.id} className="small-deck-tile">
                                                     <div className="small-deck-tile-inner">
@@ -692,9 +742,11 @@ class DeckPage extends React.Component {
                                                     </div>
                                                 </div>
                                             ))}
+                                            
                                         </div>
                                     </div>
                                 </div>
+                                
                                 {this.props.creator.id === this.props.currentUser.id ? 
                         
                                 <Link to={`/${this.props.deck.id}/edit`}>
@@ -778,6 +830,38 @@ class DeckPage extends React.Component {
                                 </div>
                             </div> 
                         </div> 
+                        <div className="session-form-container create-folders">
+                            <div onClick={this.hideFolderForm.bind(this)} className={this.state.folderCls}>
+                                <form onSubmit={this.handleSubmit.bind(this)} className='session-form-box' spellCheck="false">
+                                    <div className="info-banner">
+                                        <h1 className="form-title">Create a new folder</h1>
+                                        <div onClick={this.hideFolderForm.bind(this)} className="close-form">X</div>
+                                    </div>
+                                    <div className="session-form">
+                                        <div className="session-field">
+                                            <input type="text"
+                                                value={this.state.title}
+                                                onChange={this.handleTitleChange.bind(this)}
+                                                className="session-input"
+                                                placeholder="Enter a title"
+                                            />
+                                            <label>TITLE</label>
+                                            <div className="session-errors">{this.state.titleError}</div>
+                                        </div>
+                                        <div className="session-field">
+                                            <input type="text"
+                                                value={this.state.description}
+                                                onChange={this.handleDescriptionChange.bind(this)}
+                                                className="session-input"
+                                                placeholder="Enter a description (optional)"
+                                            />
+                                            <label>DESCRIPTION</label>
+                                        </div>
+                                        <input className="create-folder-submit" type="submit" value="Create Folder" disabled={this.state.submitDisabled} />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="deck-page-bottom-wrapper">
