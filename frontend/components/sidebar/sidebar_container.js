@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchDecks } from '../../actions/deck_actions';
-import { createFolder } from '../../actions/folder_actions';
+import { createFolder, fetchFolders } from '../../actions/folder_actions';
 import Sidebar from './sidebar';
 
 const mapStateToProps = (state) => {
@@ -13,12 +13,14 @@ const mapStateToProps = (state) => {
 
     return {
         createdDecksCount: createdDecksCt,
+        // folders: Object.values(state.entities.folders),
         currentUser: state.entities.users[state.session.id],
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     fetchDecks: () => dispatch(fetchDecks()),
+    // fetchFolders: (optUserId) => dispatch(fetchFolders(optUserId)),
     createFolder: (folder) => dispatch(createFolder(folder))
 });
 

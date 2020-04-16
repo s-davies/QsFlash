@@ -17,12 +17,14 @@ class Sidebar extends React.Component {
             title: "",
             description: "",
             submitDisabled: true,
-            titleError: ""
+            titleError: "",
+            redirect: null
         }
     }
 
     componentDidMount() {
-        this.props.fetchDecks()
+        this.props.fetchDecks();
+        // this.props.fetchFolders(this.props.currentUser.id);
     }
 
     showForm() {
@@ -64,9 +66,19 @@ class Sidebar extends React.Component {
         });
         //hide the form
         this.setState({ cls: "session-modal", title: "", description: "" });
+        this.handleRedirect()();
+    }
+
+    handleRedirect() {
+        return e => {
+            this.setState({ redirect: `/${this.props.currentUser.id}/folders` });
+        }
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect push to={this.state.redirect} />
+        }
         return(
             <aside className="sidebar">
                 <NavLink to="/" activeClassName="sidebar-selected" className="sidebar-link sidebar-home">
@@ -101,6 +113,13 @@ class Sidebar extends React.Component {
                         <p>Folders</p>
                     </div>
                 </NavLink>
+                {/* {this.props.folders.map((folder,index) => (
+                    index < 3 ?
+                    <Link to={`/${this.props.currentUser.id}/folders/${folder.id}`} className="sidebar-folder">
+                        <p>{folder.title}</p>
+                    </Link>
+                    : ""
+                ))} */}
                 <button onClick={this.showForm.bind(this)} className="sidebar-new">
                     <i className="fas fa-folder-plus"></i>
                     <p>Create a folder</p>

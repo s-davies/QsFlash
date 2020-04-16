@@ -4,11 +4,13 @@ import { fetchCards } from '../../actions/card_actions';
 import { fetchDeckStudy, fetchDeckStudies, updateDeckStudy } from '../../actions/deck_study_actions';
 import { fetchUsers } from '../../actions/session_actions';
 import { fetchCardStudies, updateCardStudy } from '../../actions/card_study_actions';
+import { fetchFolders } from '../../actions/folder_actions';
+import { fetchFolderDecks, createFolderDeck, deleteFolderDeck } from '../../actions/folder_deck_actions';
 import DeckPage from './deck_page'
 
 const mapStateToProps = (state, ownProps) => {
     let creator = state.entities.decks[ownProps.match.params.deckId] === undefined ? {} : state.entities.users[state.entities.decks[ownProps.match.params.deckId].ownerId]
-    // debugger
+    
     let deckStudies = Object.values(state.entities.deckStudies);
     let ratSum = 0
     let ratCount = 0
@@ -45,6 +47,19 @@ const mapStateToProps = (state, ownProps) => {
         }
     }
     /////
+    let folders = Object.keys(state.entities.folders).map(key => Object.assign({}, state.entities.folders[key])).reverse();
+    let folderDecks = {};
+    for (let i = 0; i < Object.values(state.entities.folderDecks).length; i++) {
+        const folderDeck = Object.values(state.entities.folderDecks)[i];
+        folderDecks[folderDeck.folderId] = folderDeck;
+    }
+    for (let i = 0; i < folders.length; i++) {
+        const folder = folders[i];
+        if (folderDecks[folder.id]) {
+            folder.folderDeckId = folderDecks[folder.id].id;
+        }
+    }
+
     return {
         deck: state.entities.decks[ownProps.match.params.deckId],
         cards: cards.sort((a, b) => (a.order > b.order) ? 1 : -1),
@@ -52,7 +67,8 @@ const mapStateToProps = (state, ownProps) => {
         creator: creator,
         currentUser: state.entities.users[state.session.id],
         avgRating: avgRating,
-        numRatings: ratCount
+        numRatings: ratCount,
+        folders: folders
         // deckStudies: Object.values(state.entities.deckStudies)
     }
 };
@@ -66,7 +82,11 @@ const mapDispatchToProps = dispatch => ({
     updateDeckStudy: (deckStudy) => dispatch(updateDeckStudy(deckStudy)),
     fetchUsers: () => dispatch(fetchUsers()),
     fetchCardStudies: deckId => dispatch(fetchCardStudies(deckId)),
-    updateCardStudy: cardStudy => dispatch(updateCardStudy(cardStudy))
+    updateCardStudy: cardStudy => dispatch(updateCardStudy(cardStudy)),
+    fetchFolderDecks: (deckId) => dispatch(fetchFolderDecks(deckId)),
+    createFolderDeck: (folderDeck) => dispatch(createFolderDeck(folderDeck)),
+    deleteFolderDeck: (folderDeckId) => dispatch(deleteFolderDeck(folderDeckId)),
+    fetchFolders: (optUserId) => dispatch(fetchFolders(optUserId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckPage);

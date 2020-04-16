@@ -41,6 +41,7 @@ class DeckPage extends React.Component {
             curTar: null,
             cls: "info-modal",
             deleteCls: "delete-modal",
+            addDecksCls: "delete-modal",
             star1cls: null,
             star2cls: null,
             star3cls: null,
@@ -61,6 +62,7 @@ class DeckPage extends React.Component {
         this.props.fetchDeck(dId).then(() => this.props.fetchUsers())
         .then(() => this.props.fetchCards(dId)).then(() => {
             this.props.fetchCardStudies(dId).then(() => this.setState({fetchedCards: true}));
+            this.props.fetchFolderDecks([this.props.deck.id]);
         });
         if (this.state.setProgress === false) {
             this.props.fetchDeckStudy(dId).then(() => this.setState({ rating: this.props.deckStudies[0].rating,  progress: this.props.deckStudies[0].progress, deckStudy: this.props.deckStudies[0], setProgress: true}, () => this.props.fetchDeckStudies(dId)))
@@ -87,6 +89,26 @@ class DeckPage extends React.Component {
         window.removeEventListener('beforeunload', this.componentCleanup);
     }
 
+    showAddDecksModal() {
+        if (this.state.addDecksCls === "delete-modal") {
+            this.props.fetchFolders(this.props.currentUser.id);
+            this.setState({ addDecksCls: "delete-modal show-modal" });
+        }
+    }
+
+    addRemoveDeck(folder) {
+        return e => {
+            //add folderdeck
+            if (!folder.folderDeckId) {
+                this.props.createFolderDeck({ deckId: this.props.deck.id, folderId: folder.id })
+                    .then(() => this.props.fetchFolderDecks([this.props.deck.id]));
+            } else {
+                this.props.deleteFolderDeck(folder.folderDeckId)
+                    .then(() => this.props.fetchFolderDecks([this.props.deck.id]));
+            }
+        }
+    }
+
 
     showDeleteModal() {
         if (this.state.deleteCls === "delete-modal") {
@@ -107,7 +129,7 @@ class DeckPage extends React.Component {
         } else if (e.target.className === "delete-modal show-modal" ||
             e.target.className === "delete-close-form" ||
             e.target.className === "cancel-button") {
-            this.setState({ deleteCls: "delete-modal" })
+            this.setState({ deleteCls: "delete-modal", addDecksCls: "delete-modal" })
         }
     }
 
@@ -649,9 +671,29 @@ class DeckPage extends React.Component {
                                 <p>{this.props.deck.description}</p>
                             </div>
                             <div className="deck-options-right">
-                                <div className="tooltip-options">
+                                <div onClick={this.showAddDecksModal.bind(this)} className="tooltip-options">
                                     <i className="fas fa-plus"></i>
-                                    <span className="tooltiptext-plus">Add set to class or folder</span>
+                                    <span className="tooltiptext-plus">Add set to folder</span>
+                                </div>
+                                <div onClick={this.hideForm.bind(this)} className={this.state.addDecksCls}>
+                                    <div className='delete-div-box folder'>
+                                        <div className="delete-banner">
+                                            <h1 className="form-title">Add deck to folder</h1>
+                                            <div onClick={this.hideForm.bind(this)} className="delete-close-form">X</div>
+                                        </div>
+                                        <div className="delete-content">
+                                            {this.props.folders.map((folder) => (
+                                                <div key={folder.id} className="small-deck-tile">
+                                                    <div className="small-deck-tile-inner">
+                                                        <div className="small-deck-tile-bottom" >
+                                                            <h3>{folder.title}</h3>
+                                                            <i onClick={this.addRemoveDeck(folder).bind(this)} className={folder.folderDeckId ? "fas fa-minus deck-in-folder" : "fas fa-plus deck-not-in-folder"}></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                                 {this.props.creator.id === this.props.currentUser.id ? 
                         
@@ -743,7 +785,7 @@ class DeckPage extends React.Component {
 
                             <div className="deck-page-bottom">
                                 <header className="deck-page-cards-header">
-                                    <span>Terms in this set ({this.props.cards.length})</span>
+                                    <span>Terms in this deck ({this.props.cards.length})</span>
                                     <div>
                                         <div className="options-radio-div">
                                             <div>
