@@ -258,6 +258,10 @@ class DeckForm extends React.Component {
                     }
 
                 }
+                //for putting deck in folder at time of creation
+                if (that.props.location.state && that.props.location.state.folderId) {
+                    that.props.createFolderDeck({ deckId: deck.deck.id, folderId: that.props.location.state.folderId })
+                }
                 this.setState({ redirect: `/${deck.deck.id}/flash-cards` })
             })
             for (let i = 0; i < this.state.removedCards.length; i++) {

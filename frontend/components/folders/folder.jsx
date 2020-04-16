@@ -193,6 +193,14 @@ class Folder extends React.Component {
                     <div onClick={this.hideForm.bind(this)} className="delete-close-form">X</div>
                   </div>
                   <div className="delete-content">
+                      <Link id="folder-modal-new" className="small-deck-tile folder-modal-new" to={{
+                        pathname: '/create-deck',
+                        state: {
+                          folderId: this.props.folder.id
+                        }
+                      }}>
+                        <p>+ CREATE A NEW DECK</p>
+                      </Link>
                       {this.props.usersDecks.map((deck) => (
                         <div key={deck.id} className="small-deck-tile">
                           <div className="small-deck-tile-inner">
