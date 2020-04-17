@@ -54,7 +54,8 @@ class FlashCards extends React.Component {
       onCls: "options-unselected",
       loading: true,
       shuffled: false,
-      shuffleCls: "learn-options-button"
+      shuffleCls: "learn-options-button",
+      flipInstruction: true
     };
     // this.componentCleanup = this.componentCleanup.bind(this);
   }
@@ -164,7 +165,7 @@ class FlashCards extends React.Component {
       e.currentTarget.style.transform = "rotateX(180deg)";
       
       //set flipped to true because audio button is rendering based on this
-      this.setState({ flipped: true })
+      this.setState({ flipped: true, flipInstruction: false })
       if (this.state.curTar === null) {
         this.setState({ curTar: e.currentTarget })
       }
@@ -355,6 +356,10 @@ class FlashCards extends React.Component {
                     <Textfit mode="multi" style={cardStyles}>
                       <p>{this.state.allCards[this.state.progress - 1].term}</p>
                     </Textfit>
+                      {this.state.flipInstruction ?
+                        <div className="flip-instructions">
+                          <span>Click card to flip ☝️</span>
+                        </div> : ""}
                   </div>
                   <div className="flip-card-back" >
                     <Textfit mode="multi" style={cardStyles}>
@@ -373,6 +378,10 @@ class FlashCards extends React.Component {
                     <Textfit mode="multi" style={cardStyles}>
                       <p>{this.state.allCards[this.state.progress - 1].definition}</p>
                     </Textfit>
+                      {this.state.flipInstruction ?
+                        <div className="flip-instructions">
+                          <span>Click card to flip ☝️</span>
+                        </div> : ""}
                   </div>
                   <div className="flip-card-back" >
                     <Textfit mode="multi" style={cardStyles}>

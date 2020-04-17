@@ -57,7 +57,8 @@ class DeckPage extends React.Component {
             description: "",
             submitDisabled: true,
             titleError: "",
-            folderCls: 'session-modal'
+            folderCls: 'session-modal',
+            flipInstruction: true
         };
         this.componentCleanup = this.componentCleanup.bind(this);
     }
@@ -214,7 +215,7 @@ class DeckPage extends React.Component {
             e.currentTarget.style.transition = "transform 0.6s"
             e.currentTarget.style.transform = "rotateX(180deg)";
             if (this.state.curTar === null) {
-                this.setState({curTar: e.currentTarget})
+                this.setState({curTar: e.currentTarget, flipInstruction: false})
             }
         }
     }
@@ -686,6 +687,10 @@ class DeckPage extends React.Component {
                                             <Textfit mode="multi" style={cardStyles}>
                                             <p>{this.props.cards[this.state.progress - 1].term}</p>
                                             </Textfit>
+                                            {this.state.flipInstruction ? 
+                                            <div className="flip-instructions">
+                                                <span>Click card to flip ☝️</span>
+                                            </div> : ""}
                                         </div>
                                         <div className="flip-card-back" >
                                             <Textfit mode="multi" style={cardStyles}>

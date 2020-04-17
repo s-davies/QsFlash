@@ -985,3 +985,12 @@
   border-bottom: 5px solid $teal;
   padding: 10px 0px;
 }
+
+.flip-instructions {
+  position: absolute;
+  background-color: $dark-gray;
+  color: $white;
+  font-size: 14px;
+  width: 100%;
+  bottom: 0px;
+}
