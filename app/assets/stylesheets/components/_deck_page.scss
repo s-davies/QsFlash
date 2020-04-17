@@ -619,14 +619,19 @@
   align-items: center;
   justify-content: center;
   height: 170px;
-  width: 170px;
+  // width: 170px;
+  flex: 1;
   background-color: $teal;
 }
-.info-modal-box:hover {
-  transition: background-color 0.15s ease;
-  background-color: $yellow;
-  cursor: pointer;
+
+.info-modal-box:first-of-type {
+  margin-right: 30px;
 }
+// .info-modal-box:hover {
+//   transition: background-color 0.15s ease;
+//   background-color: $yellow;
+//   cursor: pointer;
+// }
 
 .info-modal-box h1 {
   padding: 0;
@@ -642,11 +647,11 @@
   font-weight: 400;
 }
 
-.info-modal-box:hover h1,  .info-modal-box:hover h3 {
-  transition: color 0.15s ease;
-  color: $dark-gray;
+// .info-modal-box:hover h1,  .info-modal-box:hover h3 {
+//   transition: color 0.15s ease;
+//   color: $dark-gray;
   
-}
+// }
 
 .info-modal-bottom {
   display: flex;

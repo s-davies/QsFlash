@@ -68,7 +68,8 @@ const mapStateToProps = (state, ownProps) => {
         currentUser: state.entities.users[state.session.id],
         avgRating: avgRating,
         numRatings: ratCount,
-        folders: folders
+        folders: folders,
+        folderDecks: Object.values(folderDecks)
         // deckStudies: Object.values(state.entities.deckStudies)
     }
 };

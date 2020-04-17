@@ -802,13 +802,13 @@ class DeckPage extends React.Component {
                                             <h1>{this.props.deckStudies.length}</h1>
                                             <h3>{this.props.deckStudies.length === 1 ? "STUDIER" : "STUDIERS"}</h3>
                                         </div>
-                                        <div className="info-modal-box">
+                                        {/* <div className="info-modal-box">
                                             <h1>1</h1>
                                             <h3>CLASS</h3>
-                                        </div>
+                                        </div> */}
                                         <div className="info-modal-box">
-                                            <h1>1</h1>
-                                            <h3>FOLDER</h3>
+                                            <h1>{this.props.folderDecks.length}</h1>
+                                            <h3>{this.props.folderDecks.length === 1 ? "FOLDER" : "FOLDERS"}</h3>
                                         </div>
                                     </div>
                                 </div>
