@@ -221,7 +221,8 @@ class Spell extends React.Component {
   checkSpelling(e) {
     e.preventDefault();
     const card = Object.assign({}, this.state.wordToSpell);
-    if (this.state.wordToSpell.term.toLowerCase() === this.state.spellVal.toLowerCase()) {
+    if ((this.state.optAnsType === "Term" && this.state.wordToSpell.term.toLowerCase() === this.state.spellVal.toLowerCase()) ||
+      (this.state.optAnsType === "Definition" && this.state.wordToSpell.definition.toLowerCase() === this.state.spellVal.toLowerCase())) {
       card.spellCount += 1;
       card.correctnessCount += 1;
       this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, spellCount: card.spellCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));

@@ -221,7 +221,8 @@ class Write extends React.Component {
   checkWriteing(e) {
     e.preventDefault();
     const card = Object.assign({}, this.state.wordToWrite);
-    if (this.state.wordToWrite.term.toLowerCase() === this.state.writeVal.toLowerCase()) {
+    if ((this.state.optAnsType === "Term" && this.state.wordToWrite.term.toLowerCase() === this.state.writeVal.toLowerCase()) ||
+      (this.state.optAnsType === "Definition" && this.state.wordToWrite.definition.toLowerCase() === this.state.writeVal.toLowerCase())) {
       card.writeCount += 1;
       card.correctnessCount += 1;
       this.props.updateCardStudy({ id: card.cardStudyId, correctnessCount: card.correctnessCount, writeCount: card.writeCount }).then(() => this.props.fetchCardStudies(this.props.match.params.deckId));
