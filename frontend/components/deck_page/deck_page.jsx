@@ -214,8 +214,9 @@ class DeckPage extends React.Component {
         } else {
             e.currentTarget.style.transition = "transform 0.6s"
             e.currentTarget.style.transform = "rotateX(180deg)";
+            this.setState({ flipInstruction: false})
             if (this.state.curTar === null) {
-                this.setState({curTar: e.currentTarget, flipInstruction: false})
+                this.setState({curTar: e.currentTarget })
             }
         }
     }
