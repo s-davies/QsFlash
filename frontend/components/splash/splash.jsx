@@ -41,19 +41,20 @@ class Splash extends React.Component {
                             <p>Master any subject with your own virtual flashcards</p>
                             <div className="splash-signup-div">
                                 <SignupFormContainer />
-                                <a href="https://github.com/s-davies/QsFlash/wiki">Learn more about this project</a>
+                                <a href="https://github.com/s-davies/QsFlash" target="_blank">Learn more about this project</a>
                             </div>
                         </div>
                         <footer className="splash-footer">
                             <div className="splash-footer-left">
                                 <p>Created by Steven Davies</p>
-                                <a href="https://github.com/s-davies"><i className="fab fa-github-square"></i></a>
-                                <a href="https://www.linkedin.com/in/steven-davies-bb700119b/"><i className="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/s-davies" target="_blank"><i className="fab fa-github-square"></i></a>
+                                <a href="https://www.linkedin.com/in/steven-davies-bb700119b/" target="_blank"><i className="fab fa-linkedin"></i></a>
+                                <a href="https://angel.co/u/steven-davies-5" target="_blank"><i className="fab fa-angellist"></i></a>
                             </div>
-                            <div className="splash-footer-right">
+                            {/* <div className="splash-footer-right">
                                 <i className="fas fa-question-circle"></i>
                                 <p>Help Center</p>
-                            </div>
+                            </div> */}
                         </footer>
                     </div>
                     <div className="splash-right">

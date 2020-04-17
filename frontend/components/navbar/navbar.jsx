@@ -64,6 +64,8 @@ class Navbar extends React.Component {
                 <Link to="/" className="home">QsFlash!</Link>
                 <div className="main-nav-items">
                     <div className="main-nav-items-left">
+                        {this.props.currentUser ? 
+                        <>
                         <div className="main-nav-search-button" onClick={this.openSearchBar.bind(this)}>
                             <i className="fas fa-search"></i>
                             <p>Search</p>
@@ -72,6 +74,7 @@ class Navbar extends React.Component {
                             <i className="far fa-file"></i>
                             <p>Create</p>
                         </Link>
+                        </> : ""}
                     </div>
                     {this.props.currentUser ? 
                         <UserDropdown currentUser={this.props.currentUser} logout={this.props.logout}/>

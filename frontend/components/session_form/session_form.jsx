@@ -27,7 +27,16 @@ class SessionForm extends React.Component {
   hideForm(e) {
     if (e.target.className === "session-modal show-modal" || 
     e.target.className === "close-form"){
-      this.setState({ cls: "session-modal" })
+      this.setState({ 
+        cls: "session-modal",
+        username: '',
+        email: '',
+        password: '',
+        usernameError: " ",
+        emailError: " ",
+        passwordError: " ",
+        submitDisabled: true
+      })
     }
   }
 

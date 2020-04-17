@@ -759,7 +759,7 @@ class DeckPage extends React.Component {
                                     <i className="fas fa-info"></i>
                                     <span className="tooltiptext-info">Info</span>
                                 </div>
-                                <div className="info-dropdown">
+                                {/* <div className="info-dropdown">
                                     <i className="fas fa-ellipsis-h info-dropbtn"></i>
                                     <div className="info-dropdown-content">
                                         <span className="copy-link"><i className="far fa-copy"></i><p>Customize</p></span>
@@ -768,7 +768,12 @@ class DeckPage extends React.Component {
                                         {this.props.creator.id === this.props.currentUser.id ? 
                                         <span className="trash-link" onClick={this.showDeleteModal.bind(this)}><i className="fas fa-trash-alt"></i><p>Delete</p></span> : "" }
                                     </div>
-                                </div>
+                                </div> */}
+                                {this.props.creator.id === this.props.currentUser.id ?
+                                <div onClick={this.showDeleteModal.bind(this)} className="tooltip-options">
+                                    <i className="fas fa-trash-alt"></i>
+                                    <span className="tooltiptext-info">Delete</span>
+                                </div> : ""}
                             </div>
                         </div>
                         <div onClick={this.hideForm.bind(this)} className={this.state.cls}>
