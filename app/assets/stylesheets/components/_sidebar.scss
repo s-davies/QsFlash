@@ -40,7 +40,7 @@
     background-color: $yellow;
 }
 
-.sidebar-home, .sidebar-sets {
+.sidebar-home, .sidebar-sets, .sidebar-folders {
     margin-top: 20px;
 }
 
@@ -48,9 +48,7 @@
     margin-left: 10px;
 }
 
-.sidebar-help {
-    margin-bottom: 20px;
-}
+
 
 .sidebar-separator {
     background-color: $lightest-gray;
@@ -72,4 +70,22 @@
 .sidebar-new p {
     display: inline;
     margin-left: 6px;
+}
+
+.sidebar-help {
+    margin-bottom: 41px;
+}
+
+.sidebar-decks {
+    margin-top: 10px;
+}
+
+.sidebar-personal-links {
+    display: flex;
+    justify-content: space-around;
+    // padding: 0px 20px;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    color: $dark-gray
 }

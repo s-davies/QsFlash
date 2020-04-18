@@ -173,8 +173,8 @@ class Folder extends React.Component {
               <Link to={`/${this.props.users[this.props.folder.ownerId].id}/created`}>{this.props.users[this.props.folder.ownerId].username}</Link>
             </div>
             {this.props.folder.ownerId === this.props.currentUser.id ?
-            <div onClick={this.showAddDecksModal.bind(this)} className="folder-add-edit">
-              <div className="tooltip-options">
+            <div className="folder-add-edit">
+              <div onClick={this.showAddDecksModal.bind(this)} className="tooltip-options">
                 <i className="fas fa-plus"></i>
                 <span className="tooltiptext-info">Add decks</span>
               </div>

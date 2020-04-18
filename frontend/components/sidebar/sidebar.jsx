@@ -81,13 +81,13 @@ class Sidebar extends React.Component {
         }
         return(
             <aside className="sidebar">
-                <NavLink to="/" activeClassName="sidebar-selected" className="sidebar-link sidebar-home">
+                <NavLink exact to="/latest" activeClassName="sidebar-selected" className="sidebar-link sidebar-home">
                     <div className="sidebar-link-text">
                         <i className="fas fa-home"></i>
                         <p>Home</p> 
                     </div>
                 </NavLink>
-                <Link to="#" className="sidebar-link sidebar-settings">
+                {/* <Link to="#" className="sidebar-link sidebar-settings">
                     <div className="sidebar-link-text">
                         <i className="fas fa-cog"></i>
                         <p>Settings</p>
@@ -98,15 +98,19 @@ class Sidebar extends React.Component {
                         <i className="fas fa-question-circle"></i>
                         <p>Help Center</p>
                     </div>
-                </Link>
-                <div className="sidebar-separator"></div>
-                <NavLink exact to={`/${this.props.currentUser.id}/created`} activeClassName="sidebar-selected" className="sidebar-link sidebar-sets">
+                </Link> */}
+                <NavLink exact to={`/${this.props.currentUser.id}/created`} activeClassName="sidebar-selected" className="sidebar-link sidebar-decks">
                     <div className="sidebar-link-text">
                         <i className="fas fa-clone"></i>
                         <p>Decks</p>
                         {/* <p>Decks ({this.props.createdDecksCount})</p> */}
                     </div>
                 </NavLink>
+                <Link to="/create-deck" className="sidebar-help sidebar-new">
+                    <i className="fas fa-folder-plus"></i>
+                    <p>Create a deck</p>
+                </Link>
+                <div className="sidebar-separator"></div>
                 <NavLink to={`/${this.props.currentUser.id}/folders`} activeClassName="sidebar-selected" className="sidebar-link sidebar-folders">
                     <div className="sidebar-link-text">
                         <i className="fas fa-folder"></i>
@@ -169,7 +173,11 @@ class Sidebar extends React.Component {
                         </form>
                     </div>
                 </div>
-                
+                <div className="sidebar-personal-links">
+                    <a href="https://github.com/s-davies" target="_blank"><i className="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/steven-davies-bb700119b/" target="_blank"><i className="fab fa-linkedin-in"></i></a>
+                    <a href="https://angel.co/u/steven-davies-5" target="_blank"><i className="fab fa-angellist"></i></a>
+                </div>
             </aside>
         )
     }
