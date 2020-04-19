@@ -25,6 +25,8 @@ QsFlash! is a study application that enables users to create virtual flashcards.
 | :-------------: |:-------------:| :-------------:|
 | <img src="app/assets/images/readme_screenshots/mc_options.png" title="Options" width="400px"> | <img src="app/assets/images/readme_screenshots/spelling.png" title="Spelling" width="400px"> | <img src="app/assets/images/readme_screenshots/spelling_incorrect.png" title="Incorrect" width="400px"> |
 
+## Code Snippets
+
 ## Clone Project
 
 ```shell
