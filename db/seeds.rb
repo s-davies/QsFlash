@@ -40,6 +40,15 @@ steph_curry = User.create(
   night_mode: false
 )
 
+#demo_user------------------------------
+pbj = User.create(
+  username: "PBJTime",
+  email: "PBJTime@qsflash.com",
+  password: "PBJTime",
+  account_type: "student",
+  night_mode: false
+)
+
 #nba deck--------------------------------
 nba_deck = Deck.create(
   title: "NBA Teams",
@@ -776,6 +785,114 @@ spelling_card8 = Card.create(
   deck_id: spelling_deck.id
 )
 
+#civil war deck-------------------------------------------
+civil_war_deck = Deck.create(
+  title: "Causes of the Civil War",
+  description: "Main reasons the Civil War Started",
+  visibility: "Everyone",
+  editability: "Just me",
+  card_count: 4,
+  owner_id: pbj.id
+)
+
+#civil war cards-----------------------------------------
+civil_war_card1 = Card.create(
+  term: "Economy",
+  definition: "The southern economy depended on cotton and, consequently, on slave labor.",
+  order: 1,
+  deck_id: civil_war_deck.id
+)
+civil_war_card2 = Card.create(
+  term: "States' Rights vs. Federal Rights",
+  definition: "The southern states wanted to be able to nullify federal acts.",
+  order: 2,
+  deck_id: civil_war_deck.id
+)
+civil_war_card3 = Card.create(
+  term: "Slavery",
+  definition: "This is a broad category that contains two contributing factors: slave and non-slave states, and the abolitionist movement in the North.",
+  order: 3,
+  deck_id: civil_war_deck.id
+)
+civil_war_card4 = Card.create(
+  term: "Election of Abraham Lincoln",
+  definition: "Lincoln won the North and his opponent won the South. The country was divided.",
+  order: 4,
+  deck_id: civil_war_deck.id
+)
+
+#baseball deck-------------------------------------------
+baseball_deck = Deck.create(
+  title: "MLB Career WAR Leaders",
+  description: "Baseball wins above replacement",
+  visibility: "Everyone",
+  editability: "Just me",
+  card_count: 10,
+  owner_id: pbj.id
+)
+
+#baseball cards-----------------------------------------
+baseball_card1 = Card.create(
+  term: "Babe Ruth",
+  definition: "182.5",
+  order: 1,
+  deck_id: baseball_deck.id
+)
+baseball_card2 = Card.create(
+  term: "Walter Johnson",
+  definition: "164.5",
+  order: 2,
+  deck_id: baseball_deck.id
+)
+baseball_card3 = Card.create(
+  term: "Cy Young",
+  definition: "163.8",
+  order: 3,
+  deck_id: baseball_deck.id
+)
+baseball_card4 = Card.create(
+  term: "Barry Bonds",
+  definition: "162.8",
+  order: 4,
+  deck_id: baseball_deck.id
+)
+baseball_card5 = Card.create(
+  term: "Willie Mays",
+  definition: "156.2",
+  order: 5,
+  deck_id: baseball_deck.id
+)
+baseball_card6 = Card.create(
+  term: "Ty Cobb",
+  definition: "151.0",
+  order: 6,
+  deck_id: baseball_deck.id
+)
+baseball_card7 = Card.create(
+  term: "Hank Aaron",
+  definition: "143.1",
+  order: 7,
+  deck_id: baseball_deck.id
+)
+baseball_card8 = Card.create(
+  term: "Roger Clemons",
+  definition: "139.2",
+  order: 8,
+  deck_id: baseball_deck.id
+)
+baseball_card9 = Card.create(
+  term: "Tris Speaker",
+  definition: "134.2",
+  order: 9,
+  deck_id: baseball_deck.id
+)
+baseball_card10 = Card.create(
+  term: "Honus Wagner",
+  definition: "130.8",
+  order: 10,
+  deck_id: baseball_deck.id
+)
+
 #deck studies--------------------------------------------------
 du_deck_study1 = DeckStudy.create(
   progress: 28,
@@ -840,6 +957,20 @@ mb_deck_study3 = DeckStudy.create(
   studier_id: mrBeau.id
 )
 
+mb_deck_study4 = DeckStudy.create(
+  progress: 1,
+  rating: 4,
+  deck_id: baseball_deck.id,
+  studier_id: mrBeau.id
+)
+
+mb_deck_study5 = DeckStudy.create(
+  progress: 1,
+  rating: 5,
+  deck_id: war_deck.id,
+  studier_id: mrBeau.id
+)
+
 sc_deck_study1 = DeckStudy.create(
   progress: 10,
   rating: nil,
@@ -852,6 +983,26 @@ sc_deck_study2 = DeckStudy.create(
   rating: nil,
   deck_id: superpowers_deck.id,
   studier_id: steph_curry.id
+)
+
+sc_deck_study3 = DeckStudy.create(
+  progress: 1,
+  rating: 5,
+  deck_id: baseball_deck.id,
+  studier_id: steph_curry.id
+)
+
+pbj_deck_study1 = DeckStudy.create(
+  progress: 1,
+  rating: nil,
+  deck_id: civil_war_deck.id,
+  studier_id: pbj.id
+)
+pbj_deck_study2 = DeckStudy.create(
+  progress: 1,
+  rating: nil,
+  deck_id: baseball_deck.id,
+  studier_id: pbj.id
 )
 
 #card studies--------------------------------------
@@ -3151,4 +3302,428 @@ spelling_du_cs8 = CardStudy.create(
   card_id: spelling_card8.id,
   studier_id: mrBeau.id,
   deck_id: spelling_deck.id
+)
+
+#baseball card studies-----------------------------
+baseball_mb_cs1 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card1.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs2 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card2.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs3 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card3.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs4 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card4.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs5 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card5.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs6 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card6.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs7 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card7.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs8 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card8.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs9 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card9.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+baseball_mb_cs10 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card10.id,
+  studier_id: mrBeau.id,
+  deck_id: baseball_deck.id
+)
+
+baseball_sc_cs1 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card1.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs2 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card2.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs3 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card3.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs4 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card4.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs5 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card5.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs6 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card6.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs7 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card7.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs8 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card8.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs9 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card9.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+baseball_sc_cs10 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card10.id,
+  studier_id: steph_curry.id,
+  deck_id: baseball_deck.id
+)
+
+baseball_pbj_cs1 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card1.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs2 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card2.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs3 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card3.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs4 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card4.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs5 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card5.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs6 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card6.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs7 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card7.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs8 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card8.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs9 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card9.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+baseball_pbj_cs10 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: baseball_card10.id,
+  studier_id: pbj.id,
+  deck_id: baseball_deck.id
+)
+
+#civil war card studies-----------------------------
+civil_war_mb_cs1 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: civil_war_card1.id,
+  studier_id: mrBeau.id,
+  deck_id: civil_war_deck.id
+)
+civil_war_mb_cs2 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: civil_war_card2.id,
+  studier_id: mrBeau.id,
+  deck_id: civil_war_deck.id
+)
+civil_war_mb_cs3 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: civil_war_card3.id,
+  studier_id: mrBeau.id,
+  deck_id: civil_war_deck.id
+)
+civil_war_mb_cs4 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: civil_war_card4.id,
+  studier_id: mrBeau.id,
+  deck_id: civil_war_deck.id
+)
+civil_war_pbj_cs1 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: civil_war_card1.id,
+  studier_id: pbj.id,
+  deck_id: civil_war_deck.id
+)
+civil_war_pbj_cs2 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: civil_war_card2.id,
+  studier_id: pbj.id,
+  deck_id: civil_war_deck.id
+)
+civil_war_pbj_cs3 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: civil_war_card3.id,
+  studier_id: pbj.id,
+  deck_id: civil_war_deck.id
+)
+civil_war_pbj_cs4 = CardStudy.create(
+  starred: false,
+  correctness_count: 0,
+  learn_count: 0,
+  write_count: 0,
+  spell_count: 0,
+  test_count: 0,
+  card_id: civil_war_card4.id,
+  studier_id: pbj.id,
+  deck_id: civil_war_deck.id
 )

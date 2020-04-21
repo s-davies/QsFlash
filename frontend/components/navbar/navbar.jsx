@@ -52,7 +52,7 @@ class Navbar extends React.Component {
                     <div>
                         <i className="fas fa-search"></i>
                         <form onSubmit={this.handleSearchSubmit.bind(this)} className='main-nav-search-form' spellCheck="false">
-                            <input onBlur={this.closeSearchBar.bind(this)} type="text" placeholder="Search (ex. NBA)" onChange={this.handleSearchChange.bind(this)} value={this.state.searchVal} autoFocus />
+                            <input onBlur={this.closeSearchBar.bind(this)} type="text" placeholder="Search (ex. War)" onChange={this.handleSearchChange.bind(this)} value={this.state.searchVal} autoFocus />
                         </form>
                     </div>
                     <p>X</p>
