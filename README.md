@@ -53,6 +53,14 @@ and filter by starred cards.
 
 ![alt text](app/assets/images/readme_screenshots/q-sort.gif)
 
+Search decks and sort results by most recent, most studied, or highest rated.
+
+![alt text](app/assets/images/readme_screenshots/q-search.gif)
+
+Organize decks by adding them to folders.
+
+![alt text](app/assets/images/readme_screenshots/q-folder.gif)
+
 ## Code Snippets
 
 After a user creates a folder to organize their decks, they are given the option

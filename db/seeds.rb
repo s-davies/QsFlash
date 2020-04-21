@@ -1005,6 +1005,69 @@ pbj_deck_study2 = DeckStudy.create(
   studier_id: pbj.id
 )
 
+#folders-------------------------------------------
+
+du_folder1 = Folder.create(
+  title: "Schoolwork",
+  description: "Decks for my classes",
+  owner_id: demo_user.id,
+  deck_count: 0
+)
+
+du_folder2 = Folder.create(
+  title: "Fun and Games",
+  description: "Just for fun",
+  owner_id: demo_user.id,
+  deck_count: 0
+)
+
+sc_folder1 = Folder.create(
+  title: "Sports",
+  description: "Only sports decks allowed",
+  owner_id: steph_curry.id,
+  deck_count: 0
+)
+
+#folder decks--------------------------------------
+
+du_folder1_deck1 = FolderDeck.create(
+  deck_id: spelling_deck.id,
+  folder_id: du_folder1.id
+)
+du_folder1_deck2 = FolderDeck.create(
+  deck_id: tempo_deck.id,
+  folder_id: du_folder1.id
+)
+du_folder1_deck3 = FolderDeck.create(
+  deck_id: war_deck.id,
+  folder_id: du_folder1.id
+)
+du_folder2_deck1 = FolderDeck.create(
+  deck_id: poker_deck.id,
+  folder_id: du_folder2.id
+)
+du_folder2_deck2 = FolderDeck.create(
+  deck_id: superpowers_deck.id,
+  folder_id: du_folder2.id
+)
+du_folder2_deck3 = FolderDeck.create(
+  deck_id: nba_deck.id,
+  folder_id: du_folder2.id
+)
+du_folder2_deck4 = FolderDeck.create(
+  deck_id: tempo_deck.id,
+  folder_id: du_folder2.id
+)
+
+sc_folder1_deck1 = FolderDeck.create(
+  deck_id: baseball_deck.id,
+  folder_id: sc_folder1.id
+)
+sc_folder1_deck2 = FolderDeck.create(
+  deck_id: nba_deck.id,
+  folder_id: sc_folder1.id
+)
+
 #card studies--------------------------------------
 nba_du_cs1 = CardStudy.create(
   starred: false,
