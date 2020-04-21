@@ -2,7 +2,7 @@
 
 QsFlash! is a study application that enables users to create virtual flashcards. Through the use of interactive learning games, QsFlash provides an easy and convenient replacement for the old-fashioned paper flashcard.
 
-[LIVE SITE](https://https://qsflash.herokuapp.com/)
+[LIVE SITE](https://qsflash.herokuapp.com/)
 
 ## Features
 
