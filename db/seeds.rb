@@ -48,6 +48,15 @@ pbj = User.create(
   account_type: "student",
   night_mode: false
 )
+#login info user------------------------------
+login_info = User.create(
+  username: "loginInfo",
+  email: "loginInfo@qsflash.com",
+  password: "loginInfo",
+  account_type: "student",
+  night_mode: false,
+  school_id: 1
+)
 
 #nba deck--------------------------------
 nba_deck = Deck.create(

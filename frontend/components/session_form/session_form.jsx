@@ -110,7 +110,22 @@ class SessionForm extends React.Component {
 
   handleDemoUserLogIn(e) {
     e.preventDefault();
-    this.props.login({ username: "DemoUser", password: "DemoUser9999" });
+    let username;
+    let password;
+    if (this.props.loginInfoNum === 1) {
+      username = "DemoUser";
+      password = "DemoUser9999";
+    } else if (this.props.loginInfoNum === 2) {
+      username = "mrBeau";
+      password = "mrBeau";
+    } else if (this.props.loginInfoNum === 3) {
+      username = "StephCurry";
+      password = "StephCurry";
+    } else if (this.props.loginInfoNum === 4) {
+      username = "PBJTime";
+      password = "PBJTime";
+    }
+    this.props.login({ username: username, password: password });
   }
 
   renderErrors() {
