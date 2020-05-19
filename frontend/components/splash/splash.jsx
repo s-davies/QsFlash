@@ -58,7 +58,9 @@ class Splash extends React.Component {
                         </footer>
                     </div>
                     <div className="splash-right">
-                        <img key={this.state.img} className="splash-img" src={this.state.img === 1 ? window.qsflashSplash1 : this.state.img === 2 ? window.qsflashSplash2 : window.qsflashSplash3} alt="QsFlash"/>
+                        <div className="splash-img-bg">
+                            <img key={this.state.img} className="splash-img" src={this.state.img === 1 ? window.qsflashSplash1 : this.state.img === 2 ? window.qsflashSplash2 : window.qsflashSplash3} alt="QsFlash"/>
+                        </div>
                         <h4>QsFlash! is for</h4>
                         {this.state.img === 1 ? 
                             <p>“Get through exams to get to vacation” students</p>

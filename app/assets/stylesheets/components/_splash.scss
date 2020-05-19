@@ -35,7 +35,6 @@
     // justify-content: space-between;
     flex: 1;
     background-color: $purple;
-    // height: 100%;
 }
 
 .splash-left-div {
@@ -144,6 +143,11 @@
 
 .splash-img {
     animation: 1.3s ease-out 0s 1 imgfadeIn;
+}
+
+.splash-img-bg {
+    background-color: $purple;
+    min-height: calc(50vw * 0.73311404);
 }
 
 @keyframes pfadeIn {
