@@ -45,7 +45,7 @@ export const signup = user => dispatch => {
 
 export const updateUser = user => dispatch => {
   return APIUtil.updateUser(user).then(user => (
-    dispatch(receiveCurrentUser(user))
+    dispatch(logoutCurrentUser())
   ), err => (
     dispatch(receiveErrors(err.responseJSON))
   ))

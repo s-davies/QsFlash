@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: {format: :json} do
     get '/search/:searchTerm', to: 'decks#search', as: 'search'
-    resources :users, only: [:create, :index]
+    resources :users, only: [:create, :index, :update]
     resources :decks, only: [:create, :destroy, :update, :show, :index] do
       resources :cards, only: [:index]
       resources :deck_studies, only: [:index, :show]

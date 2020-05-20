@@ -125,7 +125,10 @@ class SessionForm extends React.Component {
       username = "PBJTime";
       password = "PBJTime";
     }
-    this.props.login({ username: username, password: password });
+    this.props.updateUser({ username: "loginInfo", school_id: (this.props.loginInfoNum % 4) + 1}).then(
+      () => this.props.login({ username: username, password: password })
+    );
+    
   }
 
   renderErrors() {
